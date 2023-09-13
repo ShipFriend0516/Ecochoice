@@ -1,13 +1,200 @@
+:root {
+    --season_color_01: #F6F4EE;
+    --season_color_01_dim: #F6F4EECF;
+    --season_color_02: #3B3B3B;
+    --season_color_03: #C49A91;
+    --season_color_04: #877B73;
+    --season_color_05: #757575;
+    --season_color_06: #9E9087;
+    --season_color_07: #FFFEFA;
+    --season_color_08: #F7F3EB;
+    --season_color_09: #CFC6BC;
+    --season_color_10: #A29388;
+    --season_color_11: #9e7470;
+    --inner_width: 1416px;
+}
+
+@font-face {
+  font-family: 'SUITE-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'SUITE-Regular', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.App {
+  background-color: white;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+
+body {
+  background-color: #9e7470;
+  min-height: 200vh;
+}
+
+body li:hover {
+  cursor:pointer;
+}
+
+nav.navbar {
+  display: flex;
+  color: white;
+  font-size: 0.75em;
+  background-color: transparent;
+  position: absolute;
+  width: 100vw;
+  z-index: 3;
+  justify-content: center;
+}
+
+nav.navbar ul {
+  list-style: none;
+}
+
+nav.navbar ul li {
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+nav.navbar span {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+nav.fixed {
+  position: fixed;
+  top: 0;
+  background-color: #F6F4EE;
+  color: #9E9087;
+}
+
+div.scrollSpy {
+  position: absolute;
+  height: 1px;
+  background: #F6F4EE;
+  width: 100vw;
+}
+
+div.scrollSpy span {
+  height: 1px;
+  padding: 0;
+  background-color: black;
+  width: 0%;
+}
+
+
+img.header-img {
+  /* min-width: 1400px; */
+  width: 100vw
+}
+
+/* Intro Style */
+.intro {
+  padding: 40px 0;
+  text-align: center;
+  font-size: 1em;
+}
+
+.intro p {
+  font-size: .8em;
+}
+
+.introPicWrap {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+
+.introPicWrap img {
+  border-radius: 20px;
+  width: 22%;
+}
+
+/* Main Wrap Styles */
+.mainWrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: white;
+}
+
+/* Item Card Styles */
+.ItemList {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+/* Footer Styles */
+
+#footer {
+  margin-top: 100px !important;
+  background-color: white;
+}
+
+.footer-top {
+  display: flex;
+  border-top: 1px solid #f2f2f2;
+  padding-top: 26px;
+}
+
+.footer-top > div.footer-block {
+  width: calc(100% / 3);
+}
+
+.footer-block > div {
+  margin-bottom: 20px;
+  padding-left: 10px;
+}
+
+.footer-block p {
+  font-size: .7em;
+  color: #999999;
+  margin-bottom: 9px;
+}
+
+.copyright {
+  color: #c8c8c8;
+  margin-top: 19px;
+}
+
+.footer-bottom {
+  border-top: 1px solid #f2f2f2;
+}
+
+.footer-bottom ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-bottom ul > * {
+  display: inline-block;
+  margin-right: 50px;
+  padding: 10px 14px;
+  color: black;
+  font-size: .8em;
+}
+
+
+
+/* / */

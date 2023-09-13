@@ -1,0 +1,41 @@
+.ItemCard {
+  margin: 0 3px;
+  width: calc(20% - 6px);
+  display: inline-block;
+  padding-bottom: 50px;
+  position: relative;
+}
+
+.img {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  margin: 0 auto;
+}
+
+.info {
+  padding: 10px 5px;
+  position: relative;
+  margin: 0;
+}
+
+.price {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+.name {
+  height: inherit;
+  padding-top: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  height: 55px;
+}
