@@ -61,9 +61,6 @@ const Footer = () => {
               <li>모바일버전</li>
             </ul>
           </div>
-          <div className="authbtn">
-            <ul></ul>
-          </div>
         </div>
       </div>
     </footer>

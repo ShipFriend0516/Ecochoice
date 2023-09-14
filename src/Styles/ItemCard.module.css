@@ -39,3 +39,33 @@
   -webkit-box-orient: vertical;
   height: 55px;
 }
+
+.brand {
+  color: #A29388;
+}
+
+.cart {
+  display: flex;
+  justify-content: end;
+  border-top: 1px solid #CFC6BC;
+  padding-top: 20px;
+  margin-top: 10px;
+}
+
+.cart .review {
+  flex-grow: 1;
+  text-align: left;
+  font-size: .8em;
+  color: #9E9087;
+}
+
+.cart button {
+  font-size: 1.2em;
+  outline: none;
+  border: 0;
+  background-color: transparent;
+}
+
+.cart button:hover {
+  cursor: pointer;
+}

@@ -4,6 +4,7 @@ import logoWide from "../Images/logo-wide.jpg";
 import ItemCard from "../Components/ItemCard";
 
 import logo from "../Images/logo.jpg";
+import { AiOutlineRight } from "react-icons/ai";
 
 const Home = () => {
   return (
@@ -29,10 +30,22 @@ const Home = () => {
           </div>
         </div>
         <div className="ItemList">
-          <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
-          <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
-          <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
-          <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
+          <ItemCard img={logo} price={30000} name={"상품의 이름"} brand={"제조사 및 브랜드"} />
+          <ItemCard
+            img={
+              "https://gametouchmall.com/web/product/tiny/202207/e5daf237d5abed5c4a2e41bd699e1a61.jpg"
+            }
+            price={655800}
+            name={"PS5"}
+            brand={"Sony"}
+          />
+          <ItemCard
+            img={"https://i.gifer.com/5K4w.gif"}
+            price={30000}
+            name={"맷도요새"}
+            brand={"개귀엽네"}
+          />
+          <ItemCard img={logo} price={50000} name={""} brand={"공주대학교"} />
           <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
         </div>
         <div className="ItemList">
@@ -41,6 +54,12 @@ const Home = () => {
           <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
           <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
           <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
+        </div>
+        <div className="moreBtnWrap">
+          <button className="moreBtn">
+            MORE
+            <AiOutlineRight className="arrow" />
+          </button>
         </div>
         <Footer />
       </div>

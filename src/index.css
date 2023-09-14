@@ -42,12 +42,16 @@ code {
 
 .bold {
   font-weight: bold;
+  margin: 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 
 body {
   background-color: #9e7470;
-  min-height: 200vh;
 }
 
 body li:hover {
@@ -61,8 +65,10 @@ nav.navbar {
   background-color: transparent;
   position: absolute;
   width: 100vw;
+  text-wrap: nowrap;
   z-index: 3;
   justify-content: center;
+  margin: 0 auto;
 }
 
 nav.navbar ul {
@@ -71,12 +77,12 @@ nav.navbar ul {
 
 nav.navbar ul li {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 5px 8px;
 }
 
 nav.navbar span {
   display: flex;
-  padding: 10px;
+  padding-right: 10px;
   align-items: center;
   font-weight: bold;
   font-size: 1.2em;
@@ -86,8 +92,32 @@ nav.fixed {
   position: fixed;
   top: 0;
   background-color: #F6F4EE;
-  color: #9E9087;
+  color: #A29388;
 }
+
+
+nav.navbar li > input[type="search"] {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid white;
+  color: white;
+  line-height: 1.2em;
+  font-size: 0.95em;
+
+}
+
+nav.fixed li > input[type="search"]{
+  border-bottom: 1px solid #A29388;
+  
+}
+
+nav.navbar li > input[type="search"]:focus {
+  outline: none;
+
+}
+
+
+
 
 div.scrollSpy {
   position: absolute;
@@ -144,6 +174,32 @@ img.header-img {
   margin-bottom: 40px;
 }
 
+.moreBtnWrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.moreBtn {
+  padding: 16px 50px;
+  border-radius: 0;
+  border: 1px solid var(--season_color_11);
+  color: var(--season_color_11);
+  background-color: transparent;
+  margin: 0 auto;
+}
+
+.moreBtn .arrow {
+  vertical-align: top;
+}
+
+.moreBtn:hover {
+  cursor: pointer;
+  transition: .2s ease-in-out;
+  color: white;
+  background-color: var(--season_color_11);
+}
+
 /* Footer Styles */
 
 #footer {
@@ -190,7 +246,7 @@ img.header-img {
 .footer-bottom ul > * {
   display: inline-block;
   margin-right: 50px;
-  padding: 10px 14px;
+  padding: 16px 14px;
   color: black;
   font-size: .8em;
 }
