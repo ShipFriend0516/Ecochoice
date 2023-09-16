@@ -11,6 +11,11 @@ const Header = () => {
 
   const [isVisible, setIsVisible] = useState(false);
 
+  const MoveToTop = () => {
+    // top:0 >> 맨위로  behavior:smooth >> 부드럽게 이동할수 있게 설정하는 속성
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const loginOnClick = () => {
     setIsVisible((prev) => !prev);
   };
@@ -43,7 +48,9 @@ const Header = () => {
         <div className="scrollSpy">
           <span className="bar" style={{ width: `${percent(scrollY, documentHeight)}%` }}></span>
         </div>
-        <span className="cursor-pointer">EcoChoice</span>
+        <span className="cursor-pointer" onClick={MoveToTop}>
+          EcoChoice
+        </span>
         <ul>
           <li>BEST🌏</li>
           <li>NEW🌱</li>

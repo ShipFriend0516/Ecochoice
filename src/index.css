@@ -238,6 +238,11 @@ img.header-img {
   padding-left: 10px;
 }
 
+.footer-block div span {
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
 .footer-block p {
   font-size: .7em;
   color: #999999;

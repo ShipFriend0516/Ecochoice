@@ -1,19 +1,23 @@
 .loginPage {
   position:absolute;
-  z-index: 5;
+  z-index: 4;
   background-color: transparent;
   overflow: hidden;
-  height: 100vw;
-  width: 100vw;
+  /* height: 100%;
+  width: 100vw; */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  backdrop-filter: brightness(30%);
+  /* backdrop-filter: brightness(30%); */
 }
 
 
 .loginForm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -22,6 +26,11 @@
   padding: 80px 80px 60px 80px;
   border: 1px solid black;
   border-radius: 20px;
+
+  animation-name: modalFade;
+  animation-duration: .2s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
 }
 
 .loginForm .field {
@@ -39,4 +48,26 @@
 .register {
   padding-left: 100px;
   padding-right: 100px;
+}
+
+.canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 3;
+}
+
+@keyframes modalFade {
+  0% {
+    opacity: 0;
+    top: 47%;
+  }
+
+  100% {
+    opacity: 1;
+    top: 50%;
+  }
 }
