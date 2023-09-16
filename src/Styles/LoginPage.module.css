@@ -1,0 +1,42 @@
+.loginPage {
+  position:absolute;
+  z-index: 5;
+  background-color: transparent;
+  overflow: hidden;
+  height: 100vw;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  backdrop-filter: brightness(30%);
+}
+
+
+.loginForm {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 80px 80px 60px 80px;
+  border: 1px solid black;
+  border-radius: 20px;
+}
+
+.loginForm .field {
+  padding: 10px 20px;
+  outline: none;
+  border: 1px solid #3B3B3B;
+  border-radius: 20px;
+} 
+
+.loginForm div > small {
+  font-size:medium;
+  padding-bottom: 20px;
+}
+
+.register {
+  padding-left: 100px;
+  padding-right: 100px;
+}

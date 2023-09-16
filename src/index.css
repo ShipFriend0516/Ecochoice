@@ -36,6 +36,15 @@ code {
     monospace;
 }
 
+
+a {
+  text-decoration: none;
+}
+
+a:-webkit-any-link {
+  color: inherit
+}
+
 .App {
   background-color: white;
 }
@@ -69,10 +78,13 @@ nav.navbar {
   z-index: 3;
   justify-content: center;
   margin: 0 auto;
+  align-items: center;
+  padding: 12px 0;
 }
 
 nav.navbar ul {
   list-style: none;
+  margin: 0;
 }
 
 nav.navbar ul li {
@@ -108,7 +120,7 @@ nav.navbar li > input[type="search"] {
 
 nav.fixed li > input[type="search"]{
   border-bottom: 1px solid #A29388;
-  
+  color: black;
 }
 
 nav.navbar li > input[type="search"]:focus {
@@ -120,7 +132,8 @@ nav.navbar li > input[type="search"]:focus {
 
 
 div.scrollSpy {
-  position: absolute;
+  position: fixed;
+  top: 0;
   height: 1px;
   background: #F6F4EE;
   width: 100vw;
@@ -129,7 +142,7 @@ div.scrollSpy {
 div.scrollSpy span {
   height: 1px;
   padding: 0;
-  background-color: black;
+  background-color: rgb(42, 114, 71);
   width: 0%;
 }
 
@@ -172,6 +185,9 @@ img.header-img {
 .ItemList {
   width: 100%;
   margin-bottom: 40px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5열 */
+  grid-template-rows: auto;
 }
 
 .moreBtnWrap {
@@ -252,5 +268,19 @@ img.header-img {
 }
 
 
+/* Reactive 반응형 Styles */
 
-/* / */
+@media (max-width: 1024px){
+  .ItemList {
+    grid-template-columns: repeat(4, 1fr); /* 5열 */
+  }
+}
+
+
+/* Reactive 반응형 Styles */
+
+@media (max-width: 512px){
+  .ItemList {
+    grid-template-columns: repeat(2, 1fr); /* 5열 */
+  }
+}

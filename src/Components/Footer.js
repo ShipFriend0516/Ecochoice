@@ -58,7 +58,6 @@ const Footer = () => {
               <li>파트너쉽 </li>
               <li>멤버쉽 </li>
               <li>리크루트 </li>
-              <li>모바일버전</li>
             </ul>
           </div>
         </div>

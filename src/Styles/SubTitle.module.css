@@ -1,0 +1,13 @@
+.subTitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  padding-top: 60px;
+}
+
+.subTitle span {
+  font-weight: bold;
+  font-size: 1.2em;
+}
