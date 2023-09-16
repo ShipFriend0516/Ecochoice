@@ -1,0 +1,68 @@
+.myPage {
+  background-color: white;
+  padding-top: 70px;
+}
+
+.myPageDetail {
+  background-color: #e1d9cf;
+  width: 80%;
+  height: 70%;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px darkgray;
+}
+
+.top_info {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  padding: 40px 0;
+}
+
+.left_contents {
+  display: flex;
+  justify-content: end;
+  width: 35%;
+  border-right: 1px solid #bfbfbf;
+  padding-right: 20px;
+}
+
+.top_info .left_contents .info .name {
+  font-size: 30px;
+  font-weight: 600;
+  overflow: hidden;
+  padding-right: 40px;
+  margin: 10px 0 15px 40px;
+  color: #877B73;
+}
+
+.right_contents {
+  display: flex;
+  flex-direction: column;
+  width: 65%;
+  height: 100%;
+  text-align: left;
+  font-size: 16px;
+  padding-left: 40px;
+  justify-content: space-around;
+  align-items: start;
+}
+
+.right_contents div > div {
+  width: 80px;
+}
+
+
+.profile_pic {
+  border-radius: 50%;
+  width: 140px;
+  height: 140px;
+  background-color: #d9d9d9;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.profile_pic img{
+  position: absolute;
+  width: 100%;
+}

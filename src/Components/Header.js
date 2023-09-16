@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
 import logoTitle from "../Images/logoTitle.png";
 import { AiOutlineSearch } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 
-const Header = () => {
+const Header = ({ isFixed }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const documentHeight = document.body.scrollHeight - window.innerHeight;
 
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   const MoveToTop = () => {
     // top:0 >> 맨위로  behavior:smooth >> 부드럽게 이동할수 있게 설정하는 속성
+    if (window.location.pathname !== "/") {
+      navigate("/");
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -44,7 +48,7 @@ const Header = () => {
 
   return (
     <>
-      <nav className={`navbar ${isScrolled && "fixed"}`}>
+      <nav className={`navbar ${isScrolled && "fixed"} ${isFixed && "fixed"}`}>
         <div className="scrollSpy">
           <span className="bar" style={{ width: `${percent(scrollY, documentHeight)}%` }}></span>
         </div>
@@ -68,7 +72,9 @@ const Header = () => {
             <input type="search"></input>
             <AiOutlineSearch />
           </li>
-          <li>마이페이지</li>
+          <li>
+            <Link to={"/mypage"}>마이페이지</Link>
+          </li>
           <li>장바구니</li>
           <li onClick={loginOnClick}>로그인</li>
         </ul>
