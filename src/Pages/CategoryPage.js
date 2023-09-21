@@ -1,7 +1,6 @@
 import Header from "../Components/Header";
 import styles from "../Styles/Category.module.css";
 import ItemCard from "../Components/ItemCard";
-import logo from "../Images/logo.jpg";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
 import axios from "axios";

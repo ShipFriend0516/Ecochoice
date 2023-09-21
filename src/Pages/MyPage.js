@@ -14,7 +14,7 @@ const MyPage = () => {
           <div className={styles.left_contents}>
             <div className={styles.profile}>
               <div className={styles.profile_pic}>
-                <img src={profileImg}></img>
+                <img src={profileImg} alt="profileImg"></img>
               </div>
             </div>
             <div className={styles.info}>

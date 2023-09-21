@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import logo from "../Images/logo.jpg";
 import styles from "../Styles/ItemDetailPage.module.css";
-import { AiFillHeart, AiOutlineHeart, AiOutlineShopping } from "react-icons/ai";
+import { AiOutlineHeart } from "react-icons/ai";
 import Header from "../Components/Header";
 import { useParams } from "react-router-dom";
 
