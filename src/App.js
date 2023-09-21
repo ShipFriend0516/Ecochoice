@@ -12,6 +12,7 @@ function App() {
         <Route key={"/login"} path={"/login"} element={<LoginPage />}></Route>
         <Route key={"/mypage"} path={"/mypage"} element={<MyPage />}></Route>
       </Routes>
+      <></>
     </Router>
   );
 }
