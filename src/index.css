@@ -11,7 +11,7 @@
     --season_color_09: #CFC6BC;
     --season_color_10: #A29388;
     --season_color_11: #9e7470;
-    --inner_width: 1416px;
+    /* --inner_width: 1416px; */
 }
 
 @font-face {
@@ -58,7 +58,6 @@ a:-webkit-any-link {
   cursor: pointer;
 }
 
-
 body {
   background-color: #9e7470;
 }
@@ -73,13 +72,14 @@ nav.navbar {
   font-size: 0.75em;
   background-color: transparent;
   position: absolute;
-  width: 100vw;
   text-wrap: nowrap;
+  width: 100vw;
+  /* overflow-x:visible; */
   z-index: 3;
   justify-content: center;
   margin: 0 auto;
   align-items: center;
-  padding: 12px 0;
+  padding: 6px 0;
 }
 
 nav.navbar ul {
@@ -89,7 +89,13 @@ nav.navbar ul {
 
 nav.navbar ul li {
   display: inline-block;
-  padding: 5px 8px;
+  padding: 8px 8px;
+}
+
+nav.navbar ul li:hover {
+  color: black;
+  background-color: rgb(255, 255, 255,.5);
+  border-radius: 20px;
 }
 
 nav.navbar span {
@@ -105,8 +111,12 @@ nav.fixed {
   top: 0;
   background-color: #F6F4EE;
   color: #A29388;
+  opacity: .9;
 }
 
+nav.fixed ul li:hover {
+  color: black;
+}
 
 nav.navbar li > input[type="search"] {
   background-color: transparent;
@@ -147,9 +157,47 @@ div.scrollSpy span {
 }
 
 
-img.header-img {
-  /* min-width: 1400px; */
-  width: 100vw
+.header-img {
+  position:relative;
+}
+
+.sliderWrapper button {
+  position: absolute;
+  border: 0;
+  background-color: transparent;
+  font-size: 1.5em;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.prev {
+  left: 50px;
+  top: 50%;
+}
+
+.next {
+  right: 50px;
+  top: 50%;
+}
+
+
+.sliderWrapper {
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.sliderWrapper > .imgWrapper {
+  display: flex;
+  flex-direction: row;
+  transition: 1.5s ease-in-out;
+}
+
+.imgWrapper img {
+  display: inline-block;
+  width: 100vw;
+  aspect-ratio: 1930/750;
 }
 
 /* Intro Style */
@@ -179,12 +227,17 @@ img.header-img {
   max-width: 1400px;
   margin: 0 auto;
   background-color: white;
+} 
+
+.bg {
+  background-color: white;
+  
 }
 
 /* Item Card Styles */
 .ItemList {
   width: 100%;
-  margin-bottom: 40px;
+  /* padding-bottom: 40px; */
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5열 */
   grid-template-rows: auto;
@@ -199,21 +252,21 @@ img.header-img {
 .moreBtn {
   padding: 16px 50px;
   border-radius: 0;
-  border: 1px solid var(--season_color_11);
-  color: var(--season_color_11);
+  border: 1px solid rgb(42, 114, 71);;
+  color: rgb(42, 114, 71);;
   background-color: transparent;
   margin: 0 auto;
 }
 
 .moreBtn .arrow {
-  vertical-align: top;
+  vertical-align: -5%;
 }
 
 .moreBtn:hover {
   cursor: pointer;
   transition: .2s ease-in-out;
   color: white;
-  background-color: var(--season_color_11);
+  background-color: rgb(42, 114, 71);
 }
 
 /* Footer Styles */

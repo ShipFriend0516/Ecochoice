@@ -48,7 +48,7 @@ const Header = ({ isFixed }) => {
 
   return (
     <>
-      <nav className={`navbar ${isScrolled && "fixed"} ${isFixed && "fixed"}`}>
+      <nav className={`navbar ${isScrolled && "fixed"} ${isFixed ? "fixed" : ""}`}>
         <div className="scrollSpy">
           <span className="bar" style={{ width: `${percent(scrollY, documentHeight)}%` }}></span>
         </div>
@@ -56,18 +56,42 @@ const Header = ({ isFixed }) => {
           EcoChoice
         </span>
         <ul>
-          <li>BEST🌏</li>
-          <li>NEW🌱</li>
-          <li>오늘의할인</li>
-          <li>의류 및 패션</li>
-          <li>생활용품</li>
-          <li>건강 및 뷰티</li>
-          <li>식품</li>
-          <li>재활용 제품</li>
-          <li>에너지 절약용품</li>
-          <li>캠핑용품</li>
-          <li>사무용품</li>
-          <li>장식</li>
+          <li>
+            <Link to={"/category/1"}>BEST🌏</Link>
+          </li>
+          <li>
+            <Link to={"/category/2"}>NEW🌱</Link>
+          </li>
+          <li>
+            <Link to={"/category/3"}>오늘의할인</Link>
+          </li>
+          <li>
+            <Link to={"/category/4"}>의류 및 패션</Link>
+          </li>
+          <li>
+            <Link to={"/category/5"}>생활용품</Link>
+          </li>
+          <li>
+            <Link to={"/category/6"}>건강 및 뷰티</Link>
+          </li>
+          <li>
+            <Link to={"/category/7"}>식품</Link>
+          </li>
+          <li>
+            <Link to={"/category/8"}>재활용 제품</Link>
+          </li>
+          <li>
+            <Link to={"/category/9"}>에너지 절약용품</Link>
+          </li>
+          <li>
+            <Link to={"/category/10"}>캠핑용품</Link>
+          </li>
+          <li>
+            <Link to={"/category/11"}>사무용품</Link>
+          </li>
+          <li>
+            <Link to={"/category/12"}>장식</Link>
+          </li>
           <li>
             <input type="search"></input>
             <AiOutlineSearch />

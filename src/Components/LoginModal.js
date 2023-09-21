@@ -1,20 +1,31 @@
 import styles from "../Styles/LoginPage.module.css";
 import { useState } from "react";
+import axios from "axios";
 
 const LoginPage = ({ loginOnClick, isOpen }) => {
   const [isRegistered, setIsRegistered] = useState(false);
+  const [id, setID] = useState("");
+  const [pw, setPW] = useState("");
 
   const canvasOnClick = () => {
-    console.log("꺼져라");
     loginOnClick();
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    try {
+      const response = axios.get(`http://localhost:3001/`);
+    } catch (e) {
+      console.error("로그인 실패:", e);
+    }
   };
 
   const onRegisterClick = (e) => {
     e.preventDefault();
     setIsRegistered((prev) => !prev);
+  };
+
+  const onChangeID = (e) => {
+    setID(e.target.value);
   };
 
   return (
@@ -29,15 +40,20 @@ const LoginPage = ({ loginOnClick, isOpen }) => {
                   <small>Eco Choice</small>
                 </div>
                 <div className="">
-                  <label for="id">아이디</label>
-                  <input id="id" className={"form-control"} type="email"></input>
+                  <label htmlFor="id">아이디</label>
+                  <input
+                    onChange={onChangeID}
+                    id="id"
+                    className={"form-control"}
+                    type="email"
+                  ></input>
                 </div>
                 <div>
-                  <label for="pw">비밀번호</label>
+                  <label htmlFor="pw">비밀번호</label>
                   <input id="pw" className={"form-control"} type="password"></input>
                 </div>
                 <div>
-                  <label for="pw">비밀번호 확인</label>
+                  <label htmlFor="pw">비밀번호 확인</label>
                   <input id="pw" className={"form-control"} type="password"></input>
                 </div>
                 <div className="d-flex justify-content-between gap-3">
@@ -65,12 +81,22 @@ const LoginPage = ({ loginOnClick, isOpen }) => {
                   <small>Eco Choice</small>
                 </div>
                 <div className="">
-                  <label for="id">아이디</label>
-                  <input id="id" className={"form-control"} type="email"></input>
+                  <label htmlFor="id">아이디</label>
+                  <input
+                    onChange={(e) => setID(e.target.value)}
+                    id="id"
+                    className={"form-control"}
+                    type="email"
+                  ></input>
                 </div>
                 <div>
-                  <label for="pw">비밀번호</label>
-                  <input id="pw" className={"form-control"} type="password"></input>
+                  <label htmlFor="pw">비밀번호</label>
+                  <input
+                    onChange={(e) => setPW(e.target.value)}
+                    id="pw"
+                    className={"form-control"}
+                    type="password"
+                  ></input>
                 </div>
                 <div className="d-flex justify-content-between gap-3">
                   <input

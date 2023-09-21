@@ -1,0 +1,27 @@
+.categoryPageWrapper {
+  background-color: white;
+  width: 100vw;
+}
+
+.categoryWrapper {
+  background-color: white;
+  padding-top: 44px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.categoryTitleWrapper {
+  font-size: 2em;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
+
+}
+
+.categoryTitleWrapper p {
+  color: rgb(104, 117, 101);
+  background-color: rgb(191, 220, 187);
+  border-radius: 30px;
+  padding: 10px 40px;
+}

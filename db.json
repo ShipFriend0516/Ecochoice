@@ -1,0 +1,168 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "imagePath": "https://mblogthumb-phinf.pstatic.net/MjAyMDA1MDdfODAg/MDAxNTg4ODE2OTY0MDM0.fravYuidqFzcmw8VPZKGf4DfDz6X5IqMGBruhwGs454g.ziPkf9sqvNospaXFxnazj8ItHf9JEjfMKdjMoJYnf3Ig.JPEG.nong-up/GettyImages-jv10991964.jpg?type=w800",
+      "name": "친환경 유기농 채소",
+      "description": "신선한 유기농 채소로 건강한 식사를 즐겨보세요.",
+      "price": 5000,
+      "brand": "GreenHarvest",
+      "categoryID": 7, 
+      "count": 50
+    },
+    {
+      "id": 2,
+      "imagePath": "https://image.istarbucks.co.kr/upload/store/skuimg/2021/08/[11123351]_20210803101044084.jpg",
+      "name": "재활용 친환경 텀블러",
+      "description": "플라스틱 사용을 줄이는 환경 친화적인 텀블러입니다.",
+      "price": 15000,
+      "brand": "EcoWare",
+      "categoryID": 5, 
+      "count": 30
+    },
+    {
+      "id": 3,
+      "imagePath": "https://cdn.imweb.me/thumbnail/20220322/b09baa2ace3b5.jpg",
+      "name": "유기농 아기용 솝",
+      "description": "아기의 민감한 피부를 위한 순한 유기농 아기용 솝입니다.",
+      "price": 8000,
+      "brand": "BabyPure",
+      "categoryID": 6,
+      "count": 40
+    },
+    {
+      "id": 4,
+      "imagePath": "https://cdn.imweb.me/thumbnail/20230413/3557dfe9109e7.jpg",
+      "name": "친환경 리사이클링 가방",
+      "description": "지속 가능한 리사이클링 소재로 만든 환경을 생각한 가방입니다.",
+      "price": 20000,
+      "brand": "GreenBag",
+      "categoryID": 4,
+      "count": 20
+    },
+    {
+      "id": 5,
+      "imagePath": "https://vittz.co.kr/shopimages/vittz/093001000008.jpg?1667522023",
+      "name": "에너지 효율적 LED 전구",
+      "description": "저전력 소비의 LED 전구로 에너지를 절약하세요.",
+      "price": 10000,
+      "brand": "EcoLight",
+      "categoryID": 9, 
+      "count": 60
+    },
+    {
+      "id": 6,
+      "imagePath": "https://cdn.ownerclan.com/SCLj1fH57fu5IW9CA1yGUsMA7ihwtr4iMpXQrfgqnHc/marketize/640/as/v1.jpg",
+      "name": "친환경 캠핑용 소형 가스렌지",
+      "description": "소형이지만 강력한 성능의 친환경 캠핑용 가스렌지입니다.",
+      "price": 25000,
+      "brand": "EcoCamp",
+      "categoryID": 10, 
+      "count": 15
+    },
+    {
+      "id": 7,
+      "imagePath": "https://image.kyobobook.co.kr/newimages/giftshop_new/goods/400/1809/hot1668048396053.png",
+      "name": "재활용 사무용 노트북 스탠드",
+      "description": "재활용된 재료로 만든 친환경 사무용 노트북 스탠드입니다.",
+      "price": 18000,
+      "brand": "GreenOffice",
+      "categoryID": 11, 
+      "count": 25
+    },
+    {
+      "id": 8,
+      "imagePath": "https://contents.sixshop.com/thumbnails/uploadedFiles/20883/product/image_1580096408592_750.jpeg",
+      "name": "환경 친화적 장식용 화분",
+      "description": "친환경 소재로 만든 아름다운 화분입니다.",
+      "price": 12000,
+      "brand": "GreenDecor",
+      "categoryID": 12, 
+      "count": 10
+    },
+    {
+      "id": 9,
+      "imagePath": "https://www.williams-sonoma.co.kr/upload/goods/U11207327672/U11207327672_01_1_1000.jpg",
+      "name": "친환경 여행용 물병",
+      "description": "여행 중에도 환경을 생각하며 물을 마실 수 있는 물병입니다.",
+      "price": 6000,
+      "brand": "EcoTravel",
+      "categoryID": 5,
+      "count": 45
+    },
+    {
+      "id": 10,
+      "imagePath": "https://gametouchmall.com/web/product/tiny/202207/e5daf237d5abed5c4a2e41bd699e1a61.jpg",
+      "name": "플레이스테이션 5",
+      "description": "노래방 너무 가고 싶다.",
+      "price": 655600,
+      "brand": "Sony",
+      "categoryID": 1,
+      "count": 3
+    }
+  ],
+  "users": [
+    {
+      "UID": 1,
+      "username": "orbita",
+      "email": "orbita@example.com",
+      "pw": "1234"
+    },
+    {
+      "UID": 2,
+      "username": "user2",
+      "email": "user2@example.com",
+      "pw": "1234"
+    }
+  ],
+  "categories": [
+    {
+      "categoryID": 1,
+      "categoryName": "BEST"
+    },
+    {
+      "categoryID": 2,
+      "categoryName": "NEW"
+    },
+    {
+      "categoryID": 3,
+      "categoryName": "오늘의할인"
+    },
+    {
+      "categoryID": 4,
+      "categoryName": "의류 및 패션"
+    },
+    {
+      "categoryID": 5,
+      "categoryName": "생활용품"
+    },
+    {
+      "categoryID": 6,
+      "categoryName": "건강 및 뷰티"
+    },
+    {
+      "categoryID": 7,
+      "categoryName": "식품"
+    },
+    {
+      "categoryID": 8,
+      "categoryName": "재활용 제품"
+    },
+    {
+      "categoryID": 9,
+      "categoryName": "에너지 절약용품"
+    },
+    {
+      "categoryID": 10,
+      "categoryName": "캠핑용품"
+    },
+    {
+      "categoryID": 11,
+      "categoryName": "사무용품"
+    },
+    {
+      "categoryID": 12,
+      "categoryName": "장식"
+    }
+  ]
+}

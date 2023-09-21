@@ -7,7 +7,7 @@ const MyPage = () => {
     <div>
       <Header isFixed={true} />
       <div
-        className={`d-flex flex-column justify-content-center align-items-center vh-100 ${styles.myPage}`}
+        className={`d-flex flex-column justify-content-center align-items-center h-100 ${styles.myPage}`}
       >
         <div className="fs-2 bold">마이페이지</div>
         <div className={styles.top_info}>

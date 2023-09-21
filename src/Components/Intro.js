@@ -1,4 +1,5 @@
 import logoWide from "../Images/logo-wide.jpg";
+import ecoImg1 from "../Images/ecoImg1.jpg";
 const Intro = () => {
   return (
     <div className="intro">
@@ -10,9 +11,9 @@ const Intro = () => {
       </p>
       <div className="introPicWrap">
         <img src={logoWide} alt="img" />
+        <img src={ecoImg1} alt="img" />
         <img src={logoWide} alt="img" />
-        <img src={logoWide} alt="img" />
-        <img src={logoWide} alt="img" />
+        <img src={ecoImg1} alt="img" />
       </div>
     </div>
   );
