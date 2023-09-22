@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import logoTitle from "../Images/logoTitle.png";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
@@ -44,6 +43,18 @@ const Header = ({ isFixed }) => {
 
   const percent = (n, tN) => {
     return ((n / tN) * 100).toFixed(2);
+  };
+  // 검색 기능
+  const [searchText, setSearchText] = useState("");
+  const onSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/search/${searchText}`);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onSubmit(e);
+    }
   };
 
   return (
@@ -93,8 +104,12 @@ const Header = ({ isFixed }) => {
             <Link to={"/category/12"}>장식</Link>
           </li>
           <li>
-            <input type="search"></input>
-            <AiOutlineSearch />
+            <input
+              type="search"
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={handleKeyDown}
+            ></input>
+            <AiOutlineSearch onClick={onSubmit} />
           </li>
           <li>
             <Link to={"/mypage"}>마이페이지</Link>

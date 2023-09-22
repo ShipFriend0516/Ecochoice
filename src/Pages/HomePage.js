@@ -104,17 +104,21 @@ const Home = () => {
           <MoreBtn categoryID={1} />
           <SubTitle title={"신상품 🌱"} summary={"가장 최신의 제품을 만나보세요."} />
           <div className="ItemList">
-            {products.map((product) => {
-              return (
-                <ItemCard
-                  key={product.id}
-                  id={product.id}
-                  img={product.imagePath}
-                  name={product.name}
-                  brand={product.brand}
-                  price={product.price}
-                />
-              );
+            {products.map((product, index) => {
+              if (index < 10) {
+                return (
+                  <ItemCard
+                    key={product.id}
+                    id={product.id}
+                    img={product.imagePath}
+                    name={product.name}
+                    brand={product.brand}
+                    price={product.price}
+                  />
+                );
+              } else {
+                return;
+              }
             })}
           </div>
           <MoreBtn categoryID={2} />

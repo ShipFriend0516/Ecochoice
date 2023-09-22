@@ -99,6 +99,56 @@
       "brand": "Sony",
       "categoryID": 1,
       "count": 3
+    },
+    {
+      "id": 11,
+      "imagePath": "https://m.karymarket.com/web/product/big/202212/13f37f03416216b2a35e3eb69ca176a1.jpg",
+      "name": "친환경 식기 세트",
+      "description": "플라스틱 대신 사용할 수 있는 환경 친화적인 식기 세트입니다.",
+      "price": 15000,
+      "brand": "EcoWare",
+      "categoryID": 5,
+      "count": 20
+    },
+    {
+      "id": 12,
+      "imagePath": "https://image.made-in-china.com/202f0j00wlEVhCNznZUP/New-Items-100-Recyclable-Cutlery-Set-Water-Based-Coating-Paper-Cutlery.webp",
+      "name": "재활용 종이 수저",
+      "description": "일회용 플라스틱 수저 대신 사용할 수 있는 환경 친화적인 종이 수저입니다.",
+      "price": 18000,
+      "brand": "GreenLife",
+      "categoryID": 5,
+      "count": 15
+    },
+    {
+      "id": 13,
+      "imagePath": "https://m.focusis.co.kr/web/product/medium/201710/2905_shop1_401901.jpg",
+      "name": "친환경 천연 세제",
+      "description": "화학 성분을 포함하지 않은 환경 친화적인 천연 세제입니다.",
+      "price": 12000,
+      "brand": "EcoFriendly",
+      "categoryID": 5,
+      "count": 25
+    },
+    {
+      "id": 14,
+      "imagePath": "https://www.collective.kr/wp-content/uploads/2021/04/4-paper_tube_yankodesign.jpg",
+      "name": "지속가능한 화장품",
+      "description": "환경에 더 나은 영향을 미치는 지속 가능한 화장품입니다.",
+      "price": 16000,
+      "brand": "EcoChoice",
+      "categoryID": 5,
+      "count": 18
+    },
+    {
+      "id": 15,
+      "imagePath": "https://res.heraldm.com/content/image/2014/05/14/20140514000122_0.jpg",
+      "name": "친환경 가구 소재",
+      "description": "자연 친화적인 재료로 만든 환경 친화적인 가구 소재입니다.",
+      "price": 13500,
+      "brand": "GreenLiving",
+      "categoryID": 5,
+      "count": 22
     }
   ],
   "users": [
@@ -163,6 +213,56 @@
     {
       "categoryID": 12,
       "categoryName": "장식"
-    }
+    },
+    {
+    "id": 1,
+    "imagePath": "https://example.com/product1.jpg",
+    "name": "친환경 식기 세트",
+    "description": "플라스틱 대신 사용할 수 있는 환경 친화적인 식기 세트입니다.",
+    "price": 15000,
+    "brand": "EcoWare",
+    "categoryID": 5,
+    "count": 20
+  },
+  {
+    "id": 2,
+    "imagePath": "https://example.com/product2.jpg",
+    "name": "재활용 종이 수저",
+    "description": "일회용 플라스틱 수저 대신 사용할 수 있는 환경 친화적인 종이 수저입니다.",
+    "price": 18000,
+    "brand": "GreenLife",
+    "categoryID": 5,
+    "count": 15
+  },
+  {
+    "id": 3,
+    "imagePath": "https://example.com/product3.jpg",
+    "name": "친환경 천연 세제",
+    "description": "화학 성분을 포함하지 않은 환경 친화적인 천연 세제입니다.",
+    "price": 12000,
+    "brand": "EcoFriendly",
+    "categoryID": 5,
+    "count": 25
+  },
+  {
+    "id": 4,
+    "imagePath": "https://example.com/product4.jpg",
+    "name": "지속가능한 화장품",
+    "description": "환경에 더 나은 영향을 미치는 지속 가능한 화장품입니다.",
+    "price": 16000,
+    "brand": "EcoChoice",
+    "categoryID": 5,
+    "count": 18
+  },
+  {
+    "id": 5,
+    "imagePath": "https://example.com/product5.jpg",
+    "name": "친환경 가구 소재",
+    "description": "자연 친화적인 재료로 만든 환경 친화적인 가구 소재입니다.",
+    "price": 13500,
+    "brand": "GreenLiving",
+    "categoryID": 5,
+    "count": 22
+  }
   ]
 }
