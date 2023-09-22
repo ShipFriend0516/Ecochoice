@@ -1,9 +1,14 @@
 .categoryPageWrapper {
   background-color: white;
   width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .categoryWrapper {
+  min-height: 60vh;
   background-color: white;
   padding-top: 44px;
   max-width: 1400px;

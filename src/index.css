@@ -23,6 +23,7 @@
 
 body {
   min-height: 100vh;
+  overflow-x: hidden;
   margin: 0;
   font-family: 'SUITE-Regular', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -69,6 +70,7 @@ body li:hover {
 
 nav.navbar {
   display: flex;
+  flex-wrap: nowrap;
   color: white;
   font-size: 0.75em;
   background-color: transparent;
@@ -90,6 +92,10 @@ nav.navbar ul {
 
 nav.navbar ul li {
   display: inline-block;
+  padding: 8px 0px;
+}
+
+nav.navbar ul li a {
   padding: 8px 8px;
 }
 
@@ -126,7 +132,8 @@ nav.navbar li > input[type="search"] {
   color: white;
   line-height: 1.2em;
   font-size: 0.95em;
-
+  padding: 0 8px;
+  width: 50px
 }
 
 nav.fixed li > input[type="search"]{
@@ -134,9 +141,9 @@ nav.fixed li > input[type="search"]{
   color: black;
 }
 
-nav.navbar li > input[type="search"]:focus {
+nav.navbar li > input[type="search"]:focus{
   outline: none;
-
+  z-index: 5;
 }
 
 
@@ -324,6 +331,7 @@ div.scrollSpy span {
   padding: 16px 14px;
   color: black;
   font-size: .8em;
+  text-wrap: nowrap;
 }
 
 
@@ -331,7 +339,7 @@ div.scrollSpy span {
 
 @media (max-width: 1024px){
   .ItemList {
-    grid-template-columns: repeat(4, 1fr); /* 5열 */
+    grid-template-columns: repeat(4, 1fr); /* 4열 */
   }
 }
 

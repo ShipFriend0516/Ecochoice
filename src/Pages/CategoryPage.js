@@ -96,10 +96,10 @@ const CategoryPage = () => {
                 <div className="d-flex w-100 justify-content-center">상품이 없습니다. 😢</div>
               )}
             </div>
-            <Footer />
           </>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

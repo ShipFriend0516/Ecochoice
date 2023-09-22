@@ -12,21 +12,21 @@ const Footer = () => {
           </div>
           <div>
             <span className="bold">Customer Center</span>
-            <p>빠르고 친절한 상담띠</p>
+            <p>빠르고 친절한 상담으로 안내드리겠습니다.</p>
           </div>
         </div>
         <div className="footer-block">
           <div>
             <span className="bold">Notice</span>
             <p>-2023년 추석연휴 배송지연 공지</p>
-            <p>-2023년 추석연휴 배송지연 공지</p>
-            <p>-2023년 추석연휴 배송지연 공지</p>
+            <p>-2024년 추석연휴 배송지연 공지</p>
+            <p>-2025년 추석연휴 배송지연 공지</p>
           </div>
           <div>
             <span className="bold">About EcoChoice</span>
             <p>우리는 아주 좋은 물건들을 판매합니다.</p>
-            <p>우리는 아주 좋은 물건들을 판매합니다.</p>
-            <p>우리는 아주 좋은 물건들을 판매합니다.</p>
+            <p>환경을 생각하는 마음으로 운영하겠습니다.</p>
+            <p>에코 초이스를 선택해주셔서 감사합니다.</p>
           </div>
           <div>
             <p className="copyright">Copyright (c) EcoChoice. All Rights Reserved.</p>
