@@ -5,31 +5,11 @@ import SubTitle from "../Components/SubTitle";
 import Intro from "../Components/Intro";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { GrPrevious, GrNext } from "react-icons/gr";
 import MoreBtn from "../Components/MoreBtn";
 import logo from "../Images/logo.jpg";
-import cover1 from "../Images/cover1.jpg";
-import cover2 from "../Images/cover2.jpg";
+import Slider from "../Components/Slider";
 
 const Home = () => {
-  const [currentSlide, setCurrentSlide] = useState(1);
-  const [translateForce, setTranslateForce] = useState(0);
-
-  const onClickNext = () => {
-    if (currentSlide === imgURL.length) {
-      return;
-    } else {
-      setCurrentSlide((prev) => prev + 1);
-    }
-  };
-  const onClickPrev = () => {
-    if (currentSlide === 0) {
-      return;
-    } else {
-      setCurrentSlide((prev) => prev - 1);
-    }
-  };
-
   const getProducts = async () => {
     try {
       const response = await axios.get("http://localhost:3001/products");
@@ -41,38 +21,15 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setTranslateForce((-(currentSlide - 1) * 100) / imgURL.length);
-  }, [currentSlide]);
-
-  useEffect(() => {
     getProducts();
   }, []);
 
   const [products, setProducts] = useState([]);
 
-  let imgURL = [
-    "https://atimg.sonyunara.com/files/attrangs/new_banner/1694426684_0.jpg",
-    cover1,
-    cover2,
-  ];
-
   return (
     <div>
       <Header />
-
-      <div className="sliderWrapper header-img">
-        <button className="prev" onClick={onClickPrev}>
-          <GrPrevious />
-        </button>
-        <button className="next" onClick={onClickNext}>
-          <GrNext />
-        </button>
-        <div className="imgWrapper" style={{ transform: `translateX(${translateForce}%)` }}>
-          {imgURL.map((imageUrl, index) => (
-            <img src={imageUrl} alt={`cover-${index}`} key={index} />
-          ))}
-        </div>
-      </div>
+      <Slider />
       <div className="bg">
         <div className="mainWrap">
           <Intro />
@@ -122,7 +79,6 @@ const Home = () => {
             })}
           </div>
           <MoreBtn categoryID={2} />
-
           <Footer />
         </div>
       </div>

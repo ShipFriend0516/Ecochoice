@@ -1,0 +1,46 @@
+.header_img {
+  position:relative;
+}
+
+.sliderWrapper button {
+  position: absolute;
+  border: 0;
+  background-color: transparent;
+  font-size: 1.5em;
+  transform: translateY(-50%);
+  z-index: 2;
+  padding: 10px;
+  display: flex;
+  background-color: rgb(255, 255, 255,0.5);
+  border-radius: 20px;
+}
+
+.prev {
+  left: 50px;
+  top: 50%;
+}
+
+.next {
+  right: 50px;
+  top: 50%;
+}
+
+
+.sliderWrapper {
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.sliderWrapper > .imgWrapper {
+  display: flex;
+  flex-direction: row;
+  transition: 1.5s ease-in-out;
+}
+
+.imgWrapper img {
+  display: inline-block;
+  width: 100vw;
+  aspect-ratio: 1930/750;
+}
