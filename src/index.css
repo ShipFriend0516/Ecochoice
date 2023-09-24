@@ -119,6 +119,7 @@ nav.navbar span {
 nav.fixed {
   position: fixed;
   top: 0;
+  /* background-color: #cae9c5; */
   background-color: #F6F4EE;
   color: #A29388;
   opacity: .9;

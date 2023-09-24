@@ -1,15 +1,31 @@
+.detailPageWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.itemDetailWrapper {
+  padding: 10px 40px;
+
+}
+
 .detailWrapper {
   padding-top: 80px;
   width: 100vw;
   background-color: white;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 .detailTop {
-  border: 1px solid beige;
-  border-radius: 20px;
+  /* border-radius: 20px; */
+  border: 1px solid black;
   padding: 20px;
+  margin: 0 80px;
+  justify-content: center;
 }
 
 .imgWrapper {
@@ -34,7 +50,7 @@
 .buttonsWrapper {
   display: flex;
   gap: 20px;
-  
+  justify-content: end;
 }
 
 .reviews {
@@ -42,7 +58,16 @@
   padding: 10px 40px;
 }
 
-.reviews > div:first-child {
+.reviews > .reviewTitle {
   font-size: 30px;
   
+}
+
+.detailBottom {
+  /* border-radius: 20px; */
+  /* border: 1px solid black; */
+  background-color: rgb(233, 225, 214);
+  padding: 20px;
+  margin: 0 40px;
+  justify-content: center;
 }

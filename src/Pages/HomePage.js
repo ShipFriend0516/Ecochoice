@@ -15,6 +15,7 @@ const Home = () => {
       const response = await axios.get("http://localhost:3001/products");
       const json = await response.data;
       setProducts(json);
+      setLoading(false);
     } catch (err) {
       console.log(err.message);
     }
@@ -24,7 +25,27 @@ const Home = () => {
     getProducts();
   }, []);
 
+  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+
+  const renderItemList = () => {
+    return products.map((product, index) => {
+      if (index < 10) {
+        return (
+          <ItemCard
+            key={product.id}
+            id={product.id}
+            img={product.imagePath}
+            name={product.name}
+            brand={product.brand}
+            price={product.price}
+          />
+        );
+      } else {
+        return;
+      }
+    });
+  };
 
   return (
     <div>
@@ -60,24 +81,7 @@ const Home = () => {
           </div>
           <MoreBtn categoryID={1} />
           <SubTitle title={"신상품 🌱"} summary={"가장 최신의 제품을 만나보세요."} />
-          <div className="ItemList">
-            {products.map((product, index) => {
-              if (index < 10) {
-                return (
-                  <ItemCard
-                    key={product.id}
-                    id={product.id}
-                    img={product.imagePath}
-                    name={product.name}
-                    brand={product.brand}
-                    price={product.price}
-                  />
-                );
-              } else {
-                return;
-              }
-            })}
-          </div>
+          <div className="ItemList">{loading ? "loading..." : renderItemList()}</div>
           <MoreBtn categoryID={2} />
           <Footer />
         </div>

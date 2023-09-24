@@ -5,7 +5,6 @@
 .sliderWrapper button {
   position: absolute;
   border: 0;
-  background-color: transparent;
   font-size: 1.5em;
   transform: translateY(-50%);
   z-index: 2;
@@ -13,6 +12,10 @@
   display: flex;
   background-color: rgb(255, 255, 255,0.5);
   border-radius: 20px;
+}
+
+.sliderWrapper button:hover {
+  background-color: rgb(255, 255, 255,0.8);
 }
 
 .prev {
