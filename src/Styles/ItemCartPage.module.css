@@ -1,0 +1,26 @@
+.ItemCartPageWrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: rgb(228, 223, 223);
+}
+
+.ItemCartWrapper {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ItemCartTitle {
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+.ItemCart {
+  width: 70%;
+  height: 600px;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+}
