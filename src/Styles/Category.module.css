@@ -3,24 +3,31 @@
   width: 100vw;
   min-height: 100vh;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .categoryWrapper {
-  min-height: 60vh;
   background-color: white;
   padding-top: 44px;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 40px;
 }
 
+.categoryDetailWrapper {
+  width: 90%;
+  margin: 0 auto;
+  /* justify-content: center; */
+
+}
 .categoryTitleWrapper {
   font-size: 2em;
   font-weight: bold;
   display: flex;
   justify-content: center;
-  padding: 60px 0;
+  padding-top: 60px;
+  padding-bottom: 40px;
 
 }
 

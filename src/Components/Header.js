@@ -114,8 +114,12 @@ const Header = ({ isFixed }) => {
           <li>
             <Link to={"/mypage"}>마이페이지</Link>
           </li>
-          <li>장바구니</li>
-          <li onClick={loginOnClick}>로그인</li>
+          <li>
+            <Link to={"/cart"}>장바구니</Link>
+          </li>
+          <li id="login" onClick={loginOnClick}>
+            로그인
+          </li>
         </ul>
       </nav>
       <LoginModal loginOnClick={loginOnClick} isOpen={isVisible} />

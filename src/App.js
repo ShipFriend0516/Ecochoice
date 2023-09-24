@@ -6,6 +6,7 @@ import ItemDetailPage from "./Pages/ItemDetailPage";
 import CategoryPage from "./Pages/CategoryPage";
 import ErrorPage from "./Pages/ErrorPage";
 import SearchPage from "./Pages/SearchPage";
+import ItemCartPage from "./Pages/ItemCartPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         ></Route>
         <Route key={"/error"} path={"/error"} element={<ErrorPage />}></Route>
         <Route key={"/search"} path={"/search/:searchText"} element={<SearchPage />}></Route>
+        <Route key={"/cart"} path={"/cart"} element={<ItemCartPage />}></Route>
       </Routes>
     </Router>
   );

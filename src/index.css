@@ -11,7 +11,7 @@
     --season_color_09: #CFC6BC;
     --season_color_10: #A29388;
     --season_color_11: #9e7470;
-    /* --inner_width: 1416px; */
+    /* --inner_width: 1416px; */ 
 }
 
 @font-face {
@@ -99,6 +99,10 @@ nav.navbar ul li a {
   padding: 8px 8px;
 }
 
+nav.navbar ul li#login {
+  padding: 8px 8px;
+}
+
 nav.navbar ul li:hover {
   color: black;
   background-color: rgb(255, 255, 255,.5);
@@ -107,7 +111,6 @@ nav.navbar ul li:hover {
 
 nav.navbar span {
   display: flex;
-  padding-right: 10px;
   align-items: center;
   font-weight: bold;
   font-size: 1.2em;
@@ -251,6 +254,10 @@ div.scrollSpy span {
   grid-template-rows: auto;
 }
 
+.noItem {
+  width: calc(100% - 6px);
+}
+
 .moreBtnWrap {
   width: 100%;
   display: flex;
@@ -280,7 +287,7 @@ div.scrollSpy span {
 /* Footer Styles */
 
 #footer {
-  padding-top: 100px !important;
+  padding-top: 60px !important;
   background-color: white;
 }
 

@@ -1,11 +1,9 @@
 .detailWrapper {
-  margin-top: 40px;
-  padding-top: 50px;
+  padding-top: 80px;
   width: 100vw;
   background-color: white;
   display: flex;
   justify-content: center;
-  padding: 50px;
 }
 
 .detailTop {

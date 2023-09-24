@@ -57,7 +57,7 @@ const CategoryPage = () => {
         {loading ? (
           <div className="d-flex vh-100 flex-column align-items-center fs-1">Loading...</div>
         ) : (
-          <>
+          <div className={styles.categoryDetailWrapper}>
             <div className={styles.categoryTitleWrapper}>
               <p>{categoryName}</p>
             </div>
@@ -93,10 +93,12 @@ const CategoryPage = () => {
                   );
                 })
               ) : (
-                <div className="d-flex w-100 justify-content-center">상품이 없습니다. 😢</div>
+                <div className="noItem text-nowrap d-flex justify-content-center">
+                  상품이 없습니다. 😢
+                </div>
               )}
             </div>
-          </>
+          </div>
         )}
       </div>
       <Footer />
