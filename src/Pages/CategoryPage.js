@@ -13,15 +13,23 @@ const CategoryPage = () => {
 
   const { categoryID } = useParams();
   const navigate = useNavigate();
+
   const getProducts = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/products/`, {
-        params: { categoryID: categoryID },
-      });
-
-      const json = await response.data;
-      setProducts(json);
-      console.log(json);
+      if (categoryID === "2") {
+        // NEW 카테고리
+        const response = await axios.get(`http://localhost:3001/products/`);
+        const json = await response.data;
+        json.reverse();
+        setProducts(json.slice(0, 20));
+      } else {
+        const response = await axios.get(`http://localhost:3001/products/`, {
+          params: { categoryID: categoryID },
+        });
+        const json = await response.data;
+        setProducts(json);
+        console.log(json);
+      }
     } catch (error) {
       console.error(error);
       console.error("카테고리별 제품 가져오기 실패");

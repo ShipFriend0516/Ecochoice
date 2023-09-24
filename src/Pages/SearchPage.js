@@ -72,7 +72,6 @@ const SearchPage = () => {
               검색
             </button>
           </div>
-
           <div className={styles.searchResult}>
             <div className={`pt-3`}>
               <p>
