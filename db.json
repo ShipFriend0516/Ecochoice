@@ -154,15 +154,11 @@
   "users": [
     {
       "UID": 1,
-      "username": "orbita",
-      "email": "orbita@example.com",
-      "pw": "1234"
-    },
-    {
-      "UID": 2,
-      "username": "user2",
-      "email": "user2@example.com",
-      "pw": "1234"
+      "id": "orbita@example.com",
+      "pw": "1234",
+      "nickName": "오르비타",
+      "membership": "bronze",
+      "profileImage": "https://i.gifer.com/5K4w.gif"
     }
   ],
   "categories": [

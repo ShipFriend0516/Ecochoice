@@ -22,10 +22,11 @@
 
 .detailTop {
   /* border-radius: 20px; */
-  border: 1px solid black;
+  border: 1px solid rgb(170, 169, 169);
   padding: 20px;
   margin: 0 80px;
-  justify-content: center;
+  justify-content: space-around;
+  /* gap: 60px; */
 }
 
 .imgWrapper {
@@ -47,10 +48,61 @@
   justify-content: space-between;
 }
 
+.itemInfoWrapper .productTitle {
+  margin-bottom: 4px;
+  font-size: 40px;
+}
+
+.itemInfoWrapper .productPrice {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
 .buttonsWrapper {
   display: flex;
-  gap: 20px;
-  justify-content: end;
+  gap: 5px;
+  justify-content: start;
+  border-top: 1px solid gray;
+  padding-top: 20px;
+}
+
+.buttonsWrapper button:first-child {
+  flex-grow: 1;
+}
+
+@keyframes heartClickAnimation {
+  0% {
+    transform: scale(1);
+
+  }
+
+  30% {
+    transform: scale(1.6);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heart {
+  animation-name: heartClickAnimation;
+  animation-duration: .5s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+}
+
+.buttonsWrapper button {
+  flex-grow: 300;
+  padding: 10px 20px;
+  border: .5px solid rgb(205, 205, 205);
+  background-color: #F7F3EB
+  
+}
+
+.buttonsWrapper button:last-child {
+  color: white;
+  background-color: #9e7470;
 }
 
 .reviews {
@@ -67,7 +119,9 @@
   /* border-radius: 20px; */
   /* border: 1px solid black; */
   background-color: rgb(233, 225, 214);
-  padding: 20px;
+  padding: 40px;
   margin: 0 40px;
   justify-content: center;
 }
+
+

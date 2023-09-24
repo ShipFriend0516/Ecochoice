@@ -1,14 +1,17 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "../Styles/ItemDetailPage.module.css";
-import { AiOutlineHeart } from "react-icons/ai";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { IconContext } from "react-icons";
 import Header from "../Components/Header";
 import { useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
+import Review from "../Components/Review";
 
 const ItemDetailPage = ({ imgPath }) => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isLiked, setIsLiked] = useState(false);
   const { id } = useParams();
   const getProduct = async () => {
     const response = await axios.get(`http://localhost:3001/products/${id}`);
@@ -22,6 +25,22 @@ const ItemDetailPage = ({ imgPath }) => {
   useEffect(() => {
     getProduct();
   }, []);
+
+  let dummyUser = {
+    UID: 1,
+    id: "orbita@example.com",
+    pw: "1234",
+    nickName: "오르비타",
+    membership: "bronze",
+    profileImage: "https://i.gifer.com/5K4w.gif",
+  };
+
+  const onCartClick = () => {
+    // 장바구니 버튼 클릭시
+  };
+  const onBuyClick = () => {
+    // 구매하기 버튼 클릭시
+  };
 
   return (
     <div className={styles.detailPageWrapper}>
@@ -46,16 +65,25 @@ const ItemDetailPage = ({ imgPath }) => {
                 <div className={`${styles.itemInfoWrapper} d-flex flex-column`}>
                   <div className="d-flex flex-column">
                     <small>상품번호 : {product.id}</small>
-                    <span className="fs-2">{product.name}</span>
-                    <span>가격 : {product.price.toLocaleString()}원</span>
+                    <span className={`${styles.productTitle}`}>{product.name}</span>
+                    <span className={`${styles.productPrice}`}>
+                      가격 : {product.price.toLocaleString()}원
+                    </span>
                     <p>{product.description}</p>
                   </div>
+
                   <div className={styles.buttonsWrapper}>
-                    <button className="btn btn-outline-dark">
-                      <AiOutlineHeart />
+                    <button onClick={() => setIsLiked((prev) => !prev)}>
+                      <IconContext.Provider value={{ color: "#9e7470", size: "1.5em" }}>
+                        {isLiked ? (
+                          <FaHeart className={isLiked && `${styles.heart}`} />
+                        ) : (
+                          <FaRegHeart />
+                        )}
+                      </IconContext.Provider>
                     </button>
-                    <button className="btn btn-outline-dark">장바구니</button>
-                    <button className="btn btn-outline-dark">구매하기</button>
+                    <button>장바구니</button>
+                    <button>구매하기</button>
                   </div>
                 </div>
               </div>
@@ -65,12 +93,14 @@ const ItemDetailPage = ({ imgPath }) => {
                     <span className="fs-2">{product.name}</span>
                     <span>가격 : {product.price.toLocaleString()}원</span>
                     <p>{product.description}</p>
+                    <img src={product.imagePath} />
                   </div>
                 </div>
                 <div className={styles.reviews}>
                   <hr />
                   <div className={styles.reviewTitle}>리뷰</div>
                   <div>리뷰가 없습니다.</div>
+                  <Review user={dummyUser} rating={4} reviewText={"이거 진짜 좋아요"} />
                 </div>
               </div>
             </div>
