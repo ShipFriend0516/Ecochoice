@@ -28,23 +28,36 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
 
-  const renderItemList = () => {
-    return products.map((product, index) => {
-      if (index < 10) {
-        return (
-          <ItemCard
-            key={product.id}
-            id={product.id}
-            img={product.imagePath}
-            name={product.name}
-            brand={product.brand}
-            price={product.price}
-          />
-        );
-      } else {
-        return;
-      }
-    });
+  const renderItemList = (categoryID) => {
+    if (categoryID === 2) {
+      return products.map((product, index) => {
+        if (index < 10) {
+          return (
+            <ItemCard
+              key={product.id}
+              id={product.id}
+              img={product.imagePath}
+              name={product.name}
+              brand={product.brand}
+              price={product.price}
+            />
+          );
+        } else {
+          return;
+        }
+      });
+    } else {
+      return products.map((product, index) => (
+        <ItemCard
+          key={product.id}
+          id={product.id}
+          img={product.imagePath}
+          name={product.name}
+          brand={product.brand}
+          price={product.price}
+        />
+      ));
+    }
   };
 
   return (
@@ -81,6 +94,9 @@ const Home = () => {
           </div>
           <MoreBtn categoryID={1} />
           <SubTitle title={"신상품 🌱"} summary={"가장 최신의 제품을 만나보세요."} />
+          <div className="ItemList">{loading ? "loading..." : renderItemList(2)}</div>
+          <MoreBtn categoryID={2} />
+          <SubTitle title={"생활용품 💡"} summary={"가장 최신의 제품을 만나보세요."} />
           <div className="ItemList">{loading ? "loading..." : renderItemList()}</div>
           <MoreBtn categoryID={2} />
           <Footer />
