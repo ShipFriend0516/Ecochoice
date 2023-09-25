@@ -15,7 +15,15 @@ const LoginPage = ({ loginOnClick, isOpen }) => {
     e.preventDefault();
     if (isRegistered) {
       try {
-        const response = axios.get(`http://localhost:3001/`);
+        let validateCode = LoginValidate();
+        if (validateCode === true) {
+          console.log("유효성 검사 통과");
+          const response = axios.get(`http://localhost:3001/`);
+        } else {
+          console.log("유효성 검사 실패");
+          setError(validateCode);
+          console.log(validateCode);
+        }
       } catch (e) {
         console.error("로그인 실패:", e);
       }
@@ -34,10 +42,19 @@ const LoginPage = ({ loginOnClick, isOpen }) => {
       }
     }
   };
+  const LoginValidate = () => {
+    // 로그인 유효성 검사 함수
+    // 아이디 8글자 이상
+    if (id.length < 8) {
+      return 101;
+    }
+
+    return true;
+  };
 
   const RegisterValidate = () => {
     // 회원가입 유효성 검사 함수
-    // 비밀번호 규칙 4글자 이상, 아이디 4글자 이상
+    // 아이디 8글자 이상
     if (id.length < 8 && pw !== pwCheck) {
       return 100;
     } else if (id.length < 8) {

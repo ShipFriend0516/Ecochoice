@@ -32,4 +32,6 @@ const Review = ({ user, rating, reviewText }) => {
   );
 };
 
+Review.propTypes = {};
+
 export default Review;

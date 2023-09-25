@@ -260,5 +260,31 @@
     "categoryID": 5,
     "count": 22
   }
+  ],
+  "reviews": [
+    {
+      "productID": 2,
+      "authorID": 1,
+      "summary": "처음 써보는 리뷰",
+      "rating": 4
+    },
+    {
+      "productID": 2,
+      "authorID": 1,
+      "summary": "스타벅스 텀블러 갖고 싶다",
+      "rating": 5
+    },
+    {
+      "productID": 2,
+      "authorID": 1,
+      "summary": "좋아요",
+      "rating": 3
+    },
+    {
+      "productID": 2,
+      "authorID": 1,
+      "summary": "별로에여",
+      "rating": 2
+    }
   ]
 }

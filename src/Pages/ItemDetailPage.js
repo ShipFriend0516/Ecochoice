@@ -7,23 +7,40 @@ import Header from "../Components/Header";
 import { useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
 import Review from "../Components/Review";
+import logo from "../Images/logo.jpg";
 
 const ItemDetailPage = ({ imgPath }) => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [reviewLoading, setReviewLoading] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
+  const [reviews, setReviews] = useState([]);
   const { id } = useParams();
+
   const getProduct = async () => {
     const response = await axios.get(`http://localhost:3001/products/${id}`);
-    console.log(response);
     const result = await response.data;
     setProduct(result);
     setLoading(false);
-    return result;
+  };
+
+  const getReviews = async () => {
+    const response = await axios.get(`http://localhost:3001/reviews`, {
+      params: {
+        productID: id,
+      },
+    });
+    const result = await response.data;
+    setReviews(result);
+    setReviewLoading(false);
   };
 
   useEffect(() => {
     getProduct();
+  }, []);
+
+  useEffect(() => {
+    getReviews();
   }, []);
 
   let dummyUser = {
@@ -31,8 +48,16 @@ const ItemDetailPage = ({ imgPath }) => {
     id: "orbita@example.com",
     pw: "1234",
     nickName: "오르비타",
-    membership: "bronze",
+    membership: "Bronze",
     profileImage: "https://i.gifer.com/5K4w.gif",
+  };
+
+  let anonymousUser = {
+    UID: 2,
+    profileImage:
+      "https://phinf.pstatic.net/contact/20210727_207/1627329785715shmqc_JPEG/image.jpg?type=s160",
+    nickName: "익명",
+    membership: "Bronze",
   };
 
   const onCartClick = () => {
@@ -99,8 +124,23 @@ const ItemDetailPage = ({ imgPath }) => {
                 <div className={styles.reviews}>
                   <hr />
                   <div className={styles.reviewTitle}>리뷰</div>
-                  <div>리뷰가 없습니다.</div>
-                  <Review user={dummyUser} rating={4} reviewText={"이거 진짜 좋아요"} />
+                  {reviewLoading ? (
+                    <div>리뷰가 없습니다.</div>
+                  ) : (
+                    <>
+                      <Review user={dummyUser} rating={4} reviewText={"이거 진짜 좋아요"} />
+                      {reviews.map((review) => {
+                        return (
+                          <Review
+                            key={review.summary}
+                            user={anonymousUser}
+                            rating={review.rating}
+                            reviewText={review.summary}
+                          />
+                        );
+                      })}
+                    </>
+                  )}
                 </div>
               </div>
             </div>
