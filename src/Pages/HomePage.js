@@ -47,16 +47,19 @@ const Home = () => {
         }
       });
     } else {
-      return products.map((product, index) => (
-        <ItemCard
-          key={product.id}
-          id={product.id}
-          img={product.imagePath}
-          name={product.name}
-          brand={product.brand}
-          price={product.price}
-        />
-      ));
+      return products.map(
+        (product, index) =>
+          product.categoryID === categoryID && (
+            <ItemCard
+              key={product.id}
+              id={product.id}
+              img={product.imagePath}
+              name={product.name}
+              brand={product.brand}
+              price={product.price}
+            />
+          )
+      );
     }
   };
 
@@ -97,8 +100,8 @@ const Home = () => {
           <div className="ItemList">{loading ? "loading..." : renderItemList(2)}</div>
           <MoreBtn categoryID={2} />
           <SubTitle title={"생활용품 💡"} summary={"가장 최신의 제품을 만나보세요."} />
-          <div className="ItemList">{loading ? "loading..." : renderItemList()}</div>
-          <MoreBtn categoryID={2} />
+          <div className="ItemList">{loading ? "loading..." : renderItemList(5)}</div>
+          <MoreBtn categoryID={5} />
           <Footer />
         </div>
       </div>

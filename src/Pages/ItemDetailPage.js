@@ -4,7 +4,7 @@ import styles from "../Styles/ItemDetailPage.module.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import Header from "../Components/Header";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
 import Review from "../Components/Review";
 import logo from "../Images/logo.jpg";
@@ -16,12 +16,18 @@ const ItemDetailPage = ({ imgPath }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [reviews, setReviews] = useState([]);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const getProduct = async () => {
-    const response = await axios.get(`http://localhost:3001/products/${id}`);
-    const result = await response.data;
-    setProduct(result);
-    setLoading(false);
+    try {
+      const response = await axios.get(`http://localhost:3001/products/${id}`);
+      const result = await response.data;
+      setProduct(result);
+      setLoading(false);
+    } catch (err) {
+      console.error("상품 세부 정보를 불러오는데 실패했습니다.", err);
+      navigate("/error");
+    }
   };
 
   const getReviews = async () => {
