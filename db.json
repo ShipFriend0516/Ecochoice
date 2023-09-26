@@ -7,7 +7,7 @@
       "description": "신선한 유기농 채소로 건강한 식사를 즐겨보세요.",
       "price": 5000,
       "brand": "GreenHarvest",
-      "categoryID": 7, 
+      "categoryID": 7,
       "count": 50
     },
     {
@@ -17,7 +17,7 @@
       "description": "플라스틱 사용을 줄이는 환경 친화적인 텀블러입니다.",
       "price": 15000,
       "brand": "EcoWare",
-      "categoryID": 5, 
+      "categoryID": 5,
       "count": 30
     },
     {
@@ -47,7 +47,7 @@
       "description": "저전력 소비의 LED 전구로 에너지를 절약하세요.",
       "price": 10000,
       "brand": "EcoLight",
-      "categoryID": 9, 
+      "categoryID": 9,
       "count": 60
     },
     {
@@ -57,7 +57,7 @@
       "description": "소형이지만 강력한 성능의 친환경 캠핑용 가스렌지입니다.",
       "price": 25000,
       "brand": "EcoCamp",
-      "categoryID": 10, 
+      "categoryID": 10,
       "count": 15
     },
     {
@@ -67,7 +67,7 @@
       "description": "재활용된 재료로 만든 친환경 사무용 노트북 스탠드입니다.",
       "price": 18000,
       "brand": "GreenOffice",
-      "categoryID": 11, 
+      "categoryID": 11,
       "count": 25
     },
     {
@@ -77,7 +77,7 @@
       "description": "친환경 소재로 만든 아름다운 화분입니다.",
       "price": 12000,
       "brand": "GreenDecor",
-      "categoryID": 12, 
+      "categoryID": 12,
       "count": 10
     },
     {
@@ -211,80 +211,126 @@
       "categoryName": "장식"
     },
     {
-    "id": 1,
-    "imagePath": "https://example.com/product1.jpg",
-    "name": "친환경 식기 세트",
-    "description": "플라스틱 대신 사용할 수 있는 환경 친화적인 식기 세트입니다.",
-    "price": 15000,
-    "brand": "EcoWare",
-    "categoryID": 5,
-    "count": 20
-  },
-  {
-    "id": 2,
-    "imagePath": "https://example.com/product2.jpg",
-    "name": "재활용 종이 수저",
-    "description": "일회용 플라스틱 수저 대신 사용할 수 있는 환경 친화적인 종이 수저입니다.",
-    "price": 18000,
-    "brand": "GreenLife",
-    "categoryID": 5,
-    "count": 15
-  },
-  {
-    "id": 3,
-    "imagePath": "https://example.com/product3.jpg",
-    "name": "친환경 천연 세제",
-    "description": "화학 성분을 포함하지 않은 환경 친화적인 천연 세제입니다.",
-    "price": 12000,
-    "brand": "EcoFriendly",
-    "categoryID": 5,
-    "count": 25
-  },
-  {
-    "id": 4,
-    "imagePath": "https://example.com/product4.jpg",
-    "name": "지속가능한 화장품",
-    "description": "환경에 더 나은 영향을 미치는 지속 가능한 화장품입니다.",
-    "price": 16000,
-    "brand": "EcoChoice",
-    "categoryID": 5,
-    "count": 18
-  },
-  {
-    "id": 5,
-    "imagePath": "https://example.com/product5.jpg",
-    "name": "친환경 가구 소재",
-    "description": "자연 친화적인 재료로 만든 환경 친화적인 가구 소재입니다.",
-    "price": 13500,
-    "brand": "GreenLiving",
-    "categoryID": 5,
-    "count": 22
-  }
+      "id": 1,
+      "imagePath": "https://example.com/product1.jpg",
+      "name": "친환경 식기 세트",
+      "description": "플라스틱 대신 사용할 수 있는 환경 친화적인 식기 세트입니다.",
+      "price": 15000,
+      "brand": "EcoWare",
+      "categoryID": 5,
+      "count": 20
+    },
+    {
+      "id": 2,
+      "imagePath": "https://example.com/product2.jpg",
+      "name": "재활용 종이 수저",
+      "description": "일회용 플라스틱 수저 대신 사용할 수 있는 환경 친화적인 종이 수저입니다.",
+      "price": 18000,
+      "brand": "GreenLife",
+      "categoryID": 5,
+      "count": 15
+    },
+    {
+      "id": 3,
+      "imagePath": "https://example.com/product3.jpg",
+      "name": "친환경 천연 세제",
+      "description": "화학 성분을 포함하지 않은 환경 친화적인 천연 세제입니다.",
+      "price": 12000,
+      "brand": "EcoFriendly",
+      "categoryID": 5,
+      "count": 25
+    },
+    {
+      "id": 4,
+      "imagePath": "https://example.com/product4.jpg",
+      "name": "지속가능한 화장품",
+      "description": "환경에 더 나은 영향을 미치는 지속 가능한 화장품입니다.",
+      "price": 16000,
+      "brand": "EcoChoice",
+      "categoryID": 5,
+      "count": 18
+    },
+    {
+      "id": 5,
+      "imagePath": "https://example.com/product5.jpg",
+      "name": "친환경 가구 소재",
+      "description": "자연 친화적인 재료로 만든 환경 친화적인 가구 소재입니다.",
+      "price": 13500,
+      "brand": "GreenLiving",
+      "categoryID": 5,
+      "count": 22
+    }
   ],
   "reviews": [
     {
+      "id": 1,
       "productID": 2,
       "authorID": 1,
       "summary": "처음 써보는 리뷰",
       "rating": 4
     },
     {
+      "id": 2,
       "productID": 2,
       "authorID": 1,
       "summary": "스타벅스 텀블러 갖고 싶다",
       "rating": 5
     },
     {
+      "id": 3,
       "productID": 2,
       "authorID": 1,
       "summary": "좋아요",
       "rating": 3
     },
     {
+      "id": 4,
       "productID": 2,
       "authorID": 1,
       "summary": "별로에여",
       "rating": 2
+    },
+    {
+      "productID": 8,
+      "authorID": 1,
+      "summary": "ddddddd",
+      "rating": 4,
+      "id": 5
+    },
+    {
+      "productID": 8,
+      "authorID": 1,
+      "summary": "별로에여;;;",
+      "rating": 1,
+      "id": 6
+    },
+    {
+      "productID": 8,
+      "authorID": 1,
+      "summary": "별로에여;;; ",
+      "rating": 3,
+      "id": 7
+    },
+    {
+      "productID": 8,
+      "authorID": 1,
+      "summary": "별로에여;;; ㅇㅇ",
+      "rating": 5,
+      "id": 8
+    },
+    {
+      "productID": 8,
+      "authorID": 1,
+      "summary": "ㅇㅇㅇㅇㅇㅇㅇ",
+      "rating": 4,
+      "id": 9
+    },
+    {
+      "productID": 8,
+      "authorID": 1,
+      "summary": "얍!!!!!!!!!",
+      "rating": 5,
+      "id": 10
     }
   ]
 }

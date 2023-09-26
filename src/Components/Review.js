@@ -1,8 +1,13 @@
 import styles from "../Styles/Review.module.css";
 import { FaRegStar, FaStar } from "react-icons/fa";
+import { FiMoreHorizontal } from "react-icons/fi";
 import logo from "../Images/logo.jpg";
+import { IconContext } from "react-icons";
+import { useState } from "react";
 
 const Review = ({ user, rating, reviewText }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const ratingRender = (rating = 0) => {
     let stars = [];
     for (let i = 0; i < rating; i++) {
@@ -24,7 +29,23 @@ const Review = ({ user, rating, reviewText }) => {
         <div className={`${styles.membership}`}>멤버십: {user.membership}</div>
       </div>
       <div className={`${styles.rightSide}`}>
-        <div className={`${styles.rating}`}>{ratingRender(rating)}</div>
+        <div className="d-flex justify-content-between">
+          <div className={`${styles.rating}`}>{ratingRender(rating)}</div>
+
+          <div className="dropdown">
+            <span onClick={() => setIsOpen((prev) => !prev)} className={`${styles.more} `}>
+              <IconContext.Provider value={{ size: "1.2em" }}>
+                <FiMoreHorizontal />
+              </IconContext.Provider>
+            </span>
+            {isOpen && (
+              <ul className={styles.dropdownMenu}>
+                <li>수정</li>
+                <li>삭제</li>
+              </ul>
+            )}
+          </div>
+        </div>
         <div className={`${styles.boughtProduct}`}>구매한 제품</div>
         <div className={`${styles.reviewText}`}>{reviewText}</div>
       </div>

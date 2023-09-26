@@ -342,6 +342,10 @@ div.scrollSpy span {
   text-wrap: nowrap;
 }
 
+.arrow {
+  transition: 3s;
+  vertical-align: text-top;
+}
 
 /* Reactive 반응형 Styles */
 

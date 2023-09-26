@@ -125,3 +125,29 @@
 }
 
 
+
+/* Review 작성 */
+.reviewWriteWrapper {
+  
+  padding: 10px;
+}
+
+.reviewWriteWrapper .rating {
+  padding: 5px 15px;
+  margin-bottom: 10px;
+  background-color: rgb(229, 237, 214);
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+
+.reviewWriteWrapper .star {
+  vertical-align: 10%;
+}
+
+.errorMsg {
+  display: inline;
+  color: red;
+  padding: 5px;
+  font-size: .9em;
+  
+} 

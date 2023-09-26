@@ -47,8 +47,8 @@ const Home = () => {
         }
       });
     } else {
-      return products.map(
-        (product, index) =>
+      return products.map((product, index) => {
+        return (
           product.categoryID === categoryID && (
             <ItemCard
               key={product.id}
@@ -59,7 +59,8 @@ const Home = () => {
               price={product.price}
             />
           )
-      );
+        );
+      });
     }
   };
 

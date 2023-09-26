@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "../Styles/ItemDetailPage.module.css";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaRegStar, FaStar } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import Header from "../Components/Header";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,11 +10,17 @@ import Review from "../Components/Review";
 import logo from "../Images/logo.jpg";
 
 const ItemDetailPage = ({ imgPath }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [reviewLoading, setReviewLoading] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
+
   const [reviews, setReviews] = useState([]);
+  const [rating, setRating] = useState(0);
+  const [summary, setSummary] = useState("");
+  const [error, setError] = useState("");
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -71,6 +77,49 @@ const ItemDetailPage = ({ imgPath }) => {
   };
   const onBuyClick = () => {
     // 구매하기 버튼 클릭시
+  };
+
+  const onStarClick = (star) => {
+    setRating(star);
+  };
+
+  const postReview = async () => {
+    try {
+      if (reviewValidate()) {
+        console.log(typeof parseInt(id, 10), dummyUser.UID, summary, rating);
+        const productID = parseFloat(id, 10);
+        axios
+          .post("http://localhost:3001/reviews", {
+            productID,
+            authorID: dummyUser.UID,
+            summary,
+            rating,
+          })
+          .then((response) => {
+            setSummary("");
+            setRating(0);
+            console.log(response);
+            getReviews();
+          })
+          .catch((error) => console.log(error));
+      }
+    } catch (err) {
+      console.error("리뷰 작성 실패!", err);
+    }
+  };
+
+  const reviewValidate = () => {
+    if (summary.length < 5 && rating === 0) {
+      setError("리뷰는 최소 5글자 이상 작성하고, 별점을 선택해주세요.");
+      return false;
+    } else if (summary.length < 5) {
+      setError("리뷰는 최소 5글자 이상 작성해주셔야합니다.");
+      return false;
+    } else if (rating === 0) {
+      setError("별점을 선택해주세요!");
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -130,6 +179,44 @@ const ItemDetailPage = ({ imgPath }) => {
                 <div className={styles.reviews}>
                   <hr />
                   <div className={styles.reviewTitle}>리뷰</div>
+                  <div className={`${styles.reviewWriteWrapper}`}>
+                    <div className={`${styles.rating}`}>
+                      <span className="me-2">별점을 선택해주세요.</span>
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <span
+                          key={star}
+                          onClick={() => onStarClick(star)}
+                          className={`${styles.star}`}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <IconContext.Provider value={{ color: "#9e7470", size: "1.5em" }}>
+                            {star <= rating ? <FaStar /> : <FaRegStar />}
+                          </IconContext.Provider>
+                        </span>
+                      ))}
+                    </div>
+                    <textarea
+                      className={`form-control ${styles.reviewTextArea}`}
+                      placeholder={
+                        isLoggedIn
+                          ? `상품을 구매하셨나요? 리뷰를 작성해보세요!`
+                          : `로그인 후 리뷰 작성하기`
+                      }
+                      onChange={(e) => setSummary(e.target.value)}
+                      value={summary}
+                      maxLength={500}
+                      rows={3}
+                    />
+                    <div className="d-flex justify-content-between">
+                      <span styles="visibility: hidden;" className={styles.errorMsg}>
+                        {error}
+                      </span>
+
+                      <button className="btn btn-success mt-1" onClick={postReview}>
+                        등록
+                      </button>
+                    </div>
+                  </div>
                   {reviewLoading ? (
                     <div>리뷰가 없습니다.</div>
                   ) : (

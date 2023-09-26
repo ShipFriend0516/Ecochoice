@@ -59,3 +59,30 @@
 .rightSide .reviewText {
   padding: 0 5px;
 }
+
+.more {
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  position: absolute;
+  list-style: none;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid gray;
+  box-shadow: 0px 0px 5px gray;
+  left: -20px;
+  padding: 5px 10px;
+  margin: 0;
+  text-wrap: nowrap;
+}
+
+.dropdownMenu li {
+  padding: 2px;
+
+}
+.dropdownMenu li:hover {
+  cursor: pointer;
+  background-color: rgb(216, 215, 215);
+  border-radius: 10px;
+}
