@@ -21,8 +21,8 @@
 }
 
 .detailTop {
-  /* border-radius: 20px; */
-  border: 1px solid rgb(170, 169, 169);
+  border-radius: 10px;
+  border: 1px solid rgb(237, 232, 232);
   padding: 20px;
   margin: 0 80px;
   justify-content: space-around;
@@ -105,20 +105,13 @@
   background-color: #9e7470;
 }
 
-.reviews {
-  background-color: white;
-  padding: 10px 40px;
-}
 
-.reviews > .reviewTitle {
-  font-size: 30px;
-  
-}
 
 .detailBottom {
+  border-radius: 10px;
   /* border-radius: 20px; */
   /* border: 1px solid black; */
-  background-color: rgb(233, 225, 214);
+  background-color: rgb(242, 238, 233);
   padding: 40px;
   margin: 0 40px;
   justify-content: center;
@@ -127,6 +120,16 @@
 
 
 /* Review 작성 */
+.reviews {
+  background-color: white;
+  padding: 10px 40px;
+}
+
+.reviews > .reviewTitle {
+  font-size: 30px;
+  padding: 10px 10px;
+}
+
 .reviewWriteWrapper {
   
   padding: 10px;
@@ -135,7 +138,7 @@
 .reviewWriteWrapper .rating {
   padding: 5px 15px;
   margin-bottom: 10px;
-  background-color: rgb(229, 237, 214);
+  background-color: rgb(200, 223, 203);
   border-radius: 10px;
   font-size: 1.2em;
 }

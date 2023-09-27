@@ -4,7 +4,7 @@ import { AiFillHeart, AiOutlineHeart, AiOutlineShopping } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import logo from "../Images/logo.jpg";
 
-const ItemCard = ({ id, img, price, name, brand }) => {
+const ItemCard = ({ id, img, price, name, brand, reviews = 0 }) => {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
 
@@ -29,7 +29,7 @@ const ItemCard = ({ id, img, price, name, brand }) => {
         <div className={styles.name}>{name}</div>
         <div className={styles.brand}>{brand}</div>
         <div className={styles.cart}>
-          <div className={styles.review}>(리뷰: 0)</div>
+          <div className={styles.review}>(리뷰: {reviews})</div>
           <div>
             <button onClick={onLikeClick}>{isLiked ? <AiFillHeart /> : <AiOutlineHeart />}</button>
             <button>

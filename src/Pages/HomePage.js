@@ -10,6 +10,8 @@ import logo from "../Images/logo.jpg";
 import Slider from "../Components/Slider";
 
 const Home = () => {
+  const [reviews, setReviews] = useState([]);
+  const [reviewLoading, setReviewLoading] = useState(true);
   const getProducts = async () => {
     try {
       const response = await axios.get("http://localhost:3001/products");
@@ -21,8 +23,19 @@ const Home = () => {
     }
   };
 
+  const getReviews = async () => {
+    const response = await axios.get(`http://localhost:3001/reviews`);
+    const result = await response.data;
+    setReviews(result);
+    setReviewLoading(false);
+  };
+
   useEffect(() => {
     getProducts();
+  }, []);
+
+  useEffect(() => {
+    getReviews();
   }, []);
 
   const [loading, setLoading] = useState(true);
@@ -40,6 +53,7 @@ const Home = () => {
               name={product.name}
               brand={product.brand}
               price={product.price}
+              reviews={reviews.filter((review) => review.productID === product.id).length}
             />
           );
         } else {
@@ -57,6 +71,7 @@ const Home = () => {
               name={product.name}
               brand={product.brand}
               price={product.price}
+              reviews={reviews.filter((review) => review.productID === product.id).length}
             />
           )
         );
@@ -98,10 +113,14 @@ const Home = () => {
           </div>
           <MoreBtn categoryID={1} />
           <SubTitle title={"신상품 🌱"} summary={"가장 최신의 제품을 만나보세요."} />
-          <div className="ItemList">{loading ? "loading..." : renderItemList(2)}</div>
+          <div className="ItemList">
+            {loading || reviewLoading ? "loading..." : renderItemList(2)}
+          </div>
           <MoreBtn categoryID={2} />
           <SubTitle title={"생활용품 💡"} summary={"가장 최신의 제품을 만나보세요."} />
-          <div className="ItemList">{loading ? "loading..." : renderItemList(5)}</div>
+          <div className="ItemList">
+            {loading || reviewLoading ? "loading..." : renderItemList(5)}
+          </div>
           <MoreBtn categoryID={5} />
           <Footer />
         </div>
