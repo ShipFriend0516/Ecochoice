@@ -5,7 +5,12 @@ import { useState } from "react";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { IconContext } from "react-icons";
 
-const ErrorPage = () => {
+const ErrorPage = ({ errorCode }) => {
+  const errorMessages = {
+    401: "로그인이 필요한 서비스입니다.",
+    404: "이런..! 페이지가 존재하지 않습니다.",
+    503: "데이터베이스와 연결되지 않았습니다.",
+  };
   const navigate = useNavigate();
   const [isOnMouse, setIsOnMouse] = useState(false);
   return (
@@ -14,7 +19,7 @@ const ErrorPage = () => {
       <div className="errorPageWrapper d-flex flex-column align-items-center">
         <img className="rounded-5 img-thumbnail w-25" src={logo} />
         <p className="fs-1 bold">404Error!</p>
-        <p>데이터베이스 연결에 실패했습니다..</p>
+        <p>{errorMessages[errorCode]}</p>
         <button
           className="btn btn-success w-25"
           onClick={(e) => {

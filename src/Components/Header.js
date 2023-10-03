@@ -48,13 +48,23 @@ const Header = ({ isFixed }) => {
   const [searchText, setSearchText] = useState("");
   const onSubmit = (e) => {
     e.preventDefault();
-    navigate(`/search/${searchText}`);
+    if (searchValidate()) {
+      navigate(`/search/${searchText}`);
+    }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       onSubmit(e);
     }
+  };
+
+  const searchValidate = () => {
+    if (searchText === "") {
+      return false;
+    }
+
+    return true;
   };
 
   return (

@@ -104,9 +104,7 @@ nav.navbar ul li#login {
 }
 
 nav.navbar ul li:hover {
-  color: black;
-  background-color: rgb(255, 255, 255,.5);
-  border-radius: 20px;
+  color: rgb(0, 0, 0);
 }
 
 nav.navbar span {
@@ -126,7 +124,7 @@ nav.fixed {
 }
 
 nav.fixed ul li:hover {
-  color: black;
+  color: rgb(197, 220, 205);
 }
 
 nav.navbar li > input[type="search"] {
