@@ -3,7 +3,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 
-const Header = ({ isFixed }) => {
+const Header = ({ isFixed, modalOpen }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const documentHeight = document.body.scrollHeight - window.innerHeight;
@@ -22,6 +22,13 @@ const Header = ({ isFixed }) => {
   const loginOnClick = () => {
     setIsVisible((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (modalOpen) {
+      console.log("22");
+      loginOnClick();
+    }
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

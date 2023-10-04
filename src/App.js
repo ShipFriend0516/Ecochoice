@@ -21,7 +21,7 @@ function App() {
           path={"/category/:categoryID"}
           element={<CategoryPage />}
         ></Route>
-        <Route key={"/error"} path={"/error"} element={<ErrorPage />}></Route>
+        <Route key={"/error"} path={"/error"} element={<ErrorPage errorCode={404} />}></Route>
         <Route key={"/search"} path={"/search/:searchText"} element={<SearchPage />}></Route>
         <Route key={"/cart"} path={"/cart"} element={<ItemCartPage />}></Route>
         <Route key={"/not"} path={"*"} element={<ErrorPage errorCode={404} />}></Route>

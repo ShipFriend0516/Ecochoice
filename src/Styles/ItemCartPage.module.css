@@ -11,6 +11,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 240px;
+}
+
+.ItemCartWrapper .ItemCartSub {
+  width: 100%;
+  display: flex;
+}
+
+.ItemCartSub p {
+  flex-grow: 1;
+  text-align: right;
 }
 
 .ItemCartTitle {

@@ -1,8 +1,8 @@
 import styles from "../Styles/LoginPage.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-const LoginPage = ({ loginOnClick, isOpen }) => {
+const LoginPage = ({ loginOnClick, isOpen, errMsg = "" }) => {
   const [isRegistered, setIsRegistered] = useState(false);
   const [id, setID] = useState("");
   const [pw, setPW] = useState("");
@@ -11,14 +11,26 @@ const LoginPage = ({ loginOnClick, isOpen }) => {
   const canvasOnClick = () => {
     loginOnClick();
   };
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (isRegistered) {
       try {
         let validateCode = LoginValidate();
         if (validateCode === true) {
           console.log("유효성 검사 통과");
-          const response = axios.get(`http://localhost:3001/`);
+          const response = await axios.get(`http://localhost:3001/users`, {
+            params: {
+              id: id,
+              pw: pw,
+            },
+          });
+          const result = response.data[0];
+          if (result) {
+            console.log("로그인 성공");
+          } else {
+            console.log("로그인 실패");
+            setError("로그인에 실패했습니다.");
+          }
         } else {
           console.log("유효성 검사 실패");
           setError(validateCode);
@@ -76,6 +88,10 @@ const LoginPage = ({ loginOnClick, isOpen }) => {
     setID(e.target.value);
   };
 
+  useEffect(() => {
+    setError(errMsg);
+  }, []);
+
   const renderModal = () => {
     return (
       <>
@@ -83,7 +99,11 @@ const LoginPage = ({ loginOnClick, isOpen }) => {
           <form className={styles.loginForm + " " + styles.register} onSubmit={onSubmit}>
             <div className="fs-2 text-center d-flex flex-column">
               {isRegistered ? "로그인" : "회원가입"}
-              <small>Eco Choice</small>
+              {errMsg === "" ? (
+                <small>Eco Choice</small>
+              ) : (
+                <small className={styles.errorMsg}>{errMsg}</small>
+              )}
             </div>
             <div className="">
               <label htmlFor="id">아이디</label>

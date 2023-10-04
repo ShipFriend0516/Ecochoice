@@ -102,7 +102,7 @@
 
 .buttonsWrapper button:last-child {
   color: white;
-  background-color: #9e7470;
+  background-color: #6A9C89;
 }
 
 
@@ -111,7 +111,7 @@
   border-radius: 10px;
   /* border-radius: 20px; */
   /* border: 1px solid black; */
-  background-color: rgb(242, 238, 233);
+  background-color: rgb(250, 249, 248);
   padding: 40px;
   margin: 0 40px;
   justify-content: center;
@@ -138,7 +138,7 @@
 .reviewWriteWrapper .rating {
   padding: 5px 15px;
   margin-bottom: 10px;
-  background-color: rgb(200, 223, 203);
+  background-color: rgb(227, 237, 229);
   border-radius: 10px;
   font-size: 1.2em;
 }

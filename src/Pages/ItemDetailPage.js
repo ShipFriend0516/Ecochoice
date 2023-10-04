@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
 import Review from "../Components/Review";
 import logo from "../Images/logo.jpg";
+import LoginModal from "../Components/LoginModal";
 
 const ItemDetailPage = ({ imgPath }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,6 +24,9 @@ const ItemDetailPage = ({ imgPath }) => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+
+  // 로그인
+  const [isVisible, setIsVisible] = useState(false);
 
   const getProduct = async () => {
     try {
@@ -72,15 +76,35 @@ const ItemDetailPage = ({ imgPath }) => {
     membership: "Bronze",
   };
 
+  const toggleModal = () => {
+    setIsVisible((prev) => !prev);
+  };
+
   const onCartClick = () => {
     // 장바구니 버튼 클릭시
+    if (userValidate()) {
+    } else {
+      toggleModal();
+    }
   };
   const onBuyClick = () => {
     // 구매하기 버튼 클릭시
+    if (userValidate()) {
+    } else {
+      toggleModal();
+    }
+  };
+
+  const userValidate = () => {
+    return false;
   };
 
   const onStarClick = (star) => {
-    setRating(star);
+    if (userValidate()) {
+      setRating(star);
+    } else {
+      toggleModal();
+    }
   };
 
   const postReview = async () => {
@@ -134,7 +158,14 @@ const ItemDetailPage = ({ imgPath }) => {
       ) : (
         <>
           <div>
-            <Header isFixed={true} />
+            <Header isFixed={true} modalOpen={isVisible} />
+            {isVisible && (
+              <LoginModal
+                loginOnClick={toggleModal}
+                isOpen={isVisible}
+                errMsg="로그인이 필요한 서비스입니다."
+              />
+            )}
             <div className={`${styles.detailWrapper}`}>
               <div className={`${styles.detailTop} d-flex flex-row`}>
                 {/* 이미지 */}
@@ -151,10 +182,10 @@ const ItemDetailPage = ({ imgPath }) => {
                     </span>
                     <p>{product.description}</p>
                   </div>
-
+                  <div></div>
                   <div className={styles.buttonsWrapper}>
                     <button onClick={() => setIsLiked((prev) => !prev)}>
-                      <IconContext.Provider value={{ color: "#9e7470", size: "1.5em" }}>
+                      <IconContext.Provider value={{ color: "#6A9C89", size: "1.5em" }}>
                         {isLiked ? (
                           <FaHeart className={isLiked && `${styles.heart}`} />
                         ) : (
@@ -162,8 +193,8 @@ const ItemDetailPage = ({ imgPath }) => {
                         )}
                       </IconContext.Provider>
                     </button>
-                    <button>장바구니</button>
-                    <button>구매하기</button>
+                    <button onClick={onCartClick}>장바구니</button>
+                    <button onClick={onBuyClick}>구매하기</button>
                   </div>
                 </div>
               </div>
@@ -189,7 +220,7 @@ const ItemDetailPage = ({ imgPath }) => {
                           className={`${styles.star}`}
                           style={{ cursor: "pointer" }}
                         >
-                          <IconContext.Provider value={{ color: "#9e7470", size: "1.5em" }}>
+                          <IconContext.Provider value={{ color: "#6A9C89", size: "1.5em" }}>
                             {star <= rating ? <FaStar /> : <FaRegStar />}
                           </IconContext.Provider>
                         </span>

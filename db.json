@@ -159,8 +159,15 @@
       "nickName": "오르비타",
       "membership": "bronze",
       "profileImage": "https://i.gifer.com/5K4w.gif",
-      "cartProductsID": [1, 2, 3, 4, 5, 8]
-  }
+      "cartProductsID": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        8
+      ]
+    }
   ],
   "categories": [
     {
@@ -332,6 +339,34 @@
       "summary": "얍!!!!!!!!!",
       "rating": 5,
       "id": 10
+    },
+    {
+      "productID": 9,
+      "authorID": 1,
+      "summary": "와아아앙ㅇㅇㅇㅇ",
+      "rating": 4,
+      "id": 11
+    },
+    {
+      "productID": 3,
+      "authorID": 1,
+      "summary": "dddddddd",
+      "rating": 4,
+      "id": 12
+    },
+    {
+      "productID": 1,
+      "authorID": 1,
+      "summary": "왜 02년생만!!",
+      "rating": 1,
+      "id": 13
+    },
+    {
+      "productID": 1,
+      "authorID": 1,
+      "summary": "너무하네 정말",
+      "rating": 1,
+      "id": 14
     }
   ]
 }
