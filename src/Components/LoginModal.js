@@ -27,6 +27,11 @@ const LoginPage = ({ loginOnClick, isOpen, errMsg = "" }) => {
           const result = response.data[0];
           if (result) {
             console.log("로그인 성공");
+            console.log(result);
+            const userJSON = JSON.stringify(result);
+            sessionStorage.setItem("user", userJSON);
+            console.log("유저 정보 기록");
+            loginOnClick();
           } else {
             console.log("로그인 실패");
             setError("로그인에 실패했습니다.");

@@ -1,0 +1,96 @@
+.ItemCard {
+  margin: 10px 0px;
+  height: 140px;
+  display: inline-flex;
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  padding: 20px 20px;
+  border-radius: 10px;
+  gap: 10px;
+  width: 100%;
+  align-items: center;
+  box-shadow: 0px 1px 3px rgb(189, 188, 188);
+}
+
+.cover {
+  display: none;
+}
+.cover > button:hover { 
+  display: none;
+  cursor: pointer;
+}
+
+.img {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  aspect-ratio: 1/1;
+  justify-content: start;
+  border-radius: 10px;
+}
+
+/* .ItemCard:hover  .cover {
+  display: flex;
+} */
+
+.check {
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.info {
+  flex-grow: 1;
+  position: relative;
+  margin: 0;
+}
+
+.price {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+}
+
+.name {
+  height: inherit;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.brand {
+  color: #A29388;
+}
+
+.buttonWrap {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+
+.buttonWrap button {
+  font-size: 1.2em;
+  outline: none;
+  border: 0;
+  background-color: transparent;
+  height: 30px;
+  border-radius: 50%;
+  line-height: 1.2em;
+  vertical-align: auto;
+}
+
+.buttonWrap button:hover {
+  cursor: pointer;
+  background-color: rgb(162, 158, 158);
+  transition: .2s;
+}
+
+
+

@@ -157,14 +157,14 @@
       "id": "orbita@example.com",
       "pw": "1234",
       "nickName": "오르비타",
-      "membership": "bronze",
+      "membership": "Bronze",
       "profileImage": "https://i.gifer.com/5K4w.gif",
       "cartProductsID": [
         1,
         2,
         3,
         4,
-        5,
+        7,
         8
       ]
     }

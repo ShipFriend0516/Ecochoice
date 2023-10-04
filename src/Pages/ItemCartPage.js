@@ -9,6 +9,9 @@ const ItemCartPage = ({ user }) => {
   // props로 유저를 받아와, 유저마다 다른 장바구니를 적용
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [checkedItems, setCheckedItems] = useState([]);
+  const [isAllChecked, setIsAllChecked] = useState(false);
+
   const getProductsID = async () => {
     user = dummyUser;
     const response = await axios.get(`http://localhost:3001/users`, {
@@ -41,6 +44,12 @@ const ItemCartPage = ({ user }) => {
       // cart 스테이트에 상품 정보를 추가
       setCart(cartItems);
       setLoading(false);
+
+      const initialCheckedItems = userCartList.reduce((acc, id) => {
+        acc[id] = false; // 각 아이디를 키로 가지고 초기값을 false로 설정
+        return acc;
+      }, {});
+      setCheckedItems(initialCheckedItems);
     } catch (error) {
       console.error("상품 정보 조회 오류:", error);
     }
@@ -59,7 +68,53 @@ const ItemCartPage = ({ user }) => {
     nickName: "오르비타",
     membership: "Bronze",
     profileImage: "https://i.gifer.com/5K4w.gif",
-    cartProductsID: [1, 2, 3, 4, 5, 8],
+    cartProductsID: [1, 2, 3, 4, 7, 8],
+  };
+
+  const countCheckedItems = () => {
+    const checkedItemValues = Object.values(checkedItems);
+    const checkedCount = checkedItemValues.filter((value) => value).length;
+    return checkedCount;
+  };
+
+  const handleCheckboxChange = (id) => {
+    setCheckedItems((prevCheckedItems) => ({
+      ...prevCheckedItems,
+      [id]: !prevCheckedItems[id],
+    }));
+  };
+
+  const calCheckedPrices = () => {
+    const checkedItemValues = Object.values(checkedItems);
+    console.log(checkedItemValues);
+    let totalPrice = 0;
+
+    cart.map((cartItem, index) => {
+      if (checkedItemValues[index]) totalPrice += cartItem.price;
+    });
+    return totalPrice;
+  };
+
+  const calTotalPrices = () => {
+    let totalPrice = 0;
+    cart.map((cartItem) => (totalPrice += cartItem.price));
+
+    return totalPrice;
+  };
+
+  const handleAllCheckboxChange = () => {
+    // 현재 전체 선택 상태의 반대 값을 설정합니다.
+    setIsAllChecked((prevIsAllChecked) => !prevIsAllChecked);
+
+    // 모든 상품의 체크 상태를 전체 선택 상태로 설정합니다.
+    const newCheckedItems = {};
+
+    // cart 배열의 각 상품에 대해 isCheckedItems의 키를 만들고 값을 전체 선택 상태로 설정합니다.
+    cart.forEach((cartItem) => {
+      newCheckedItems[cartItem.id] = !isAllChecked;
+    });
+
+    setCheckedItems(newCheckedItems);
   };
 
   return (
@@ -69,6 +124,15 @@ const ItemCartPage = ({ user }) => {
         <div className={`${styles.ItemCartTitle}`}>장바구니</div>
         <div className={`${styles.ItemCartSub}`}>
           <p>
+            {countCheckedItems()}개 상품 선택됨
+            <button
+              onClick={handleAllCheckboxChange}
+              className="btn btn-outline-success btn-sm ms-2"
+            >
+              {isAllChecked ? "전체 해제" : "전체 선택"}
+            </button>
+          </p>
+          <p>
             {dummyUser.nickName}님의 장바구니에 <b>{dummyUser.cartProductsID.length}</b>개의 상품이
             존재합니다.
           </p>
@@ -77,18 +141,32 @@ const ItemCartPage = ({ user }) => {
           {loading ? (
             <div>Loading...</div>
           ) : (
-            <div className="ItemList">
-              {cart.map((cartItem) => {
-                return (
-                  <ItemCard
-                    id={cartItem.id}
-                    img={cartItem.imagePath}
-                    price={cartItem.price}
-                    name={cartItem.name}
-                    brand={cartItem.brand}
-                  />
-                );
-              })}
+            <div>
+              <div className="ItemList2 px-5">
+                {cart.map((cartItem) => {
+                  return (
+                    <ItemCard
+                      key={cartItem.id}
+                      id={cartItem.id}
+                      img={cartItem.imagePath}
+                      price={cartItem.price}
+                      name={cartItem.name}
+                      brand={cartItem.brand}
+                      cardStyle={1}
+                      onCheckChange={handleCheckboxChange}
+                      checked={checkedItems[cartItem.id]}
+                    />
+                  );
+                })}
+              </div>
+              <div className={styles.pricesWrapper}>
+                선택 상품 가격 : {calCheckedPrices().toLocaleString()}원 / 총 가격 :{" "}
+                {calTotalPrices().toLocaleString()}원
+              </div>
+              <div className={styles.buttonWrap}>
+                <button className={`btn btn-outline-dark btn-lg`}>모두 취소하기</button>
+                <button className={`btn btn-outline-dark btn-lg`}>모두 결제하기</button>
+              </div>
             </div>
           )}
         </div>

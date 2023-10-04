@@ -1,5 +1,6 @@
 .ItemCartPageWrapper {
   min-height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -8,20 +9,21 @@
 
 .ItemCartWrapper {
   padding: 60px;
+  
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 240px;
 }
 
 .ItemCartWrapper .ItemCartSub {
   width: 100%;
   display: flex;
+  justify-content: space-between;
 }
 
 .ItemCartSub p {
-  flex-grow: 1;
-  text-align: right;
+  padding: 0 60px;
 }
 
 .ItemCartTitle {
@@ -32,8 +34,27 @@
 }
 
 .ItemCart {
-  min-width: 50vw;
-  height: 600px;
+  width: 80vw;
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
+}
+
+.buttonWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px;
+  gap: 20px;
+  border-top: 1px solid gray;
+}
+
+.buttonWrap button {
+  
+}
+
+.pricesWrapper {
+  font-weight: bold;
+  font-size: 1.2em;
+  padding: 10px 0;
+  text-align: right;
 }

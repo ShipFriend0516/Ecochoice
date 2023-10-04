@@ -9,6 +9,8 @@ const Header = ({ isFixed, modalOpen }) => {
   const documentHeight = document.body.scrollHeight - window.innerHeight;
 
   const [isVisible, setIsVisible] = useState(false);
+  const [user, setUser] = useState(null);
+  const [userLoading, setUserLoading] = useState(true);
   const navigate = useNavigate();
 
   const MoveToTop = () => {
@@ -28,6 +30,12 @@ const Header = ({ isFixed, modalOpen }) => {
       console.log("22");
       loginOnClick();
     }
+  }, []);
+
+  useEffect(() => {
+    setUser(JSON.parse(sessionStorage.getItem("user")));
+    console.log("유저 정보 받아오기", JSON.parse(sessionStorage.getItem("user")));
+    setUserLoading(false);
   }, []);
 
   useEffect(() => {
@@ -134,9 +142,13 @@ const Header = ({ isFixed, modalOpen }) => {
           <li>
             <Link to={"/cart"}>장바구니</Link>
           </li>
-          <li id="login" onClick={loginOnClick}>
-            로그인
-          </li>
+          {user !== null && !userLoading ? (
+            <img className="profileImg" src={user.profileImage} />
+          ) : (
+            <li id="login" onClick={loginOnClick}>
+              로그인
+            </li>
+          )}
         </ul>
       </nav>
       <LoginModal loginOnClick={loginOnClick} isOpen={isVisible} />
