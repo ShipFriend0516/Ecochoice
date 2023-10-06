@@ -86,7 +86,6 @@ const ItemCartPage = ({ user }) => {
 
   const calCheckedPrices = () => {
     const checkedItemValues = Object.values(checkedItems);
-    console.log(checkedItemValues);
     let totalPrice = 0;
 
     cart.map((cartItem, index) => {

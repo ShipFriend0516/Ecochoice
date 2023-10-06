@@ -7,13 +7,25 @@ import CategoryPage from "./Pages/CategoryPage";
 import ErrorPage from "./Pages/ErrorPage";
 import SearchPage from "./Pages/SearchPage";
 import ItemCartPage from "./Pages/ItemCartPage";
+import { useState } from "react";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const handleLoginSuccess = (user) => {
+    setIsLoggedIn(true);
+    setUser(user);
+  };
+
   return (
     <Router>
       <Routes>
-        <Route key={"/"} path={"/"} element={<HomePage />}></Route>
-        <Route key={"/login"} path={"/login"} element={<LoginPage />}></Route>
+        <Route
+          key={"/"}
+          path={"/"}
+          element={<HomePage onLoginSuccess={handleLoginSuccess} />}
+        ></Route>
         <Route key={"/mypage"} path={"/mypage"} element={<MyPage />}></Route>
         <Route key={"/products/:id"} path={"/products/:id"} element={<ItemDetailPage />}></Route>
         <Route

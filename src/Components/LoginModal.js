@@ -2,14 +2,18 @@ import styles from "../Styles/LoginPage.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const LoginPage = ({ loginOnClick, isOpen, errMsg = "" }) => {
-  const [isRegistered, setIsRegistered] = useState(false);
+const LoginModal = ({ loginOnClick, isOpen, errMsg = "", onLoginSuccess }) => {
+  const [isRegistered, setIsRegistered] = useState(true);
   const [id, setID] = useState("");
   const [pw, setPW] = useState("");
   const [pwCheck, setPWCheck] = useState("");
   const [error, setError] = useState("");
   const canvasOnClick = () => {
     loginOnClick();
+    setError("");
+    setID("");
+    setPW("");
+    setPWCheck("");
   };
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -29,9 +33,10 @@ const LoginPage = ({ loginOnClick, isOpen, errMsg = "" }) => {
             console.log("로그인 성공");
             console.log(result);
             const userJSON = JSON.stringify(result);
-            sessionStorage.setItem("user", userJSON);
+            localStorage.setItem("user", userJSON);
             console.log("유저 정보 기록");
             loginOnClick();
+            onLoginSuccess(userJSON);
           } else {
             console.log("로그인 실패");
             setError("로그인에 실패했습니다.");
@@ -169,4 +174,4 @@ const LoginPage = ({ loginOnClick, isOpen, errMsg = "" }) => {
   return <>{isOpen && renderModal()}</>;
 };
 
-export default LoginPage;
+export default LoginModal;

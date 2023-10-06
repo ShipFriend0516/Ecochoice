@@ -76,13 +76,12 @@ const ItemCard = ({
         ></input>
 
         <div className={card2.img}>
-          <div className={card2.cover}>
-            <button onClick={onClickDetail}>자세히 보기</button>
-          </div>
-          <img className={card2.img} srcSet={(logo, img)} alt={name} />
+          <img onClick={onClickDetail} className={card2.img} srcSet={(logo, img)} alt={name} />
         </div>
         <div className={card2.info}>
-          <div className={card2.name}>{name}</div>
+          <div onClick={onClickDetail} className={card2.name + " cursor-pointer"}>
+            {name}
+          </div>
           <div className={card2.price}>{price.toLocaleString()}원</div>
           <div className={card2.brand}>{brand}</div>
         </div>

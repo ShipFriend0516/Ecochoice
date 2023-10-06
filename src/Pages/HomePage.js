@@ -9,7 +9,7 @@ import MoreBtn from "../Components/MoreBtn";
 import logo from "../Images/logo.jpg";
 import Slider from "../Components/Slider";
 
-const Home = () => {
+const Home = ({ onLoginSuccess }) => {
   const [reviews, setReviews] = useState([]);
   const [reviewLoading, setReviewLoading] = useState(true);
   const getProducts = async () => {
@@ -81,7 +81,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header />
+      <Header onLoginSuccess={onLoginSuccess} />
       <Slider />
       <div className="bg">
         <div className="mainWrap">

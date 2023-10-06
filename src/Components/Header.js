@@ -3,7 +3,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 
-const Header = ({ isFixed, modalOpen }) => {
+const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const documentHeight = document.body.scrollHeight - window.innerHeight;
@@ -11,6 +11,8 @@ const Header = ({ isFixed, modalOpen }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const MoveToTop = () => {
@@ -22,21 +24,45 @@ const Header = ({ isFixed, modalOpen }) => {
   };
 
   const loginOnClick = () => {
+    setError("");
     setIsVisible((prev) => !prev);
+  };
+
+  const cartOnClick = () => {
+    if (user !== null) {
+      navigate("/cart");
+    } else {
+      loginOnClick();
+      setError("로그인이 필요한 서비스입니다.");
+    }
   };
 
   useEffect(() => {
     if (modalOpen) {
-      console.log("22");
       loginOnClick();
     }
   }, []);
 
-  useEffect(() => {
-    setUser(JSON.parse(sessionStorage.getItem("user")));
-    console.log("유저 정보 받아오기", JSON.parse(sessionStorage.getItem("user")));
+  const userLoad = async () => {
+    const userInfo = await JSON.parse(localStorage.getItem("user"));
+    setUser(userInfo);
     setUserLoading(false);
-  }, []);
+  };
+
+  useEffect(() => {
+    try {
+      userLoad();
+      if (user === null) {
+        setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(true);
+      }
+    } catch (e) {
+      console.error("유저 정보가 없음", e);
+    } finally {
+      console.log(user, isLoggedIn);
+    }
+  }, [userLoading]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,6 +85,7 @@ const Header = ({ isFixed, modalOpen }) => {
   const percent = (n, tN) => {
     return ((n / tN) * 100).toFixed(2);
   };
+
   // 검색 기능
   const [searchText, setSearchText] = useState("");
   const onSubmit = (e) => {
@@ -140,10 +167,13 @@ const Header = ({ isFixed, modalOpen }) => {
             <Link to={"/mypage"}>마이페이지</Link>
           </li>
           <li>
-            <Link to={"/cart"}>장바구니</Link>
+            <div onClick={cartOnClick} className="px-1" to={"/cart"}>
+              장바구니
+            </div>
+            {/* <Link to={"/cart"}>장바구니</Link> */}
           </li>
-          {user !== null && !userLoading ? (
-            <img className="profileImg" src={user.profileImage} />
+          {isLoggedIn ? (
+            <>{!userLoading && <img className="profileImg" src={user.profileImage} />}</>
           ) : (
             <li id="login" onClick={loginOnClick}>
               로그인
@@ -151,7 +181,12 @@ const Header = ({ isFixed, modalOpen }) => {
           )}
         </ul>
       </nav>
-      <LoginModal loginOnClick={loginOnClick} isOpen={isVisible} />
+      <LoginModal
+        loginOnClick={loginOnClick}
+        isOpen={isVisible}
+        errMsg={user ? null : error}
+        onLoginSuccess={onLoginSuccess}
+      />
     </>
   );
 };
