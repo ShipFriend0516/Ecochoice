@@ -182,19 +182,35 @@ const ItemDetailPage = ({ imgPath }) => {
                     </span>
                     <p>{product.description}</p>
                   </div>
-                  <div></div>
-                  <div className={styles.buttonsWrapper}>
-                    <button onClick={() => setIsLiked((prev) => !prev)}>
-                      <IconContext.Provider value={{ color: "#6A9C89", size: "1.5em" }}>
-                        {isLiked ? (
-                          <FaHeart className={isLiked && `${styles.heart}`} />
-                        ) : (
-                          <FaRegHeart />
-                        )}
-                      </IconContext.Provider>
-                    </button>
-                    <button onClick={onCartClick}>장바구니</button>
-                    <button onClick={onBuyClick}>구매하기</button>
+                  <div>
+                    <div>
+                      <div className={`${styles.btn_group}`}>
+                        <button
+                          className="btn btn-secondary btn-sm dropdown-toggle"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          상품옵션
+                        </button>
+                        <ul className="dropdown-menu">
+                          <li>사이즈 : Free</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div className={styles.buttonsWrapper}>
+                      <button onClick={() => setIsLiked((prev) => !prev)}>
+                        <IconContext.Provider value={{ color: "#6A9C89", size: "1.5em" }}>
+                          {isLiked ? (
+                            <FaHeart className={isLiked && `${styles.heart}`} />
+                          ) : (
+                            <FaRegHeart />
+                          )}
+                        </IconContext.Provider>
+                      </button>
+                      <button onClick={onCartClick}>장바구니</button>
+                      <button onClick={onBuyClick}>구매하기</button>
+                    </div>
                   </div>
                 </div>
               </div>

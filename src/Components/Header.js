@@ -49,6 +49,11 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
     setUserLoading(false);
   };
 
+  const logOut = () => {
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+  };
+
   useEffect(() => {
     try {
       userLoad();
@@ -63,6 +68,8 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
       console.log(user, isLoggedIn);
     }
   }, [userLoading]);
+
+  // ScrollSpy
 
   useEffect(() => {
     const handleScroll = () => {
@@ -173,7 +180,9 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
             {/* <Link to={"/cart"}>장바구니</Link> */}
           </li>
           {isLoggedIn ? (
-            <>{!userLoading && <img className="profileImg" src={user.profileImage} />}</>
+            <li onClick={logOut}>
+              {!userLoading && <img className="profileImg" src={user.profileImage} />}
+            </li>
           ) : (
             <li id="login" onClick={loginOnClick}>
               로그인
