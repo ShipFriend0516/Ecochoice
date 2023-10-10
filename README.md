@@ -15,6 +15,13 @@ CSS 프레임워크 : 부트스트랩 5
 npm install
 npm start
 ```
+그리고 터미널 하나 더 열어서 
+
+```
+npm run db
+```
+입력하면 json-server 실행
+
 
 ![Static Badge](https://img.shields.io/github/languages/top/ShipFriend0516/dbproject)
 ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/ShipFriend0516/dbproject)
