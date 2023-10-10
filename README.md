@@ -17,7 +17,7 @@ npm start
 ```
 그리고 터미널 하나 더 열어서 
 
-```
+```bash
 npm run db
 ```
 입력하면 json-server 실행
