@@ -149,6 +149,26 @@
       "brand": "GreenLiving",
       "categoryID": 5,
       "count": 22
+    },
+    {
+      "id": 16,
+      "imagePath": "https://res.heraldm.com/content/image/2014/05/14/20140514000122_0.jpg",
+      "name": "친환경 가구 소재",
+      "description": "자연 친화적인 재료로 만든 환경 친화적인 가구 소재입니다.",
+      "price": 13500,
+      "brand": "GreenLiving",
+      "categoryID": 5,
+      "count": 22
+    },
+    {
+      "id": 17,
+      "imagePath": "https://res.heraldm.com/content/image/2014/05/14/20140514000122_0.jpg",
+      "name": "친환경 가구 소재",
+      "description": "자연 친화적인 재료로 만든 환경 친화적인 가구 소재입니다.",
+      "price": 13500,
+      "brand": "GreenLiving",
+      "categoryID": 5,
+      "count": 22
     }
   ],
   "users": [

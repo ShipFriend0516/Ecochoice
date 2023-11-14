@@ -22,13 +22,13 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "", onLoginSuccess }) => {
         let validateCode = LoginValidate();
         if (validateCode === true) {
           console.log("유효성 검사 통과");
-          const response = await axios.get(`http://localhost:3001/users`, {
-            params: {
-              id: id,
-              pw: pw,
-            },
+          console.log("id", id, "pw", pw);
+          const response = await axios.post(`http://localhost:8080/auth/sign-in`, {
+            email: id,
+            password: pw,
           });
-          const result = response.data[0];
+          console.log(response);
+          const result = response.data;
           if (result) {
             console.log("로그인 성공");
             console.log(result);
@@ -54,6 +54,17 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "", onLoginSuccess }) => {
         let validateCode = RegisterValidate();
         if (validateCode === true) {
           console.log("유효성 검사 통과");
+          // 회원가입 유효성 검사 통과시
+          console.log("id", id, "pw", pw, "pwcheck", pwCheck);
+          const response = await axios.post(`http://localhost:8080/auth/sign-up`, {
+            email: id,
+            password: pw,
+          });
+          if (response) {
+            console.log(id, "회원가입 성공!!");
+          }
+          console.log(response);
+          loginOnClick();
         } else {
           console.log("유효성 검사 실패");
           setError(validateCode);
