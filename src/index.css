@@ -167,15 +167,16 @@ div.scrollSpy {
   position: fixed;
   top: 0;
   height: 1px;
-  background: #F6F4EE;
+  background: #354032;
   width: 100vw;
 }
 
 div.scrollSpy span {
   height: 1px;
   padding: 0;
-  background-color: rgb(42, 114, 71);
+  background-color: rgb(221, 186, 29);
   width: 0%;
+  
 }
 
 

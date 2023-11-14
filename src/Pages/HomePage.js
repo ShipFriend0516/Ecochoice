@@ -8,10 +8,12 @@ import { useEffect, useState } from "react";
 import MoreBtn from "../Components/MoreBtn";
 import logo from "../Images/logo.jpg";
 import Slider from "../Components/Slider";
+import FetchTest from "../Components/FetchTest";
 
 const Home = ({ onLoginSuccess }) => {
   const [reviews, setReviews] = useState([]);
   const [reviewLoading, setReviewLoading] = useState(true);
+
   const getProducts = async () => {
     try {
       const response = await axios.get("http://localhost:3001/products");
@@ -81,6 +83,7 @@ const Home = ({ onLoginSuccess }) => {
 
   return (
     <div>
+      {/* <FetchTest /> */}
       <Header onLoginSuccess={onLoginSuccess} />
       <Slider />
       <div className="bg">
