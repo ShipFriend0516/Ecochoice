@@ -36,7 +36,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "", onLoginSuccess }) => {
             localStorage.setItem("user", userJSON);
             console.log("유저 정보 기록");
             loginOnClick();
-            onLoginSuccess(userJSON);
+            // onLoginSuccess(userJSON);
           } else {
             console.log("로그인 실패");
             setError("로그인에 실패했습니다.");

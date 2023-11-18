@@ -8,6 +8,8 @@ import ErrorPage from "./Pages/ErrorPage";
 import SearchPage from "./Pages/SearchPage";
 import ItemCartPage from "./Pages/ItemCartPage";
 import { useState } from "react";
+import Payments from "./Components/Payments";
+import OrderPage from "./Pages/OrderPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,6 +38,8 @@ function App() {
         <Route key={"/error"} path={"/error"} element={<ErrorPage errorCode={404} />}></Route>
         <Route key={"/search"} path={"/search/:searchText"} element={<SearchPage />}></Route>
         <Route key={"/cart"} path={"/cart"} element={<ItemCartPage />}></Route>
+        <Route key={"/order"} path={"/order"} element={<OrderPage />}></Route>
+        <Route key={"/pay"} path={"/pay"} element={<Payments />}></Route>
         <Route key={"/not"} path={"*"} element={<ErrorPage errorCode={404} />}></Route>
       </Routes>
     </Router>

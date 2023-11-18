@@ -1,0 +1,102 @@
+
+.bg {
+  padding-top: 50px;
+  background-color: #dcefd9;
+}
+
+.itemGrid > div{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  padding: 12px 0;
+}
+
+.gridheader {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.leftSide {
+  width: 70%;
+}
+
+.leftSide button {
+  margin-top: 5px;
+  padding: 6px 12px;
+  border: .5px solid rgb(205, 205, 205);
+  background-color: #F7F3EB
+}
+
+.rightSide {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.box {
+  background-color: #f8f8f8;
+  padding: 30px;
+}
+
+.box > table > tr > :first-child {
+  text-align: left;
+}
+
+.box > table > tr > :last-child {
+  text-align: right;
+}
+
+.box > table {
+  border-bottom: 1px solid gray;
+  width: 100%;
+}
+
+.box > table td {
+  padding-bottom: 6px;
+}
+
+.bill {
+  margin: 0 auto;
+  width: 84%;
+  border-radius: 1em;
+  padding: 20px;
+}
+
+.rightSide button {
+  margin-top: 5px;
+  padding: 10px 20px;
+  border: .5px solid rgb(205, 205, 205);
+  background-color: #F7F3EB
+}
+
+.rightSide button:first-of-type {
+  background-color: black;
+  color: white;
+}
+
+
+.bg button:hover {
+  transition: .3s;
+  border-radius: .75em;
+}
+
+.tbl_order {
+  table-layout: fixed;
+  width: 100%;
+  margin: 0 auto;
+  border-top: 1px solid #e0e0e0;
+}
+
+.tbl_order .tel input {
+  width: 55px;
+}
+
+.tbl_order .phone input {
+  width: 55px;
+}
+
+.tbl_order th {
+  width: 120px;
+
+}
