@@ -4,6 +4,7 @@ import Header from "../Components/Header";
 import styles from "../Styles/ItemCartPage.module.css";
 import ItemCard from "../Components/ItemCard";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const ItemCartPage = ({ user }) => {
   // props로 유저를 받아와, 유저마다 다른 장바구니를 적용
@@ -11,6 +12,8 @@ const ItemCartPage = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [checkedItems, setCheckedItems] = useState([]);
   const [isAllChecked, setIsAllChecked] = useState(false);
+
+  const navigate = useNavigate();
 
   const getProductsID = async () => {
     user = dummyUser;
@@ -164,7 +167,14 @@ const ItemCartPage = ({ user }) => {
               </div>
               <div className={styles.buttonWrap}>
                 <button className={`btn btn-outline-dark btn-lg`}>모두 취소하기</button>
-                <button className={`btn btn-outline-dark btn-lg`}>모두 결제하기</button>
+                <button
+                  onClick={() => {
+                    navigate("/order");
+                  }}
+                  className={`btn btn-outline-dark btn-lg`}
+                >
+                  모두 결제하기
+                </button>
               </div>
             </div>
           )}

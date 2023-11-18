@@ -1,10 +1,20 @@
-
 .bg {
   padding-top: 50px;
-  background-color: #dcefd9;
+  background-color: #e4e9e4;
+  width: 100vw;
+  min-height: 100vh;
+  padding-bottom: 100px;
 }
 
-.itemGrid > div{
+.title {
+  width: 500px;
+  color: white;
+  background-color: rgb(74, 119, 93);
+  border-radius: 0.25em;
+  padding: 10px 40px;
+  box-shadow: 5px 5px 30px rgb(186, 186, 186);
+}
+.itemGrid > div {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: auto;
@@ -21,22 +31,21 @@
 }
 
 .leftSide button {
-  margin-top: 5px;
-  padding: 6px 12px;
-  border: .5px solid rgb(205, 205, 205);
-  background-color: #F7F3EB
+  padding: 4px 12px;
+  border: 0.5px solid rgb(205, 205, 205);
+  background-color: #f7f3eb;
 }
 
 .rightSide {
   width: 30%;
   display: flex;
   flex-direction: column;
-
 }
 
 .box {
   background-color: #f8f8f8;
   padding: 30px;
+  margin-top: 50px;
 }
 
 .box > table > tr > :first-child {
@@ -57,17 +66,18 @@
 }
 
 .bill {
+  box-shadow: 5px 5px 30px rgb(186, 186, 186);
   margin: 0 auto;
-  width: 84%;
+  width: 86%;
   border-radius: 1em;
-  padding: 20px;
+  padding: 40px;
 }
 
 .rightSide button {
   margin-top: 5px;
   padding: 10px 20px;
-  border: .5px solid rgb(205, 205, 205);
-  background-color: #F7F3EB
+  border: 0.5px solid rgb(205, 205, 205);
+  background-color: #f7f3eb;
 }
 
 .rightSide button:first-of-type {
@@ -75,28 +85,83 @@
   color: white;
 }
 
-
 .bg button:hover {
-  transition: .3s;
-  border-radius: .75em;
+  transition: 0.3s;
+  border-radius: 0.75em;
 }
 
 .tbl_order {
   table-layout: fixed;
-  width: 100%;
-  margin: 0 auto;
-  border-top: 1px solid #e0e0e0;
-}
-
-.tbl_order .tel input {
-  width: 55px;
-}
-
-.tbl_order .phone input {
-  width: 55px;
+  width: 90%;
+  margin: 0;
 }
 
 .tbl_order th {
   width: 120px;
+}
 
+table tr {
+  border-top: 1px solid #d4d4d4;
+}
+table th {
+  border-right: 1px solid #d4d4d4;
+}
+
+table td {
+  padding: 10px;
+}
+
+.section {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #f8f8f8;
+  width: 90%;
+  /* box-sizing: border-box */
+}
+
+.paymentWays {
+  display: flex;
+  flex-direction: row;
+}
+
+.paymentWays > button {
+  width: 120px;
+  height: 120px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.paymentWays :first-child {
+  border-right: 0;
+}
+
+.paymentWays > button:hover {
+  border-radius: 0;
+  background-color: rgb(91, 107, 91);
+  color: white;
+  transition: 0.2s;
+}
+
+.paymentWays > button.checked {
+  border-radius: 0;
+  background-color: #202632;
+  color: white;
+}
+
+.paymentWays .toss {
+  background: url("../Images/Toss_Logo_Secondary_Gray.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 0;
+}
+
+.paymentWays .tossChecked {
+  background: url("../Images/Toss_Logo_Secondary_White.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 0;
+  background-color: #202632;
 }
