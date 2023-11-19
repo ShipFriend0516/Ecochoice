@@ -10,6 +10,7 @@ import ItemCartPage from "./Pages/ItemCartPage";
 import { useState } from "react";
 import Payments from "./Components/Payments";
 import OrderPage from "./Pages/OrderPage";
+import SellPage from "./Pages/SellPage";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,6 +41,7 @@ function App() {
         <Route key={"/cart"} path={"/cart"} element={<ItemCartPage />}></Route>
         <Route key={"/order"} path={"/order"} element={<OrderPage />}></Route>
         <Route key={"/pay"} path={"/pay"} element={<Payments />}></Route>
+        <Route key={"/sell"} path={"/sell"} element={<SellPage />}></Route>
         <Route key={"/not"} path={"*"} element={<ErrorPage errorCode={404} />}></Route>
       </Routes>
     </Router>
