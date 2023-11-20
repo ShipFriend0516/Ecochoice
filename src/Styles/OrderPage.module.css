@@ -8,11 +8,10 @@
 
 .title {
   width: 500px;
-  color: white;
-  background-color: rgb(74, 119, 93);
+  color: #354032;
   border-radius: 0.25em;
   padding: 10px 40px;
-  box-shadow: 5px 5px 30px rgb(186, 186, 186);
+  font-weight: 100;
 }
 .itemGrid > div {
   display: grid;

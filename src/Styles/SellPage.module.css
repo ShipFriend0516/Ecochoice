@@ -1,0 +1,92 @@
+
+
+.title {
+  width: 500px;
+  color: #354032;
+  border-radius: 0.25em;
+  padding: 10px 40px;
+  font-weight: 100;
+}
+
+.addItem {
+  margin: 0 auto;
+  width: 90%;
+  background-color: #f5f5f5;
+  border-radius: .5em;
+  padding: 40px;
+  box-shadow: 5px 5px 30px rgb(186, 186, 186);
+
+}
+
+.addImage {
+  display: flex;
+  justify-content: center;
+  align-items: center ;
+  min-width: 300px;
+  width: 40vw;
+  aspect-ratio: 1/1;
+  border-radius: .5em;
+  border: 1px solid tomato;
+  background-color: white;
+}
+
+.addImage:hover {
+  transition: .15s;
+  background-color: rgb(234, 231, 231);
+}
+
+.addItem input {
+  width: 240px;
+}
+
+.addItem p {
+  margin: auto 10px;
+}
+
+.addItem .itemForm > div:last-of-type > p {
+  margin-top: 5px;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.itemForm > div {
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.itemForm > div > p {
+  margin-right: 8px;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.buttonWrapper button {
+  padding: 12px 36px;
+  border: 0.5px solid rgb(205, 205, 205);
+}
+
+.buttonWrapper button:nth-of-type(2) {
+  color: white;
+  background-color: black;  
+}
+
+.buttonWrapper button:hover {
+  border-radius: .25em;
+  transition: .2s;
+}
+
+.addImage img {
+  height: 100%;
+  overflow: hidden;
+  border-radius: .5em;
+
+}
+
+.addImage:hover {
+  cursor: pointer;
+}
