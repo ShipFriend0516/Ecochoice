@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
+import logo from "../Images/logo.jpg";
 
 const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -44,9 +45,12 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
   }, []);
 
   const userLoad = async () => {
-    const userInfo = await JSON.parse(localStorage.getItem("user"));
+    const userInfo = await JSON.parse(sessionStorage.getItem("user"));
     setUser(userInfo);
     setUserLoading(false);
+    if (user) {
+      setIsLoggedIn(true);
+    }
   };
 
   const logOut = () => {
@@ -65,7 +69,7 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
     } catch (e) {
       console.error("유저 정보가 없음", e);
     } finally {
-      console.log(user, isLoggedIn);
+      console.log("user access token", user, "로그인 여부", isLoggedIn);
     }
   }, [userLoading]);
 
@@ -181,7 +185,9 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
           </li>
           {isLoggedIn ? (
             <li onClick={logOut}>
-              {!userLoading && <img className="profileImg" src={user.profileImage} />}
+              {!userLoading && (
+                <img className="profileImg" srcSet={[user.profileImage, logo]} alt="profile" />
+              )}
             </li>
           ) : (
             <li id="login" onClick={loginOnClick}>
@@ -194,7 +200,8 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
         loginOnClick={loginOnClick}
         isOpen={isVisible}
         errMsg={user ? null : error}
-        onLoginSuccess={onLoginSuccess}
+        setIsLoggedIn={setIsLoggedIn}
+        isLoggedIn={isLoggedIn}
       />
     </>
   );

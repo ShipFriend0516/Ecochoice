@@ -11,6 +11,7 @@ import { useState } from "react";
 import Payments from "./Components/Payments";
 import OrderPage from "./Pages/OrderPage";
 import SellPage from "./Pages/SellPage";
+import FetchTest from "./Components/FetchTest";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -42,6 +43,7 @@ function App() {
         <Route key={"/order"} path={"/order"} element={<OrderPage />}></Route>
         <Route key={"/pay"} path={"/pay"} element={<Payments />}></Route>
         <Route key={"/sell"} path={"/sell"} element={<SellPage />}></Route>
+        <Route key={"/test"} path={"/test"} element={<FetchTest />}></Route>
         <Route key={"/not"} path={"*"} element={<ErrorPage errorCode={404} />}></Route>
       </Routes>
     </Router>

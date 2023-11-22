@@ -49,9 +49,10 @@ const OrderPage = () => {
       <Header isFixed={true} />
 
       <div className={`${styles.bg}`}>
-        <h1 className={`d-block m-5 bold text-center`}>
+        <div className={`d-block bold text-center ${styles.titleBox}`}>
           <span className={`${styles.title}`}>주문서 작성</span>
-        </h1>
+        </div>
+
         <div className={`bg-white ${styles.bill}`}>
           <p className="bold fs-5 mb-2">주문 상품 목록()</p>
           <div className={`${styles.itemGrid}`}>

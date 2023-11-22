@@ -6,39 +6,49 @@ import ItemCard from "../Components/ItemCard";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-const ItemCartPage = ({ user }) => {
+const ItemCartPage = () => {
   // props로 유저를 받아와, 유저마다 다른 장바구니를 적용
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(true);
   const [checkedItems, setCheckedItems] = useState([]);
   const [isAllChecked, setIsAllChecked] = useState(false);
+  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
 
   const getProductsID = async () => {
-    user = dummyUser;
-    const response = await axios.get(`http://localhost:3001/users`, {
-      params: {
-        UID: user.UID,
-      },
-    });
-    const userCartList = await response.data[0].cartProductsID;
-    return userCartList;
+    const user = sessionStorage.getItem("user");
+
+    if (user) {
+      const userToken = await JSON.parse(user).accessToken;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+
+      const response = await axios.get("http://localhost:8080/carts");
+
+      const userCartList = await response.data.items;
+      return userCartList;
+    } else {
+      console.log("User not found");
+      return null;
+    }
   };
 
   // 상품 정보를 조회하고 cart 스테이트에 추가하는 함수
   const fetchAndAddToCart = async () => {
     try {
       // 사용자의 장바구니 상품 ID 목록을 얻어옴
+      console.log("장바구니를 불러옵니다..");
       const userCartList = await getProductsID();
-
+      console.log(userCartList[0]);
       // 상품 정보를 담을 빈 배열
       const cartItems = [];
 
       // 각 상품 ID에 대해 정보 조회
-      for (const productID of userCartList) {
+      for (const product of userCartList) {
         // 각 상품 정보를 조회하는 axios 요청을 생성
-        const productResponse = await axios.get(`http://localhost:3001/products/${productID}`);
+        const productResponse = await axios.get(
+          `http://localhost:3001/products/${product.productId}`
+        );
 
         // 조회한 상품 정보를 cartItems 배열에 추가
         cartItems.push(productResponse.data);

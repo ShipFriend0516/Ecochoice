@@ -18,12 +18,16 @@ const SearchPage = () => {
 
   const getSearchResult = async () => {
     try {
-      let params = {
-        _sort: "id",
-        name_like: searchText,
-      };
-      const response = await axios.get(`http://localhost:3001/products`, { params: params });
+      const user = sessionStorage.getItem("user");
 
+      const userToken = await JSON.parse(user).accessToken;
+
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      const response = await axios.post(`http://localhost:8080/products`, {
+        searchKeyword: searchText,
+      });
+
+      console.log(response);
       setSearchResult(response.data);
     } catch (error) {
       console.error(error);

@@ -21,6 +21,7 @@ const ItemDetailPage = ({ imgPath }) => {
   const [rating, setRating] = useState(0);
   const [summary, setSummary] = useState("");
   const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -30,14 +31,27 @@ const ItemDetailPage = ({ imgPath }) => {
 
   const getProduct = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/products/${id}`);
+      const user = sessionStorage.getItem("user");
+
+      const userToken = await JSON.parse(user).accessToken;
+
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+
+      const response = await axios.get(`http://localhost:8080/products/${id}/details`);
       const result = await response.data;
+      console.log(result);
       setProduct(result);
       setLoading(false);
     } catch (err) {
       console.error("상품 세부 정보를 불러오는데 실패했습니다.", err);
-      navigate("/error");
+      // navigate("/error");
     }
+  };
+
+  const getUser = async () => {
+    const userData = sessionStorage.getItem("user");
+    const userToken = JSON.parse(userData).accessToken;
+    setUser(userToken);
   };
 
   const getReviews = async () => {
@@ -53,6 +67,7 @@ const ItemDetailPage = ({ imgPath }) => {
 
   useEffect(() => {
     getProduct();
+    getUser();
   }, []);
 
   useEffect(() => {
@@ -80,9 +95,19 @@ const ItemDetailPage = ({ imgPath }) => {
     setIsVisible((prev) => !prev);
   };
 
-  const onCartClick = () => {
+  const onCartClick = async () => {
     // 장바구니 버튼 클릭시
     if (userValidate()) {
+      console.log("장바구니 클릭");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${user}`;
+      const response = await axios.post("http://localhost:8080/carts", {
+        item: {
+          productId: id,
+          productOptionId: 1,
+          quantity: 1,
+        },
+      });
+      console.log(response);
     } else {
       toggleModal();
     }
@@ -96,6 +121,7 @@ const ItemDetailPage = ({ imgPath }) => {
   };
 
   const userValidate = () => {
+    if (user) return true;
     return false;
   };
 
@@ -170,15 +196,15 @@ const ItemDetailPage = ({ imgPath }) => {
               <div className={`${styles.detailTop} d-flex flex-row`}>
                 {/* 이미지 */}
                 <div className={`${styles.imgWrapper}`}>
-                  <img src={product.imagePath} alt="상품디테일" />
+                  <img src={product.thumbnailImageUrl} alt="상품디테일" />
                 </div>
                 {/* 설명 */}
                 <div className={`${styles.itemInfoWrapper} d-flex flex-column`}>
                   <div className="d-flex flex-column">
-                    <small>상품번호 : {product.id}</small>
-                    <span className={`${styles.productTitle}`}>{product.name}</span>
+                    <small>상품번호 : {product.productId}</small>
+                    <span className={`${styles.productTitle}`}>{product.title}</span>
                     <span className={`${styles.productPrice}`}>
-                      가격 : {product.price.toLocaleString()}원
+                      가격 : {product.representativeOption.price.toLocaleString()}원
                     </span>
                     <p>{product.description}</p>
                   </div>
@@ -194,7 +220,15 @@ const ItemDetailPage = ({ imgPath }) => {
                           상품옵션
                         </button>
                         <ul className="dropdown-menu">
-                          <li>사이즈 : Free</li>
+                          {product.options.map((option, i) => (
+                            <>
+                              <>{i !== 0 && <hr style={{ margin: "3px" }} />}</>
+                              <li key={option.productOptionId}>
+                                {option.title}: 가격 {option.price.toLocaleString()}원, 수량{" "}
+                                {option.quantity}개{" "}
+                              </li>
+                            </>
+                          ))}
                         </ul>
                       </div>
                     </div>
@@ -217,10 +251,10 @@ const ItemDetailPage = ({ imgPath }) => {
               <div className={styles.itemDetailWrapper}>
                 <div className={`${styles.detailBottom}`}>
                   <div className={`d-flex flex-column`}>
-                    <span className="fs-2">{product.name}</span>
-                    <span>가격 : {product.price.toLocaleString()}원</span>
-                    <p>{product.description}</p>
-                    <img src={product.imagePath} />
+                    <span className="fs-2">{product.title}</span>
+                    <span>가격 : {product.representativeOption.price.toLocaleString()}원</span>
+                    <p>{product.contents}</p>
+                    <img src={product.thumbnailImageUrl} alt="상품이미지" />
                   </div>
                 </div>
                 <div className={styles.reviews}>

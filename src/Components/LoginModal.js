@@ -2,7 +2,7 @@ import styles from "../Styles/LoginPage.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const LoginModal = ({ loginOnClick, isOpen, errMsg = "", onLoginSuccess }) => {
+const LoginModal = ({ loginOnClick, isOpen, errMsg = "", setIsLoggedIn, isLoggedIn }) => {
   const [isRegistered, setIsRegistered] = useState(true);
   const [id, setID] = useState("");
   const [pw, setPW] = useState("");
@@ -33,10 +33,10 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "", onLoginSuccess }) => {
             console.log("로그인 성공");
             console.log(result);
             const userJSON = JSON.stringify(result);
-            localStorage.setItem("user", userJSON);
+            sessionStorage.setItem("user", userJSON);
             console.log("유저 정보 기록");
             loginOnClick();
-            // onLoginSuccess(userJSON);
+            setIsLoggedIn(true);
           } else {
             console.log("로그인 실패");
             setError("로그인에 실패했습니다.");
