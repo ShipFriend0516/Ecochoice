@@ -68,8 +68,13 @@ const ItemCartPage = () => {
     getCartItemsDetail();
   }, []);
 
-  const findKeyByValue = (obj, value) => {
-    return Object.keys(obj).find((key) => obj[key] === value);
+  const findKeyByValue = (arr, value) => {
+    for (let index = 0; index < arr.length; index++) {
+      if (arr[index].productOptionId === value) {
+        return index;
+      }
+    }
+    return -1; // 찾지 못한 경우
   };
 
   let dummyUser = {
@@ -121,9 +126,9 @@ const ItemCartPage = () => {
 
     console.log(optionIdArray);
     totalPrice = products.reduce((acc, product, index) => {
-      const optionIndex = findKeyByValue(product.options[0], optionIdArray[index]);
-      console.log("optionIndex", optionIndex);
-      return acc + product.options[parseInt(optionIndex)].price;
+      const optionId = parseInt(cart[index].productOptionId);
+      const optionIndex = parseInt(findKeyByValue(product.options, optionId));
+      return acc + product.options[optionIndex].price;
     }, 0);
     console.log("tp", totalPrice);
     return totalPrice;
@@ -183,12 +188,14 @@ const ItemCartPage = () => {
                   </p>
                 )}
                 {products.map((product, index) => {
+                  const optionId = parseInt(cart[index].productOptionId);
+                  const optionIndex = parseInt(findKeyByValue(product.options, optionId));
                   return (
                     <ItemCard
                       key={product.productId}
                       id={product.productId}
                       img={product.thumbnailImageUrl}
-                      price={(product.options, optionIdArray[index])}
+                      price={product.options[optionIndex].price}
                       name={product.title}
                       // brand={products.brand}
                       quantity={cart.quantity}
