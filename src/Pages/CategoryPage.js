@@ -38,12 +38,16 @@ const CategoryPage = () => {
 
   const getCategoryName = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/categories/`, {
-        params: {
-          categoryID,
-        },
-      });
-      setCategoryName(response.data[0].categoryName);
+      const user = sessionStorage.getItem("user");
+
+      const userToken = await JSON.parse(user).accessToken;
+
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      const response = await axios.get(`http://localhost:8080/categories`);
+      const categoryList = response.data;
+      const categoryIndex = categoryList.findIndex((data) => data.id === parseInt(categoryID));
+
+      setCategoryName(categoryList[categoryIndex].title);
       setLoading(false);
     } catch (error) {
       console.error(error);

@@ -9,6 +9,9 @@ import { useNavigate } from "react-router";
 const ItemCartPage = () => {
   // props로 유저를 받아와, 유저마다 다른 장바구니를 적용
   const [cart, setCart] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [optionIdArray, setOptionIdArray] = useState([]);
+  const [optionIdIndexArray, setOptionIdIndexArray] = useState([]);
   const [loading, setLoading] = useState(true);
   const [checkedItems, setCheckedItems] = useState([]);
   const [isAllChecked, setIsAllChecked] = useState(false);
@@ -16,16 +19,19 @@ const ItemCartPage = () => {
 
   const navigate = useNavigate();
 
-  const getProductsID = async () => {
+  const getCartItems = async () => {
     const user = sessionStorage.getItem("user");
 
     if (user) {
-      const userToken = await JSON.parse(user).accessToken;
+      const userToken = JSON.parse(user).accessToken;
       axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
 
       const response = await axios.get("http://localhost:8080/carts");
+      const userCartList = response.data.items;
 
-      const userCartList = await response.data.items;
+      setCart(userCartList);
+
+      setOptionIdArray(userCartList.map((cartItem) => cartItem.productOptionId));
       return userCartList;
     } else {
       console.log("User not found");
@@ -33,46 +39,38 @@ const ItemCartPage = () => {
     }
   };
 
-  // 상품 정보를 조회하고 cart 스테이트에 추가하는 함수
-  const fetchAndAddToCart = async () => {
-    try {
-      // 사용자의 장바구니 상품 ID 목록을 얻어옴
-      console.log("장바구니를 불러옵니다..");
-      const userCartList = await getProductsID();
-      console.log(userCartList[0]);
-      // 상품 정보를 담을 빈 배열
-      const cartItems = [];
+  const getCartItemsDetail = async () => {
+    const cartItems = await getCartItems();
+    // 상품 정보 디테일을 담을 빈 배열 선언
+    const cartItemsDetails = [];
 
-      // 각 상품 ID에 대해 정보 조회
-      for (const product of userCartList) {
-        // 각 상품 정보를 조회하는 axios 요청을 생성
-        const productResponse = await axios.get(
-          `http://localhost:3001/products/${product.productId}`
+    try {
+      for (const cartItem of cartItems) {
+        const productID = cartItem.productId; // await 제거
+        const productDetail = await axios.get(
+          `http://localhost:8080/products/${productID}/details`
         );
 
-        // 조회한 상품 정보를 cartItems 배열에 추가
-        cartItems.push(productResponse.data);
+        console.log("productDetail:", productDetail);
+
+        cartItemsDetails.push(productDetail.data);
       }
 
-      // cart 스테이트에 상품 정보를 추가
-      setCart(cartItems);
+      setProducts(cartItemsDetails);
       setLoading(false);
-
-      const initialCheckedItems = userCartList.reduce((acc, id) => {
-        acc[id] = false; // 각 아이디를 키로 가지고 초기값을 false로 설정
-        return acc;
-      }, {});
-      setCheckedItems(initialCheckedItems);
     } catch (error) {
-      console.error("상품 정보 조회 오류:", error);
+      console.log(error);
     }
   };
 
-  // fetchAndAddToCart 함수를 호출하여 상품 정보를 조회하고 cart 스테이트에 추가
-
   useEffect(() => {
-    fetchAndAddToCart();
+    getCartItems();
+    getCartItemsDetail();
   }, []);
+
+  const findKeyByValue = (obj, value) => {
+    return Object.keys(obj).find((key) => obj[key] === value);
+  };
 
   let dummyUser = {
     UID: 1,
@@ -100,17 +98,34 @@ const ItemCartPage = () => {
   const calCheckedPrices = () => {
     const checkedItemValues = Object.values(checkedItems);
     let totalPrice = 0;
-
+    console.log("cart", cart);
+    console.log("products", products);
     cart.map((cartItem, index) => {
-      if (checkedItemValues[index]) totalPrice += cartItem.price;
+      if (checkedItemValues[index]) {
+        const optionId = cartItem.productOptionId;
+        const optionIndex = products[index].options.findIndex(
+          (option) => option.productOptionId === optionId
+        );
+
+        const price = products[index].options[optionIndex].price;
+        console.log(price);
+        totalPrice += price;
+      }
     });
     return totalPrice;
   };
 
   const calTotalPrices = () => {
     let totalPrice = 0;
-    cart.map((cartItem) => (totalPrice += cartItem.price));
+    // console.log(products, optionIdArray);
 
+    console.log(optionIdArray);
+    totalPrice = products.reduce((acc, product, index) => {
+      const optionIndex = findKeyByValue(product.options[0], optionIdArray[index]);
+      console.log("optionIndex", optionIndex);
+      return acc + product.options[parseInt(optionIndex)].price;
+    }, 0);
+    console.log("tp", totalPrice);
     return totalPrice;
   };
 
@@ -155,18 +170,31 @@ const ItemCartPage = () => {
           ) : (
             <div>
               <div className="ItemList2 px-5">
-                {cart.map((cartItem) => {
+                {products.length === 0 && (
+                  <p
+                    style={{
+                      padding: `40px 0`,
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      color: "gray",
+                    }}
+                  >
+                    [ 장바구니에 담은 상품이 없습니다. 상품을 담아보세요! ]
+                  </p>
+                )}
+                {products.map((product, index) => {
                   return (
                     <ItemCard
-                      key={cartItem.id}
-                      id={cartItem.id}
-                      img={cartItem.imagePath}
-                      price={cartItem.price}
-                      name={cartItem.name}
-                      brand={cartItem.brand}
+                      key={product.productId}
+                      id={product.productId}
+                      img={product.thumbnailImageUrl}
+                      price={(product.options, optionIdArray[index])}
+                      name={product.title}
+                      // brand={products.brand}
+                      quantity={cart.quantity}
                       cardStyle={1}
                       onCheckChange={handleCheckboxChange}
-                      checked={checkedItems[cartItem.id]}
+                      checked={checkedItems[cart.cartId]}
                     />
                   );
                 })}

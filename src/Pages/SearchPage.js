@@ -23,11 +23,12 @@ const SearchPage = () => {
       const userToken = await JSON.parse(user).accessToken;
 
       axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+
       const response = await axios.post(`http://localhost:8080/products`, {
-        searchKeyword: searchText,
+        categoryId: "1",
       });
 
-      console.log(response);
+      console.log("검색 결과", response);
       setSearchResult(response.data);
     } catch (error) {
       console.error(error);

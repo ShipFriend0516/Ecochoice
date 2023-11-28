@@ -9,6 +9,7 @@ import Footer from "../Components/Footer";
 import Review from "../Components/Review";
 import logo from "../Images/logo.jpg";
 import LoginModal from "../Components/LoginModal";
+import { FaCheck } from "react-icons/fa";
 
 const ItemDetailPage = ({ imgPath }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,6 +18,13 @@ const ItemDetailPage = ({ imgPath }) => {
   const [reviewLoading, setReviewLoading] = useState(true);
   const [isLiked, setIsLiked] = useState(false);
 
+  // 장바구니 & 상품 옵션 관련
+  const [selectedOptionId, setSelectedOptionId] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [cartValidateMsg, setCartValidateMsg] = useState("");
+  const [isCarted, setIsCarted] = useState(false);
+
+  // 리뷰 관련
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(0);
   const [summary, setSummary] = useState("");
@@ -95,19 +103,25 @@ const ItemDetailPage = ({ imgPath }) => {
     setIsVisible((prev) => !prev);
   };
 
-  const onCartClick = async () => {
+  const onCartClick = async (e) => {
     // 장바구니 버튼 클릭시
     if (userValidate()) {
-      console.log("장바구니 클릭");
-      axios.defaults.headers.common["Authorization"] = `Bearer ${user}`;
-      const response = await axios.post("http://localhost:8080/carts", {
-        item: {
-          productId: id,
-          productOptionId: 1,
-          quantity: 1,
-        },
-      });
-      console.log(response);
+      if (cartValidate()) {
+        console.log("장바구니 클릭");
+        // axios.defaults.headers.common["Authorization"] = `Bearer ${user}`;
+        console.log("장바구니에 담으려는 item 객체", id, selectedOptionId, quantity);
+        const response = await axios.post("http://localhost:8080/carts", {
+          item: {
+            productId: id,
+            productOptionId: selectedOptionId,
+            quantity: quantity,
+          },
+        });
+        console.log(response);
+        setIsCarted(true);
+      } else {
+        console.log("장바구니에 넣을 상품을 다시 확인해주세요.");
+      }
     } else {
       toggleModal();
     }
@@ -123,6 +137,18 @@ const ItemDetailPage = ({ imgPath }) => {
   const userValidate = () => {
     if (user) return true;
     return false;
+  };
+
+  const cartValidate = () => {
+    if (quantity <= 0) {
+      setCartValidateMsg("수량이 올바르지 않습니다!!");
+      return false;
+    }
+    if (selectedOptionId === null) {
+      setCartValidateMsg("상품 옵션 선택은 필수입니다!!");
+      return false;
+    }
+    return true;
   };
 
   const onStarClick = (star) => {
@@ -209,27 +235,61 @@ const ItemDetailPage = ({ imgPath }) => {
                     <p>{product.description}</p>
                   </div>
                   <div>
+                    {cartValidateMsg ? (
+                      <small className={`${styles.errorMsg}`}>{cartValidateMsg}</small>
+                    ) : (
+                      ""
+                    )}
                     <div>
                       <div className={`${styles.btn_group}`}>
-                        <button
-                          className="btn btn-secondary btn-sm dropdown-toggle"
-                          type="button"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          상품옵션
-                        </button>
-                        <ul className="dropdown-menu">
-                          {product.options.map((option, i) => (
-                            <>
-                              <>{i !== 0 && <hr style={{ margin: "3px" }} />}</>
-                              <li key={option.productOptionId}>
-                                {option.title}: 가격 {option.price.toLocaleString()}원, 수량{" "}
-                                {option.quantity}개{" "}
-                              </li>
-                            </>
-                          ))}
-                        </ul>
+                        <span>
+                          <button
+                            className="btn border btn-sm dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            {selectedOptionId === null
+                              ? "상품옵션"
+                              : product.options[
+                                  product.options.findIndex(
+                                    (option) => option.productOptionId === selectedOptionId
+                                  )
+                                ].title}
+                          </button>
+                          <ul className="dropdown-menu">
+                            {product.options.map((option, i) => (
+                              <>
+                                <>{i !== 0 && <hr style={{ margin: "3px" }} />}</>
+                                <li
+                                  style={
+                                    selectedOptionId === option.productOptionId
+                                      ? { backgroundColor: "#ECF4D6" }
+                                      : {}
+                                  }
+                                  onClick={() => {
+                                    setSelectedOptionId(option.productOptionId);
+                                  }}
+                                  key={option.productOptionId}
+                                >
+                                  {option.title}: 가격 {option.price.toLocaleString()}원, 수량{" "}
+                                  {option.quantity}개{" "}
+                                </li>
+                              </>
+                            ))}
+                          </ul>
+                        </span>
+                        <span>
+                          <span>수량: </span>
+                          <input
+                            className={`${styles.quantityInput}`}
+                            type="number"
+                            defaultValue={1}
+                            onChange={(e) => {
+                              setQuantity(e.target.value);
+                            }}
+                          ></input>
+                        </span>
                       </div>
                     </div>
                     <div className={styles.buttonsWrapper}>
@@ -242,7 +302,9 @@ const ItemDetailPage = ({ imgPath }) => {
                           )}
                         </IconContext.Provider>
                       </button>
-                      <button onClick={onCartClick}>장바구니</button>
+                      <button onClick={onCartClick}>
+                        {isCarted ? <FaCheck color="#6A9C89" /> : "장바구니"}
+                      </button>
                       <button onClick={onBuyClick}>구매하기</button>
                     </div>
                   </div>

@@ -87,9 +87,7 @@
 }
 
 .buttonWrap button:hover {
-  cursor: pointer;
-  background-color: rgb(162, 158, 158);
-  transition: .2s;
+  color: gray
 }
 
 

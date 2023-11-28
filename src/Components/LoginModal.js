@@ -48,6 +48,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "", setIsLoggedIn, isLogged
         }
       } catch (e) {
         console.error("로그인 실패:", e);
+        setError(105);
       }
     } else {
       try {
@@ -156,9 +157,14 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "", setIsLoggedIn, isLogged
                 ) : null}
               </div>
             )}
+            {error === 105 && (
+              <small className={`${styles.errorMsg}`}>
+                로그인에 실패했습니다. 다시 시도해주세요.
+              </small>
+            )}
             <div className="d-flex justify-content-between gap-3">
               <input
-                onClick={loginOnClick}
+                onClick={canvasOnClick}
                 className="btn btn-danger mt-3 flex-grow-1"
                 type="button"
                 value={"취소"}

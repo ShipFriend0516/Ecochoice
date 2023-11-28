@@ -34,6 +34,8 @@
   width: 40vw; 
   height: 40vw;
   aspect-ratio: 1/1;
+  border-radius: .25em;
+  overflow: hidden;
 }
 
 .imgWrapper img {
@@ -93,12 +95,17 @@
 }
 
 .buttonsWrapper button {
-  flex-grow: 300;
+  width: 40%;
   padding: 10px 20px;
   border: .5px solid rgb(205, 205, 205);
   background-color: #F7F3EB
   
 }
+
+.buttonsWrapper button:first-child {
+  width: 20%;
+}
+
 
 .buttonsWrapper button:last-child {
   color: white;
@@ -156,6 +163,9 @@
 } 
 
 .btn_group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin: 3px;
   margin-bottom: 10px;
 }
@@ -165,5 +175,14 @@
 }
 
 .btn_group li {
-  padding: 0 10px;
+  margin: 0 5px;
+  padding: 0 5px;
+  border-radius: .3em;
+}
+
+.btn_group .quantityInput {
+  width: 40px;
+  border-radius: .5em;
+  border: 1px solid lightgray;
+  text-align: right ;
 }

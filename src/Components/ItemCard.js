@@ -5,6 +5,7 @@ import { AiFillHeart, AiOutlineHeart, AiOutlineShopping, AiOutlineClose } from "
 import { useNavigate } from "react-router-dom";
 import logo from "../Images/logo.jpg";
 import { BsMenuButton } from "react-icons/bs";
+import axios from "axios";
 
 const ItemCard = ({
   id,
@@ -12,6 +13,8 @@ const ItemCard = ({
   price,
   name,
   brand,
+  optionID,
+  quantity,
   reviews = 0,
   cardStyle = 0,
   onCheckChange,
@@ -32,10 +35,23 @@ const ItemCard = ({
     onCheckChange(id); // 체크박스 상태를 부모 컴포넌트로 전달
   };
 
-  const onDeleteClick = () => {
+  const onDeleteClick = async () => {
     // 장바구니 상품 취소 버튼 클릭이벤트
+    try {
+      const response = await axios.post("http://loaclhost:8080/carts/delete", {
+        items: {
+          productId: id,
+          productOptionId: optionID,
+          quantity: quantity,
+        },
+      });
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
+  // 상품 소개용
   const renderCard1 = () => {
     return (
       <div className={styles.ItemCard}>
@@ -65,6 +81,7 @@ const ItemCard = ({
     );
   };
 
+  // 장바구니용
   const renderCard2 = () => {
     return (
       <div className={card2.ItemCard}>
@@ -85,8 +102,16 @@ const ItemCard = ({
           <div className={card2.price}>{price.toLocaleString()}원</div>
           <div className={card2.brand}>{brand}</div>
         </div>
+        <div>
+          <input
+            type="number"
+            style={{ width: 40 + "px" }}
+            className="border rounded text-center"
+            defaultValue={quantity}
+          />
+        </div>
         <div className={card2.buttonWrap}>
-          <button>
+          <button onClick={onDeleteClick}>
             <AiOutlineClose />
           </button>
         </div>
