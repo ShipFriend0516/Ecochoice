@@ -38,7 +38,7 @@ const ItemCard = ({
   const onDeleteClick = async () => {
     // 장바구니 상품 취소 버튼 클릭이벤트
     try {
-      const response = await axios.post("http://loaclhost:8080/carts/delete", {
+      const response = await axios.post("http://localhost:8080/carts/delete", {
         items: {
           productId: id,
           productOptionId: optionID,
@@ -89,6 +89,7 @@ const ItemCard = ({
           type="checkbox"
           className={`form-check-input ${card2.check}`}
           onChange={onCheckboxChange}
+          // defaultChecked={false}
           checked={checked}
         ></input>
 
@@ -107,6 +108,7 @@ const ItemCard = ({
             type="number"
             style={{ width: 40 + "px" }}
             className="border rounded text-center"
+            disabled
             defaultValue={quantity}
           />
         </div>

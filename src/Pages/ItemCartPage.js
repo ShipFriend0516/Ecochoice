@@ -51,8 +51,6 @@ const ItemCartPage = () => {
           `http://localhost:8080/products/${productID}/details`
         );
 
-        console.log("productDetail:", productDetail);
-
         cartItemsDetails.push(productDetail.data);
       }
 
@@ -77,15 +75,15 @@ const ItemCartPage = () => {
     return -1; // 찾지 못한 경우
   };
 
-  let dummyUser = {
-    UID: 1,
-    id: "orbita@example.com",
-    pw: "1234",
-    nickName: "오르비타",
-    membership: "Bronze",
-    profileImage: "https://i.gifer.com/5K4w.gif",
-    cartProductsID: [1, 2, 3, 4, 7, 8],
-  };
+  // let dummyUser = {
+  //   UID: 1,
+  //   id: "orbita@example.com",
+  //   pw: "1234",
+  //   nickName: "오르비타",
+  //   membership: "Bronze",
+  //   profileImage: "https://i.gifer.com/5K4w.gif",
+  //   cartProductsID: [1, 2, 3, 4, 7, 8],
+  // };
 
   const countCheckedItems = () => {
     const checkedItemValues = Object.values(checkedItems);
@@ -103,8 +101,6 @@ const ItemCartPage = () => {
   const calCheckedPrices = () => {
     const checkedItemValues = Object.values(checkedItems);
     let totalPrice = 0;
-    console.log("cart", cart);
-    console.log("products", products);
     cart.map((cartItem, index) => {
       if (checkedItemValues[index]) {
         const optionId = cartItem.productOptionId;
@@ -113,7 +109,7 @@ const ItemCartPage = () => {
         );
 
         const price = products[index].options[optionIndex].price;
-        console.log(price);
+
         totalPrice += price;
       }
     });
@@ -122,15 +118,13 @@ const ItemCartPage = () => {
 
   const calTotalPrices = () => {
     let totalPrice = 0;
-    // console.log(products, optionIdArray);
 
-    console.log(optionIdArray);
     totalPrice = products.reduce((acc, product, index) => {
       const optionId = parseInt(cart[index].productOptionId);
       const optionIndex = parseInt(findKeyByValue(product.options, optionId));
       return acc + product.options[optionIndex].price;
     }, 0);
-    console.log("tp", totalPrice);
+
     return totalPrice;
   };
 
@@ -143,7 +137,7 @@ const ItemCartPage = () => {
 
     // cart 배열의 각 상품에 대해 isCheckedItems의 키를 만들고 값을 전체 선택 상태로 설정합니다.
     cart.forEach((cartItem) => {
-      newCheckedItems[cartItem.id] = !isAllChecked;
+      newCheckedItems[cartItem.productId] = !isAllChecked;
     });
 
     setCheckedItems(newCheckedItems);
@@ -165,8 +159,7 @@ const ItemCartPage = () => {
             </button>
           </p>
           <p>
-            {dummyUser.nickName}님의 장바구니에 <b>{dummyUser.cartProductsID.length}</b>개의 상품이
-            존재합니다.
+            {""}님의 장바구니에 <b>{cart.length}</b>개의 상품이 존재합니다.
           </p>
         </div>
         <div className={`${styles.ItemCart}`}>
@@ -197,11 +190,12 @@ const ItemCartPage = () => {
                       img={product.thumbnailImageUrl}
                       price={product.options[optionIndex].price}
                       name={product.title}
-                      // brand={products.brand}
-                      quantity={cart.quantity}
+                      optionID={optionId}
+                      brand={products.brand}
+                      quantity={cart[index].quantity}
                       cardStyle={1}
                       onCheckChange={handleCheckboxChange}
-                      checked={checkedItems[cart.cartId]}
+                      checked={checkedItems[product.productId]}
                     />
                   );
                 })}
