@@ -19,6 +19,7 @@ const ItemCard = ({
   cardStyle = 0,
   onCheckChange,
   checked = false,
+  isUpdated,
 }) => {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -37,15 +38,19 @@ const ItemCard = ({
 
   const onDeleteClick = async () => {
     // 장바구니 상품 취소 버튼 클릭이벤트
+    const user = sessionStorage.getItem("user");
+
+    if (user) {
+      const userToken = JSON.parse(user).accessToken;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+    }
+    console.log(id, optionID, quantity);
     try {
       const response = await axios.post("http://localhost:8080/carts/delete", {
-        items: {
-          productId: id,
-          productOptionId: optionID,
-          quantity: quantity,
-        },
+        items: [{ productId: id, productOptionId: optionID, quantity: quantity }],
       });
       console.log(response);
+      isUpdated = true;
     } catch (err) {
       console.log(err);
     }

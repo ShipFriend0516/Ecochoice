@@ -191,11 +191,12 @@ const ItemCartPage = () => {
                       price={product.options[optionIndex].price}
                       name={product.title}
                       optionID={optionId}
-                      brand={products.brand}
+                      // brand={products.brand}
                       quantity={cart[index].quantity}
                       cardStyle={1}
                       onCheckChange={handleCheckboxChange}
                       checked={checkedItems[product.productId]}
+                      isUpdated={false}
                     />
                   );
                 })}
