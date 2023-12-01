@@ -5,6 +5,7 @@ import LoginModal from "./LoginModal";
 import logo from "../Images/logo.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../Store/authSlice";
+import useToast from "../hooks/toast";
 
 const Header = ({ isFixed, modalOpen }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,6 +19,8 @@ const Header = ({ isFixed, modalOpen }) => {
   const dispatch = useDispatch();
 
   const [error, setError] = useState("");
+  // 토스트
+  const { addToast } = useToast();
   const navigate = useNavigate();
 
   const MoveToTop = () => {
@@ -62,7 +65,6 @@ const Header = ({ isFixed, modalOpen }) => {
     if (userData) {
       dispatch(login(userData));
       const userInfo = await JSON.parse(sessionStorage.getItem("user"));
-      console.log(userInfo);
       setUser(userInfo);
     }
     setUserLoading(false);
@@ -70,6 +72,10 @@ const Header = ({ isFixed, modalOpen }) => {
 
   const logOut = () => {
     dispatch(logout());
+    addToast({
+      type: "danger",
+      text: "로그아웃되었습니다.",
+    });
   };
 
   useEffect(() => {
@@ -83,7 +89,6 @@ const Header = ({ isFixed, modalOpen }) => {
   }, [userLoading]);
 
   // ScrollSpy
-
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
@@ -125,7 +130,6 @@ const Header = ({ isFixed, modalOpen }) => {
     if (searchText === "") {
       return false;
     }
-
     return true;
   };
 
@@ -187,13 +191,11 @@ const Header = ({ isFixed, modalOpen }) => {
             <div onClick={myPageOnClick} className="px-1">
               마이페이지
             </div>
-            {/* <Link to={"/mypage"}>마이페이지</Link> */}
           </li>
           <li>
             <div onClick={cartOnClick} className="px-1" to={"/cart"}>
               장바구니
             </div>
-            {/* <Link to={"/cart"}>장바구니</Link> */}
           </li>
           {isLoggedIn ? (
             <li onClick={logOut}>

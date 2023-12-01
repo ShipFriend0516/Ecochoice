@@ -77,3 +77,23 @@ const FetchTest = () => {
 };
 
 export default FetchTest;
+
+// const a = {
+//   items: [
+//     [
+//       { cartId: 7, productId: 15, productOptionId: 17, quantity: 1 },
+//       { cartId: 6, productId: 2, productOptionId: 4, quantity: 1 },
+//       { cartId: 1, productId: 5, productOptionId: 7, quantity: 1 },
+//     ],
+//   ],
+// };
+
+const b = {
+  items: [
+    [
+      { productId: 15, productOptionId: 17, quantity: 1 },
+      { productId: 2, productOptionId: 4, quantity: 1 },
+      { productId: 5, productOptionId: 7, quantity: 1 },
+    ],
+  ],
+};

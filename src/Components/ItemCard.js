@@ -19,11 +19,12 @@ const ItemCard = ({
   cardStyle = 0,
   onCheckChange,
   checked = false,
-  isUpdated,
+  cart,
+  updateFunc,
 }) => {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+
   const onLikeClick = () => {
     setIsLiked((prev) => !prev);
   };
@@ -50,7 +51,8 @@ const ItemCard = ({
         items: [{ productId: id, productOptionId: optionID, quantity: quantity }],
       });
       console.log(response);
-      isUpdated = true;
+      updateFunc(id);
+      // console.log(cart);
     } catch (err) {
       console.log(err);
     }

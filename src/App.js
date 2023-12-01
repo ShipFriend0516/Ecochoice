@@ -12,24 +12,18 @@ import Payments from "./Components/Payments";
 import OrderPage from "./Pages/OrderPage";
 import SellPage from "./Pages/SellPage";
 import FetchTest from "./Components/FetchTest";
+import Toast from "./Components/Toast";
+import { useSelector } from "react-redux";
+import { removeToast } from "./Store/toastSlice";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
-
-  const handleLoginSuccess = (user) => {
-    setIsLoggedIn(true);
-    setUser(user);
-  };
+  const toasts = useSelector((state) => state.toast.toasts);
 
   return (
     <Router>
+      <Toast toasts={toasts} deleteToast={removeToast} />
       <Routes>
-        <Route
-          key={"/"}
-          path={"/"}
-          element={<HomePage onLoginSuccess={handleLoginSuccess} />}
-        ></Route>
+        <Route key={"/"} path={"/"} element={<HomePage />}></Route>
         <Route key={"/mypage"} path={"/mypage"} element={<MyPage />}></Route>
         <Route key={"/products/:id"} path={"/products/:id"} element={<ItemDetailPage />}></Route>
         <Route

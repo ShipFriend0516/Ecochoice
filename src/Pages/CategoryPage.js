@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import useToast from "../hooks/toast";
 
 const CategoryPage = () => {
   const [products, setProducts] = useState([]);
@@ -13,6 +14,8 @@ const CategoryPage = () => {
 
   const { categoryID } = useParams();
   const navigate = useNavigate();
+
+  const { addToast } = useToast();
 
   const getProducts = async () => {
     try {
@@ -38,11 +41,11 @@ const CategoryPage = () => {
 
   const getCategoryName = async () => {
     try {
-      // const user = sessionStorage.getItem("user");
+      const user = sessionStorage.getItem("user");
 
-      // const userToken = await JSON.parse(user).accessToken;
+      const userToken = await JSON.parse(user).accessToken;
 
-      // axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
       const response = await axios.get(`http://localhost:8080/categories`);
       const categoryList = response.data;
       const categoryIndex = categoryList.findIndex((data) => data.id === parseInt(categoryID));
@@ -52,7 +55,10 @@ const CategoryPage = () => {
     } catch (error) {
       console.error(error);
       console.error("카테고리 이름 불러오기 실패");
-      // navigate("/error");
+      addToast({
+        type: "danger",
+        text: "카테고리 이름 불러오기 실패",
+      });
     }
   };
 
@@ -69,7 +75,7 @@ const CategoryPage = () => {
         {loading ? (
           <div className="d-flex p-5 h-100 flex-column align-items-center fs-1">
             <div class="spinner-border text-success" role="status">
-              <span class="visually-hidden">Loading...</span>
+              <span className="visually-hidden">Loading...</span>
             </div>
           </div>
         ) : (

@@ -2,22 +2,27 @@ import styles from "../Styles/LoginPage.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../Store/authSlice";
+import { login } from "../Store/authSlice";
+import useToast from "../hooks/toast";
 
 const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   const [isRegistered, setIsRegistered] = useState(true);
   const [id, setID] = useState("");
   const [pw, setPW] = useState("");
   const [pwCheck, setPWCheck] = useState("");
   const [error, setError] = useState("");
+  // 토스트
+  const { addToast } = useToast();
+
   const canvasOnClick = () => {
     loginOnClick();
     setError("");
     setID("");
     setPW("");
     setPWCheck("");
+    setIsRegistered(true);
   };
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -25,23 +30,21 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
       try {
         let validateCode = LoginValidate();
         if (validateCode === true) {
-          console.log("유효성 검사 통과");
-          console.log("id", id, "pw", pw);
           const response = await axios.post(`http://localhost:8080/auth/sign-in`, {
             email: id,
             password: pw,
           });
-          console.log(response);
+
           const result = await response.data;
           if (result) {
             console.log("로그인 성공");
-            console.log(result);
-            // result 객체
+            // result => 객체
 
             const userJSON = JSON.stringify(result);
             console.log("userJSON", userJSON);
 
             dispatch(login(userJSON));
+            addToast({ type: "success", text: "로그인 성공! 환영합니다." });
             console.log("유저 정보 기록");
             loginOnClick();
           } else {

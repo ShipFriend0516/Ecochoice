@@ -10,9 +10,9 @@ import Review from "../Components/Review";
 import logo from "../Images/logo.jpg";
 import LoginModal from "../Components/LoginModal";
 import { FaCheck } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const ItemDetailPage = ({ imgPath }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [reviewLoading, setReviewLoading] = useState(true);
@@ -36,6 +36,7 @@ const ItemDetailPage = ({ imgPath }) => {
 
   // 로그인
   const [isVisible, setIsVisible] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const getProduct = async () => {
     try {
@@ -99,7 +100,7 @@ const ItemDetailPage = ({ imgPath }) => {
 
   const onCartClick = async (e) => {
     // 장바구니 버튼 클릭시
-    if (userValidate()) {
+    if (isLoggedIn) {
       if (cartValidate()) {
         console.log("장바구니 클릭");
         // axios.defaults.headers.common["Authorization"] = `Bearer ${user}`;
@@ -122,15 +123,10 @@ const ItemDetailPage = ({ imgPath }) => {
   };
   const onBuyClick = () => {
     // 구매하기 버튼 클릭시
-    if (userValidate()) {
+    if (isLoggedIn) {
     } else {
       toggleModal();
     }
-  };
-
-  const userValidate = () => {
-    if (user) return true;
-    return false;
   };
 
   const cartValidate = () => {
@@ -146,7 +142,7 @@ const ItemDetailPage = ({ imgPath }) => {
   };
 
   const onStarClick = (star) => {
-    if (userValidate()) {
+    if (isLoggedIn) {
       setRating(star);
     } else {
       toggleModal();
@@ -236,7 +232,7 @@ const ItemDetailPage = ({ imgPath }) => {
                     )}
                     <div>
                       <div className={`${styles.btn_group}`}>
-                        <span>
+                        <span className="">
                           <button
                             className="btn border btn-sm dropdown-toggle"
                             type="button"

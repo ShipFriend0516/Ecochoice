@@ -5,17 +5,16 @@ import styles from "../Styles/ItemCartPage.module.css";
 import ItemCard from "../Components/ItemCard";
 import axios from "axios";
 import { useNavigate } from "react-router";
-
+import { useSelector } from "react-redux";
 const ItemCartPage = () => {
   // props로 유저를 받아와, 유저마다 다른 장바구니를 적용
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
-  const [optionIdArray, setOptionIdArray] = useState([]);
-  const [optionIdIndexArray, setOptionIdIndexArray] = useState([]);
   const [loading, setLoading] = useState(true);
   const [checkedItems, setCheckedItems] = useState([]);
   const [isAllChecked, setIsAllChecked] = useState(false);
-  const [user, setUser] = useState(null);
+
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const navigate = useNavigate();
 
@@ -32,7 +31,6 @@ const ItemCartPage = () => {
 
       setCart(userCartList);
 
-      setOptionIdArray(userCartList.map((cartItem) => cartItem.productOptionId));
       return userCartList;
     } else {
       console.log("User not found");
@@ -41,7 +39,7 @@ const ItemCartPage = () => {
   };
 
   const getCartItemsDetail = async () => {
-    const cartItems = await getCartItems();
+    const cartItems = cart;
     // 상품 정보 디테일을 담을 빈 배열 선언
     const cartItemsDetails = [];
 
@@ -51,10 +49,8 @@ const ItemCartPage = () => {
         const productDetail = await axios.get(
           `http://localhost:8080/products/${productID}/details`
         );
-
         cartItemsDetails.push(productDetail.data);
       }
-
       setProducts(cartItemsDetails);
       setLoading(false);
     } catch (error) {
@@ -62,11 +58,25 @@ const ItemCartPage = () => {
     }
   };
 
+  // 장바구니에서 로그아웃될 경우 홈페이지로 이동
+  useEffect(() => {
+    if (!loading) {
+      if (!isLoggedIn) {
+        navigate("/");
+      }
+    }
+  }, [loading, isLoggedIn]);
+
+  // 상품의 정보를 읽어오는 요청
   useEffect(() => {
     getCartItems();
-    getCartItemsDetail();
   }, []);
 
+  useEffect(() => {
+    getCartItemsDetail();
+  }, [cart]);
+
+  // 상품 가격과 상품 선택
   const findKeyByValue = (arr, value) => {
     for (let index = 0; index < arr.length; index++) {
       if (arr[index].productOptionId === value) {
@@ -134,6 +144,48 @@ const ItemCartPage = () => {
     setCheckedItems(newCheckedItems);
   };
 
+  const handleUpdate = (id) => {
+    setCart((prevCart) => prevCart.filter((cartItem) => cartItem.productId !== id));
+    setLoading(true);
+  };
+
+  const allCancelClick = async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/carts/delete", {
+        items: cart.map((cartItem) => {
+          return {
+            productId: cartItem.productId,
+            productOptionId: cartItem.productOptionId,
+            quantity: cartItem.quantity,
+          };
+        }),
+      });
+
+      console.log(response);
+      setCart([]);
+      setProducts([]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const selectCancelClick = async () => {
+    let checkedItemsId = Object.keys(checkedItems);
+    checkedItemsId = checkedItemsId.map((checkedItem) => parseInt(checkedItem));
+    console.log(checkedItemsId);
+    try {
+      const response = await axios.post("http://localhost:8080/carts/delete", {
+        items: cart.filter((cartItem) => checkedItemsId.includes(cartItem.productId)),
+      });
+      console.log(response);
+      checkedItemsId.map((checkedItem) => handleUpdate(checkedItem));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const selectOrderClick = async () => {};
+  const allOrderClick = async () => {};
+
   return (
     <div className={`${styles.ItemCartPageWrapper}`}>
       <Header isFixed={true} />
@@ -187,7 +239,8 @@ const ItemCartPage = () => {
                       cardStyle={1}
                       onCheckChange={handleCheckboxChange}
                       checked={checkedItems[product.productId]}
-                      isUpdated={false}
+                      cart={cart}
+                      updateFunc={handleUpdate}
                     />
                   );
                 })}
@@ -197,13 +250,16 @@ const ItemCartPage = () => {
                 {calTotalPrices().toLocaleString()}원
               </div>
               <div className={styles.buttonWrap}>
-                <button className={`btn btn-outline-dark btn-lg`}>모두 취소하기</button>
-                <button
-                  onClick={() => {
-                    navigate("/order");
-                  }}
-                  className={`btn btn-outline-dark btn-lg`}
-                >
+                <button className={`btn btn-outline-dark btn-lg`} onClick={selectCancelClick}>
+                  선택 취소하기
+                </button>
+                <button className={`btn btn-outline-dark btn-lg`} onClick={allCancelClick}>
+                  모두 취소하기
+                </button>
+                <button className={`btn btn-outline-dark btn-lg`} onClick={selectOrderClick}>
+                  선택 결제하기
+                </button>
+                <button onClick={allOrderClick} className={`btn btn-outline-dark btn-lg`}>
                   모두 결제하기
                 </button>
               </div>
