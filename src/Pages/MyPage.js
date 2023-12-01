@@ -28,7 +28,23 @@ const MyPage = () => {
             <div>등급 브론즈</div>
           </div>
         </div>
-        <div className={`${styles.myPageDetail}`}></div>
+        <div className={`${styles.myPageDetail}`}>
+            <div className="fs-3 text-center mt-3">회원정보</div>
+            <hr />
+          <div className="me-3">
+            <div>회원번호</div>
+            <hr />
+            <div>이름</div>
+            <hr />
+            <div>회원 등급</div>
+            <hr />
+            <div>이메일</div>
+            <hr />
+            <div>전화번호</div>
+            <hr />
+          </div>
+
+        </div>
       </div>
     </div>
   );
