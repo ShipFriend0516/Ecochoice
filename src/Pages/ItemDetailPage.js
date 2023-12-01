@@ -40,10 +40,11 @@ const ItemDetailPage = ({ imgPath }) => {
   const getProduct = async () => {
     try {
       const user = sessionStorage.getItem("user");
+      if (user) {
+        const userToken = await JSON.parse(user).accessToken;
 
-      const userToken = await JSON.parse(user).accessToken;
-
-      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      }
 
       const response = await axios.get(`http://localhost:8080/products/${id}/details`);
       const result = await response.data;
@@ -54,12 +55,6 @@ const ItemDetailPage = ({ imgPath }) => {
       console.error("상품 세부 정보를 불러오는데 실패했습니다.", err);
       // navigate("/error");
     }
-  };
-
-  const getUser = async () => {
-    const userData = sessionStorage.getItem("user");
-    const userToken = JSON.parse(userData).accessToken;
-    setUser(userToken);
   };
 
   const getReviews = async () => {
@@ -75,7 +70,6 @@ const ItemDetailPage = ({ imgPath }) => {
 
   useEffect(() => {
     getProduct();
-    getUser();
   }, []);
 
   useEffect(() => {

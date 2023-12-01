@@ -1,8 +1,12 @@
 import styles from "../Styles/LoginPage.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../Store/authSlice";
 
-const LoginModal = ({ loginOnClick, isOpen, errMsg = "", setIsLoggedIn, isLoggedIn }) => {
+const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [isRegistered, setIsRegistered] = useState(true);
   const [id, setID] = useState("");
   const [pw, setPW] = useState("");
@@ -28,15 +32,18 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "", setIsLoggedIn, isLogged
             password: pw,
           });
           console.log(response);
-          const result = response.data;
+          const result = await response.data;
           if (result) {
             console.log("로그인 성공");
             console.log(result);
+            // result 객체
+
             const userJSON = JSON.stringify(result);
-            sessionStorage.setItem("user", userJSON);
+            console.log("userJSON", userJSON);
+
+            dispatch(login(userJSON));
             console.log("유저 정보 기록");
             loginOnClick();
-            setIsLoggedIn(true);
           } else {
             console.log("로그인 실패");
             setError("로그인에 실패했습니다.");

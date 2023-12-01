@@ -19,6 +19,7 @@ const ItemCartPage = () => {
 
   const navigate = useNavigate();
 
+  // 상품 정보 조회 API
   const getCartItems = async () => {
     const user = sessionStorage.getItem("user");
 
@@ -74,16 +75,6 @@ const ItemCartPage = () => {
     }
     return -1; // 찾지 못한 경우
   };
-
-  // let dummyUser = {
-  //   UID: 1,
-  //   id: "orbita@example.com",
-  //   pw: "1234",
-  //   nickName: "오르비타",
-  //   membership: "Bronze",
-  //   profileImage: "https://i.gifer.com/5K4w.gif",
-  //   cartProductsID: [1, 2, 3, 4, 7, 8],
-  // };
 
   const countCheckedItems = () => {
     const checkedItemValues = Object.values(checkedItems);

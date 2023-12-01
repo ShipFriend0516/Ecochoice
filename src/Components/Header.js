@@ -3,8 +3,10 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import logo from "../Images/logo.jpg";
+import { useSelector, useDispatch } from "react-redux";
+import { login, logout } from "../Store/authSlice";
 
-const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
+const Header = ({ isFixed, modalOpen }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const documentHeight = document.body.scrollHeight - window.innerHeight;
@@ -12,7 +14,9 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -30,8 +34,17 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
   };
 
   const cartOnClick = () => {
-    if (user !== null) {
+    if (isLoggedIn) {
       navigate("/cart");
+    } else {
+      loginOnClick();
+      setError("로그인이 필요한 서비스입니다.");
+    }
+  };
+
+  const myPageOnClick = () => {
+    if (isLoggedIn) {
+      navigate("/mypage");
     } else {
       loginOnClick();
       setError("로그인이 필요한 서비스입니다.");
@@ -45,27 +58,23 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
   }, []);
 
   const userLoad = async () => {
-    const userInfo = await JSON.parse(sessionStorage.getItem("user"));
-    setUser(userInfo);
-    setUserLoading(false);
-    if (user) {
-      setIsLoggedIn(true);
+    const userData = sessionStorage.getItem("user");
+    if (userData) {
+      dispatch(login(userData));
+      const userInfo = await JSON.parse(sessionStorage.getItem("user"));
+      console.log(userInfo);
+      setUser(userInfo);
     }
+    setUserLoading(false);
   };
 
   const logOut = () => {
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
+    dispatch(logout());
   };
 
   useEffect(() => {
     try {
       userLoad();
-      if (user === null) {
-        setIsLoggedIn(false);
-      } else {
-        setIsLoggedIn(true);
-      }
     } catch (e) {
       console.error("유저 정보가 없음", e);
     } finally {
@@ -175,7 +184,10 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
             <AiOutlineSearch onClick={onSubmit} />
           </li>
           <li>
-            <Link to={"/mypage"}>마이페이지</Link>
+            <div onClick={myPageOnClick} className="px-1">
+              마이페이지
+            </div>
+            {/* <Link to={"/mypage"}>마이페이지</Link> */}
           </li>
           <li>
             <div onClick={cartOnClick} className="px-1" to={"/cart"}>
@@ -185,9 +197,7 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
           </li>
           {isLoggedIn ? (
             <li onClick={logOut}>
-              {!userLoading && (
-                <img className="profileImg" srcSet={[user.profileImage, logo]} alt="profile" />
-              )}
+              {!userLoading && <img className="profileImg" srcSet={[logo]} alt="profile" />}
             </li>
           ) : (
             <li id="login" onClick={loginOnClick}>
@@ -200,7 +210,6 @@ const Header = ({ isFixed, modalOpen, onLoginSuccess }) => {
         loginOnClick={loginOnClick}
         isOpen={isVisible}
         errMsg={user ? null : error}
-        setIsLoggedIn={setIsLoggedIn}
         isLoggedIn={isLoggedIn}
       />
     </>
