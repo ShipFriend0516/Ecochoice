@@ -26,10 +26,12 @@
 }
 
 .ItemCartTitle {
-  font-size: 2em;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 30px;
+  font-size: 30px;
+  
+  color: #354032;
+  border-radius: 0.25em;
+  padding: 10px 40px;
+  font-weight: 100;
 }
 
 .ItemCart {

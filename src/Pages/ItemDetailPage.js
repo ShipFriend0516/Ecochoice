@@ -98,22 +98,26 @@ const ItemDetailPage = ({ imgPath }) => {
     setIsVisible((prev) => !prev);
   };
 
+  const addCartItem = async () => {
+    console.log("장바구니 클릭");
+
+    console.log("장바구니에 담으려는 item 객체", id, selectedOptionId, quantity);
+    const response = await axios.post("http://localhost:8080/carts", {
+      item: {
+        productId: id,
+        productOptionId: selectedOptionId,
+        quantity: quantity,
+      },
+    });
+    console.log(response);
+    setIsCarted(true);
+  };
+
   const onCartClick = async (e) => {
     // 장바구니 버튼 클릭시
     if (isLoggedIn) {
       if (cartValidate()) {
-        console.log("장바구니 클릭");
-        // axios.defaults.headers.common["Authorization"] = `Bearer ${user}`;
-        console.log("장바구니에 담으려는 item 객체", id, selectedOptionId, quantity);
-        const response = await axios.post("http://localhost:8080/carts", {
-          item: {
-            productId: id,
-            productOptionId: selectedOptionId,
-            quantity: quantity,
-          },
-        });
-        console.log(response);
-        setIsCarted(true);
+        addCartItem();
       } else {
         console.log("장바구니에 넣을 상품을 다시 확인해주세요.");
       }
@@ -121,9 +125,15 @@ const ItemDetailPage = ({ imgPath }) => {
       toggleModal();
     }
   };
-  const onBuyClick = () => {
+  const onBuyClick = async () => {
     // 구매하기 버튼 클릭시
     if (isLoggedIn) {
+      if (cartValidate()) {
+        await addCartItem();
+        navigate(`/order?checkedItems=${id}`);
+      } else {
+        console.log("장바구니에 넣을 상품을 다시 확인해주세요.");
+      }
     } else {
       toggleModal();
     }

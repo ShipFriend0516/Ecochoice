@@ -78,10 +78,11 @@ const SearchPage = () => {
             </button>
           </div>
           <div className={styles.searchResult}>
-            <div className={`pt-3`}>
+            <div className={"d-flex flex-row justify-content-between pt-3"}>
               <p>
                 [ {searchText} ] 에 대한 검색 결과입니다. 총 {searchResult.length} 개 상품 검색됨
               </p>
+              <select />
             </div>
             <hr />
             <div className="ItemList">
