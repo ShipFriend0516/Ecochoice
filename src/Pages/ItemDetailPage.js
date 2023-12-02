@@ -212,7 +212,11 @@ const ItemDetailPage = ({ imgPath }) => {
               <div className={`${styles.detailTop} d-flex flex-row`}>
                 {/* 이미지 */}
                 <div className={`${styles.imgWrapper}`}>
-                  <img src={product.thumbnailImageUrl} alt="상품디테일" />
+                  {product.thumbnailImageUrl ? (
+                    <img src={product.thumbnailImageUrl} alt="상품디테일" />
+                  ) : (
+                    <img src={logo} alt="이미지 없음!" />
+                  )}
                 </div>
                 {/* 설명 */}
                 <div className={`${styles.itemInfoWrapper} d-flex flex-column`}>
@@ -306,7 +310,11 @@ const ItemDetailPage = ({ imgPath }) => {
                     <span className="fs-2">{product.title}</span>
                     <span>가격 : {product.representativeOption.price.toLocaleString()}원</span>
                     <p>{product.contents}</p>
-                    <img src={product.thumbnailImageUrl} alt="상품이미지" />
+                    {product.thumbnailImageUrl ? (
+                      <img src={product.thumbnailImageUrl} alt="상품디테일" />
+                    ) : (
+                      <img src={logo} alt="이미지 없음!" />
+                    )}
                   </div>
                 </div>
                 <div className={styles.reviews}>

@@ -29,6 +29,21 @@
   padding: 12px 0;
 }
 
+.itemGrid > div img {
+  width: 30%;
+  border-radius: .5em;
+  aspect-ratio: 1/1;
+  border: 1px solid lightgray;
+  overflow: hidden;
+  margin-right: 10px;
+}
+
+.itemGrid > div > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .gridheader {
   border-top: 1px solid black;
   border-bottom: 1px solid black;
@@ -74,7 +89,7 @@
 }
 
 .bill {
-  box-shadow: 5px 5px 30px rgb(186, 186, 186);
+  box-shadow: 5px 5px 30px rgb(194, 194, 194);
   margin: 0 auto;
   width: 86%;
   border-radius: 1em;
@@ -91,6 +106,10 @@
 .rightSide button:first-of-type {
   background-color: black;
   color: white;
+}
+
+.productRow {
+  border-bottom: 1px solid lightgray;
 }
 
 .bg button:hover {
@@ -113,6 +132,10 @@ table tr {
 }
 table th {
   border-right: 1px solid #d4d4d4;
+}
+
+table tr > td:last-child {
+  text-align: right;
 }
 
 table td {

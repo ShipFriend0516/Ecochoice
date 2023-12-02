@@ -70,11 +70,10 @@ const CategoryPage = () => {
   return (
     <div className={styles.categoryPageWrapper}>
       <Header isFixed={true} />
-
       <div className={styles.categoryWrapper}>
         {loading ? (
           <div className="d-flex p-5 h-100 flex-column align-items-center fs-1">
-            <div class="spinner-border text-success" role="status">
+            <div className="spinner-border text-success" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
           </div>

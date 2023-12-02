@@ -183,8 +183,22 @@ const ItemCartPage = () => {
       console.log(err);
     }
   };
-  const selectOrderClick = async () => {};
-  const allOrderClick = async () => {};
+
+  const selectOrderClick = async () => {
+    const checkedItemString = Object.keys(checkedItems).join(",");
+    console.log(checkedItemString);
+    if (cart.length > 0) {
+      console.log(checkedItemString);
+
+      navigate(`/order?checkedItems=${checkedItemString}`);
+    }
+  };
+
+  const allOrderClick = async () => {
+    if (cart.length > 0) {
+      navigate(`/order`);
+    }
+  };
 
   return (
     <div className={`${styles.ItemCartPageWrapper}`}>
