@@ -105,7 +105,7 @@ nav.navbar ul li#login {
 }
 
 nav.navbar ul li:hover {
-  color: rgb(0, 0, 0);
+  color: rgb(48, 55, 39);
 }
 
 nav.navbar span {
@@ -243,7 +243,10 @@ div.scrollSpy span {
 .introPicWrap img {
   border-radius: 20px;
   width: 22%;
+  aspect-ratio: 16/9;
 }
+
+
 
 /* Main Wrap Styles */
 .mainWrap {

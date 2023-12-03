@@ -36,7 +36,8 @@
   z-index: 1;
   margin: 0 auto;
   cursor: pointer;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1/1 ;
+  object-fit: cover;
 }
 
 .ItemCard:hover  .cover {

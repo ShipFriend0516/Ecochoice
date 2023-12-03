@@ -117,7 +117,8 @@ const OrderPage = () => {
     try {
       await paymentWidget?.requestPayment({
         orderId: nanoid(),
-        orderName: "지구를 지켜요 후드티",
+        orderName:
+          products.length >= 2 ? products[0].title + " 외 " + products.length : products[0].title,
         customerName: "지구인",
         customerEmail: "orbita@gmail.com",
         successUrl: `${window.location.origin}/success`,
@@ -171,9 +172,9 @@ const OrderPage = () => {
                   totalPrice += price * quantity;
                   return (
                     <div className={styles.productRow} key={product.productId}>
-                      <span>
+                      <span className="d-flex flex-row justify-content-between">
                         <img src={product.thumbnailImageUrl} alt={product.title + "이미지"}></img>
-                        <span>{product.title}</span>
+                        <span className="flex-grow-1">{product.title}</span>
                       </span>
                       <span>{product.options[optionIndex].title}</span>
                       <span>{price.toLocaleString()}원</span>

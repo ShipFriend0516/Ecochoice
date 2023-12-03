@@ -185,12 +185,17 @@ const ItemCartPage = () => {
   };
 
   const selectOrderClick = async () => {
-    const checkedItemString = Object.keys(checkedItems).join(",");
-    console.log(checkedItemString);
-    if (cart.length > 0) {
+    const checkedItemsArray = Object.keys(checkedItems);
+    if (checkedItemsArray.length > 0) {
+      const checkedItemString = checkedItemsArray.join(",");
       console.log(checkedItemString);
+      if (cart.length > 0) {
+        console.log(checkedItemString);
 
-      navigate(`/order?checkedItems=${checkedItemString}`);
+        navigate(`/order?checkedItems=${checkedItemString}`);
+      }
+    } else {
+      console.log("선택된 상품이 없습니다.");
     }
   };
 

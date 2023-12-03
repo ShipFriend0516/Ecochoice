@@ -120,7 +120,7 @@ const Home = ({ onLoginSuccess }) => {
             {loading || reviewLoading ? "loading..." : renderItemList(2)}
           </div>
           <MoreBtn categoryID={2} />
-          <SubTitle title={"생활용품 💡"} summary={"가장 최신의 제품을 만나보세요."} />
+          <SubTitle title={"생활용품 💡"} summary={"친환경적인 생활용품을 만나보세요."} />
           <div className="ItemList">
             {loading || reviewLoading ? "loading..." : renderItemList(5)}
           </div>
