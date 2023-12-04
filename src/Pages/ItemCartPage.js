@@ -110,8 +110,8 @@ const ItemCartPage = () => {
         );
 
         const price = products[index].options[optionIndex].price;
-
-        totalPrice += price;
+        const quantity = cart[index].quantity;
+        totalPrice += price * quantity;
       }
     });
     return totalPrice;
@@ -123,7 +123,8 @@ const ItemCartPage = () => {
     totalPrice = products.reduce((acc, product, index) => {
       const optionId = parseInt(cart[index].productOptionId);
       const optionIndex = parseInt(findKeyByValue(product.options, optionId));
-      return acc + product.options[optionIndex].price;
+      const quantity = cart[index].quantity;
+      return acc + product.options[optionIndex].price * quantity;
     }, 0);
 
     return totalPrice;
