@@ -11,6 +11,7 @@ import logo from "../Images/logo.jpg";
 import LoginModal from "../Components/LoginModal";
 import { FaCheck } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import useToast from "../hooks/toast";
 
 const ItemDetailPage = ({ imgPath }) => {
   const [product, setProduct] = useState(null);
@@ -23,6 +24,7 @@ const ItemDetailPage = ({ imgPath }) => {
   const [quantity, setQuantity] = useState(1);
   const [cartValidateMsg, setCartValidateMsg] = useState("");
   const [isCarted, setIsCarted] = useState(false);
+  const { addToast } = useToast();
 
   // 리뷰 관련
   const [reviews, setReviews] = useState([]);
@@ -118,6 +120,7 @@ const ItemDetailPage = ({ imgPath }) => {
     if (isLoggedIn) {
       if (cartValidate()) {
         addCartItem();
+        addToast({ type: "success", text: "장바구니에 담았습니다!" });
       } else {
         console.log("장바구니에 넣을 상품을 다시 확인해주세요.");
       }

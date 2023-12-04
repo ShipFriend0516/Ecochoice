@@ -24,9 +24,33 @@ const OrderPage = () => {
   const deliveryFee = 2000;
   let salePrice = 0;
 
+  // 배송지 및 결제 정보
+  const [userPayInfo, setUserPayInfo] = useState([]); // 유저 정보
+  const [deliveryInfo, setDeliveryInfo] = useState([]); // 배송정보
+
+  const [userName, setUserName] = useState(""); //
+  const [userTelFirst, setUserTelFirst] = useState("");
+  const [userTelSecond, setUserTelSecond] = useState("");
+  const [userTelThird, setUserTelThird] = useState("");
+  const [userPhoneFirst, setUserPhoneFirst] = useState("010");
+  const [userPhoneSecond, setUserPhoneSecond] = useState("");
+  const [userPhoneThird, setUserPhoneThird] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  const [deliveryName, setDeliveryName] = useState("");
+  const [deliveryAddress1, setDeliveryAddress1] = useState("");
+  const [deliveryAddress2, setDeliveryAddress2] = useState("");
+  const [deliveryZip, setDeliveryZip] = useState(0);
+  const [deliveryRequest, setDeliveryRequest] = useState("");
+
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    console.log(userPayInfo, deliveryInfo);
+  }, [userPayInfo, deliveryInfo]);
+
   // 로딩
   const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
 
   // 로그인 여부
@@ -86,6 +110,39 @@ const OrderPage = () => {
       }
     }
   };
+
+  const infoValidate = () => {
+    if (!userName) {
+      setError("이름은 필수 항목입니다.");
+      return false;
+    }
+    if (!(userTelFirst && userTelSecond && userTelThird)) {
+      setError("전화번호가 잘못된 입력입니다.");
+      return false;
+    }
+    if (!(userPhoneFirst && userPhoneSecond && userPhoneThird)) {
+      setError("휴대폰번호가 잘못된 입력입니다.");
+      return false;
+    }
+    if (!userEmail) {
+      setError("이메일은 필수 항목입니다.");
+      return false;
+    }
+    if (!deliveryName) {
+      setError("받는 분 이름은 필수입니다.");
+      return false;
+    }
+    if (!(deliveryAddress1 && deliveryAddress2)) {
+      setError("배송지 주소를 다시 한번 확인해주세요");
+      return false;
+    }
+    if (!deliveryZip) {
+      setError("우편번호는 필수입니다.");
+      return false;
+    }
+    return true;
+  };
+
   // 로그인 여부 확인
   useEffect(() => {
     if (!loading) {
@@ -112,20 +169,36 @@ const OrderPage = () => {
   }, []);
 
   const payBtnClick = async () => {
+    setError(null);
     const paymentWidget = paymentWidgetRef.current;
+    if (infoValidate()) {
+      try {
+        setUserPayInfo({
+          userName,
+          userEmail,
+          userPhone: userPhoneFirst + userPhoneSecond + userPhoneThird,
+          userTel: userTelFirst + userTelSecond + userTelThird,
+        });
 
-    try {
-      await paymentWidget?.requestPayment({
-        orderId: nanoid(),
-        orderName:
-          products.length >= 2 ? products[0].title + " 외 " + products.length : products[0].title,
-        customerName: "지구인",
-        customerEmail: "orbita@gmail.com",
-        successUrl: `${window.location.origin}/success`,
-        failUrl: `${window.location.origin}/fail`,
-      });
-    } catch (err) {
-      console.log(err);
+        setDeliveryInfo({
+          deliveryName,
+          deliveryZip,
+          deliveryAddress: `${deliveryAddress1} ${deliveryAddress2}`,
+          deliveryRequest,
+        });
+
+        await paymentWidget?.requestPayment({
+          orderId: nanoid(),
+          orderName:
+            products.length >= 2 ? products[0].title + " 외 " + products.length : products[0].title,
+          customerName: userName,
+          customerEmail: userEmail,
+          successUrl: `${window.location.origin}/success`,
+          failUrl: `${window.location.origin}/fail`,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -201,7 +274,11 @@ const OrderPage = () => {
                         <tr>
                           <th scope="row">이름</th>
                           <td>
-                            <input className="form-control" type="text" />
+                            <input
+                              onChange={(e) => setUserName(e.target.value)}
+                              className="form-control"
+                              type="text"
+                            />
                           </td>
                         </tr>
                         <tr className={`${styles.tel}`}>
@@ -209,15 +286,30 @@ const OrderPage = () => {
                           <td>
                             <div className="row">
                               <div className="col">
-                                <input className="form-control" type="text" />
+                                <input
+                                  onChange={(e) => setUserTelFirst(e.target.value)}
+                                  className="form-control"
+                                  maxLength={4}
+                                  type="text"
+                                />
                               </div>
                               -{" "}
                               <div className="col">
-                                <input className="form-control" type="text" />
+                                <input
+                                  onChange={(e) => setUserTelSecond(e.target.value)}
+                                  className="form-control"
+                                  maxLength={4}
+                                  type="text"
+                                />
                               </div>
                               -{" "}
                               <div className="col">
-                                <input className="form-control" type="text" />
+                                <input
+                                  onChange={(e) => setUserTelThird(e.target.value)}
+                                  className="form-control"
+                                  maxLength={4}
+                                  type="text"
+                                />
                               </div>
                             </div>
                           </td>
@@ -228,8 +320,8 @@ const OrderPage = () => {
                             <div className="row">
                               <div className="col">
                                 <select
-                                  name="cp[]"
                                   defaultValue="010"
+                                  onChange={(e) => setUserPhoneFirst(e.target.value)}
                                   className="required form-select"
                                 >
                                   <option value="010">010</option>
@@ -241,11 +333,21 @@ const OrderPage = () => {
                               </div>
                               -{" "}
                               <div className="col">
-                                <input className="form-control" type="text" />
+                                <input
+                                  onChange={(e) => setUserPhoneSecond(e.target.value)}
+                                  className="form-control"
+                                  maxLength={4}
+                                  type="text"
+                                />
                               </div>
                               -{" "}
                               <div className="col">
-                                <input className="form-control" type="text" />
+                                <input
+                                  onChange={(e) => setUserPhoneThird(e.target.value)}
+                                  className="form-control"
+                                  maxLength={4}
+                                  type="text"
+                                />
                               </div>
                             </div>
                           </td>
@@ -254,6 +356,7 @@ const OrderPage = () => {
                           <th scope="row">이메일</th>
                           <td>
                             <input
+                              onChange={(e) => setUserEmail(e.target.value)}
                               className="form-control"
                               type="text"
                               data-require_msg="이메일주소를"
@@ -270,7 +373,11 @@ const OrderPage = () => {
                         <tr>
                           <th scope="row">받는 분 이름</th>
                           <td>
-                            <input className="form-control" type="text" />
+                            <input
+                              onChange={(e) => setDeliveryName(e.target.value)}
+                              className="form-control"
+                              type="text"
+                            />
                           </td>
                         </tr>
                         <tr className={`${styles.address}`}>
@@ -279,6 +386,7 @@ const OrderPage = () => {
                             <div className="row">
                               <div className="col">
                                 <input
+                                  onChange={(e) => setDeliveryZip(e.target.value)}
                                   className="form-control"
                                   type="text"
                                   placeholder="우편 번호"
@@ -290,10 +398,16 @@ const OrderPage = () => {
                             </div>
                             <div className="row">
                               <div className="col">
-                                <input className="form-control" type="text" placeholder="주소" />
+                                <input
+                                  onChange={(e) => setDeliveryAddress1(e.target.value)}
+                                  className="form-control"
+                                  type="text"
+                                  placeholder="주소"
+                                />
                               </div>
                               <div className="col">
                                 <input
+                                  onChange={(e) => setDeliveryAddress2(e.target.value)}
                                   className="form-control"
                                   type="text"
                                   placeholder="상세 주소"
@@ -306,6 +420,7 @@ const OrderPage = () => {
                           <th scope="row">배송 요청사항</th>
                           <td>
                             <input
+                              onChange={(e) => setDeliveryRequest(e.target.value)}
                               className="form-control"
                               type="text"
                               data-require_msg="배송요청사항"
@@ -369,6 +484,7 @@ const OrderPage = () => {
                   >
                     취소
                   </button>
+                  <span className={styles.errorMsg}>{error}</span>
                 </div>
               </div>
             </div>

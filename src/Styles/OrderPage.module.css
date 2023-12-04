@@ -197,3 +197,11 @@ table td {
   background-position: 0;
   background-color: #202632;
 }
+
+
+.errorMsg {
+  display: inline;
+  color: red;
+  padding: 5px;
+  font-size: .9em;
+}

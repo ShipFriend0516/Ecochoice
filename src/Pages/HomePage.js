@@ -84,7 +84,7 @@ const Home = ({ onLoginSuccess }) => {
   return (
     <div>
       {/* <FetchTest /> */}
-      <Header onLoginSuccess={onLoginSuccess} />
+      <Header />
       <Slider />
       <div className="bg">
         <div className="mainWrap">
