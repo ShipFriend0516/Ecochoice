@@ -76,6 +76,13 @@ const ItemCartPage = () => {
     getCartItemsDetail();
   }, [cart]);
 
+  useEffect(() => {
+    console.log(cart, products);
+  }, [cart, products]);
+  useEffect(() => {
+    console.log(checkedItems);
+  }, [checkedItems]);
+
   // 상품 가격과 상품 선택
   const findKeyByValue = (arr, value) => {
     for (let index = 0; index < arr.length; index++) {
@@ -103,7 +110,7 @@ const ItemCartPage = () => {
     const checkedItemValues = Object.values(checkedItems);
     let totalPrice = 0;
     cart.map((cartItem, index) => {
-      if (checkedItemValues[index]) {
+      if (checkedItems[cartItem.productId]) {
         const optionId = cartItem.productOptionId;
         const optionIndex = products[index].options.findIndex(
           (option) => option.productOptionId === optionId
