@@ -38,6 +38,17 @@
   margin-right: 10px;
 }
 
+.itemGrid span > span {
+  padding: 15px 0;
+}
+.itemGrid span > span:hover {
+  cursor: pointer;
+}
+
+.itemGrid > div img:hover {
+  cursor: pointer;
+}
+
 .itemGrid > div > span {
   display: flex;
   justify-content: center;

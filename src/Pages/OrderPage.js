@@ -246,8 +246,21 @@ const OrderPage = () => {
                   return (
                     <div className={styles.productRow} key={product.productId}>
                       <span className="d-flex flex-row justify-content-between">
-                        <img src={product.thumbnailImageUrl} alt={product.title + "이미지"}></img>
-                        <span className="flex-grow-1">{product.title}</span>
+                        <img
+                          onClick={() => {
+                            navigate(`/products/${product.productId}`);
+                          }}
+                          src={product.thumbnailImageUrl}
+                          alt={product.title + "이미지"}
+                        ></img>
+                        <span
+                          onClick={() => {
+                            navigate(`/products/${product.productId}`);
+                          }}
+                          className="flex-grow-1"
+                        >
+                          {product.title}
+                        </span>
                       </span>
                       <span>{product.options[optionIndex].title}</span>
                       <span>{price.toLocaleString()}원</span>
