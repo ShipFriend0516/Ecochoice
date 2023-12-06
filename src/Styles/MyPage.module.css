@@ -1,16 +1,16 @@
 .myPage {
   background-color: white;
-  padding-top: 70px;
+  padding-top: 50px;
   min-height: 100vh;
 }
 
+.mytop{
+  background-color: rgb(104, 117, 101);
+}
+
 .myPageDetail {
-  background-color: #e1d9cf;
   width: 80%;
   height: 800px;
-  border-radius: 10px;
-  box-shadow: 0px 3px 10px darkgray;
-  margin-bottom: 100px;
 }
 
 .top_info {
@@ -37,10 +37,10 @@
   color: #877B73;
 }
 
-.right_contents {
+.center_contents {
   display: flex;
   flex-direction: column;
-  width: 65%;
+  width: 30%;
   height: 100%;
   text-align: left;
   font-size: 16px;
@@ -49,8 +49,15 @@
   align-items: start;
 }
 
-.right_contents div > div {
+.center_contents div > div {
   width: 80px;
+}
+
+.right_contents {
+  display: block;
+  width: 35%;
+  border-left: 1px solid #bfbfbf;
+  padding-left: 40px;
 }
 
 
@@ -67,4 +74,15 @@
 .profile_pic img{
   position: absolute;
   width: 100%;
+}
+
+.count_coupon{
+  display: block;
+  color: lightgray;
+}
+
+.coupon_b{
+  display: block;
+  margin-top: 10%;
+  
 }
