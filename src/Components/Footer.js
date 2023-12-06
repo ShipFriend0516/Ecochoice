@@ -1,6 +1,7 @@
 import logoWide from "../Images/logo-wide.jpg";
-
+import { useNavigate } from "react-router-dom";
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <footer id="footer">
       <div className="footer-top">
@@ -54,7 +55,13 @@ const Footer = () => {
             <ul className="bold">
               <li>이용안내 </li>
               <li>이용약관 </li>
-              <li>개인정보처리방침 </li>
+              <li
+                onClick={() => {
+                  navigate("/notice");
+                }}
+              >
+                개인정보처리방침{" "}
+              </li>
               <li>파트너쉽 </li>
               <li>멤버쉽 </li>
               <li>리크루트 </li>
