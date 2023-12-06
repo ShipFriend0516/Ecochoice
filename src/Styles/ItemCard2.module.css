@@ -68,6 +68,11 @@
   color: #A29388;
 }
 
+.option {
+  color: #A29388;
+  font-size: .8em;
+}
+
 .buttonWrap {
   display: flex;
   justify-content: end;

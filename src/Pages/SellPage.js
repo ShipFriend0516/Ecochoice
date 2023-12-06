@@ -79,12 +79,13 @@ const SellPage = () => {
   return (
     <div>
       <Header isFixed={true} />
-      <div className={"bg p-5 vw-100 vh-100"}>
+      <div className={`${styles.bg} p-5 vw-100`}>
         <h1 className={`d-block m-5 bold text-center`}>
           <span className={`${styles.title}`}>상품 판매</span>
         </h1>
         <div className={`${styles.addItem}`}>
           <div className={`d-flex justify-content-evenly  align-items-center`}>
+            <input type="text"> </input>
             <div onClick={handleImageClick} className={`${styles.addImage}`}>
               {itemImage ? (
                 <img src={itemImage} alt="상품이미지"></img>
@@ -110,6 +111,17 @@ const SellPage = () => {
                   className="form-control"
                   type="text"
                   placeholder="상품이름"
+                ></input>
+              </div>
+              <div className="d-flex flex-row text-nowrap">
+                <p>옵션 이름</p>
+                <input
+                  onChange={(e) => {
+                    setItemPrice(e.target.value);
+                  }}
+                  className="form-control"
+                  type="text"
+                  placeholder="옵션 이름"
                 ></input>
               </div>
               <div className="d-flex flex-row text-nowrap">

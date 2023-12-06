@@ -21,15 +21,18 @@ const CategoryPage = () => {
     try {
       if (categoryID === "2") {
         // NEW 카테고리
-        const response = await axios.get(`http://localhost:3001/products/`);
-        const json = await response.data;
+        const response = await axios.post("http://localhost:8080/products", {
+          // sort: "new",
+        });
+        const json = await response.data.list;
         json.reverse();
         setProducts(json.slice(0, 20));
       } else {
-        const response = await axios.get(`http://localhost:3001/products/`, {
-          params: { categoryID: categoryID },
+        const response = await axios.post("http://localhost:8080/products", {
+          categoryId: parseInt(categoryID),
         });
-        const json = await response.data;
+        console.log(response);
+        const json = await response.data.list;
         setProducts(json);
         console.log(json);
       }
@@ -41,11 +44,6 @@ const CategoryPage = () => {
 
   const getCategoryName = async () => {
     try {
-      const user = sessionStorage.getItem("user");
-
-      const userToken = await JSON.parse(user).accessToken;
-
-      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
       const response = await axios.get(`http://localhost:8080/categories`);
       const categoryList = response.data;
       const categoryIndex = categoryList.findIndex((data) => data.id === parseInt(categoryID));
@@ -82,17 +80,18 @@ const CategoryPage = () => {
             <div className={styles.categoryTitleWrapper}>
               <p>{categoryName}</p>
             </div>
+            <hr className={styles.hrStyle} />
             <div className="ItemList">
               {products.length !== 0 ? (
                 products.map((product) => {
                   return (
                     <ItemCard
-                      key={product.id}
-                      id={product.id}
-                      img={product.imagePath}
-                      name={product.name}
-                      brand={product.brand}
-                      price={product.price}
+                      key={product.productId}
+                      id={product.productId}
+                      img={product.thumbnailImageUrl}
+                      name={product.title}
+                      brand={product.brandName}
+                      price={product.representativeOption.price}
                     />
                   );
                 })

@@ -261,9 +261,10 @@ const ItemCartPage = () => {
                       price={product.options[optionIndex].price}
                       name={product.title}
                       optionID={optionId}
-                      // brand={products.brand}
+                      brand={product.brandName}
                       quantity={cart[index].quantity}
                       cardStyle={1}
+                      optionName={product.options[optionIndex].title}
                       onCheckChange={handleCheckboxChange}
                       checked={checkedItems[product.productId]}
                       cart={cart}
@@ -278,16 +279,16 @@ const ItemCartPage = () => {
               </div>
               <div className={styles.buttonWrap}>
                 <button className={`btn btn-outline-dark btn-lg`} onClick={selectCancelClick}>
-                  선택 취소하기
+                  선택 취소
                 </button>
                 <button className={`btn btn-outline-dark btn-lg`} onClick={allCancelClick}>
-                  모두 취소하기
+                  모두 취소
                 </button>
                 <button className={`btn btn-outline-dark btn-lg`} onClick={selectOrderClick}>
-                  선택 결제하기
+                  선택 결제
                 </button>
                 <button onClick={allOrderClick} className={`btn btn-outline-dark btn-lg`}>
-                  모두 결제하기
+                  모두 결제
                 </button>
               </div>
             </div>

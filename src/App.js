@@ -16,6 +16,7 @@ import Toast from "./Components/Toast";
 import { useSelector } from "react-redux";
 import { removeToast } from "./Store/toastSlice";
 import NoticePage from "./Pages/NoticePage";
+import OrderCompletePage from "./Pages/OrderCompletePage";
 
 function App() {
   const toasts = useSelector((state) => state.toast.toasts);
@@ -38,6 +39,8 @@ function App() {
         <Route key={"/order"} path={"/order"} element={<OrderPage />}></Route>
         <Route key={"/pay"} path={"/pay"} element={<Payments />}></Route>
         <Route key={"/sell"} path={"/sell"} element={<SellPage />}></Route>
+        <Route key={"/success"} path={"/success"} element={<OrderCompletePage />}></Route>
+        <Route key={"/fail"} path={"/fail"} element={<OrderCompletePage />}></Route>
         <Route key={"/notice"} path={"/notice"} element={<NoticePage />}></Route>
         <Route key={"/test"} path={"/test"} element={<FetchTest />}></Route>
         <Route key={"/not"} path={"*"} element={<ErrorPage errorCode={404} />}></Route>

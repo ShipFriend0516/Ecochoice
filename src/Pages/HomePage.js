@@ -14,14 +14,32 @@ const Home = ({ onLoginSuccess }) => {
   const [reviews, setReviews] = useState([]);
   const [reviewLoading, setReviewLoading] = useState(true);
 
-  const getProducts = async () => {
+  const getProducts = async (categoryId) => {
     try {
-      const response = await axios.get("http://localhost:3001/products");
-      const json = await response.data;
-      setProducts(json);
-      setLoading(false);
-    } catch (err) {
-      console.log(err.message);
+      const user = sessionStorage.getItem("user");
+
+      const userToken = JSON.parse(user).accessToken;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      if (categoryId === "2") {
+        // NEW 카테고리
+        const response = await axios.post("http://localhost:8080/products", {
+          // sort: "new",
+        });
+        const json = await response.data.list;
+        json.reverse();
+        setProducts(json.slice(0, 20));
+      } else {
+        const response = await axios.post("http://localhost:8080/products", {
+          categoryId: parseInt(categoryId),
+        });
+        console.log(response);
+        const json = await response.data.list;
+        setProducts(json);
+        console.log(json);
+      }
+    } catch (error) {
+      console.error(error);
+      console.error("카테고리별 제품 가져오기 실패");
     }
   };
 
@@ -84,7 +102,7 @@ const Home = ({ onLoginSuccess }) => {
   return (
     <div>
       {/* <FetchTest /> */}
-      <Header />
+      <Header onLoginSuccess={onLoginSuccess} />
       <Slider />
       <div className="bg">
         <div className="mainWrap">

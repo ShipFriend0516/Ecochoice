@@ -17,6 +17,7 @@ const ItemCard = ({
   quantity,
   reviews = 0,
   cardStyle = 0,
+  optionName,
   onCheckChange,
   checked = false,
   cart,
@@ -63,8 +64,8 @@ const ItemCard = ({
     return (
       <div className={styles.ItemCard}>
         <div className={styles.img}>
-          <div className={styles.cover}>
-            <button onClick={onClickDetail}>자세히 보기</button>
+          <div onClick={onClickDetail} className={styles.cover}>
+            <button>자세히 보기</button>
           </div>
           <img className={styles.img} srcSet={(logo, img)} alt={name} />
         </div>
@@ -109,6 +110,10 @@ const ItemCard = ({
           </div>
           <div className={card2.price}>{price.toLocaleString()}원</div>
           <div className={card2.brand}>{brand}</div>
+          <div className={card2.option}>
+            옵션{">"}
+            {optionName}
+          </div>
         </div>
         <div>
           <input

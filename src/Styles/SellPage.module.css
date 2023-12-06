@@ -16,6 +16,12 @@
   padding: 40px;
   box-shadow: 5px 5px 30px rgb(186, 186, 186);
 
+
+}
+
+.bg {
+  min-height: 100vh;
+  background-color: #e4e9e4;
 }
 
 .addImage {
