@@ -28,8 +28,8 @@ const MyPage = () => {
               <div className="rank"></div>
             </div>
             <div className={styles.center_contents}>
-              <div>적립금 0원</div>
               <div>등급 VIP</div>
+              <div>주문정보조회</div>
             </div>
             <div className={styles.right_contents}>
               <div>현재 가진 쿠폰</div>
