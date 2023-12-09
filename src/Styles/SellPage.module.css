@@ -14,9 +14,7 @@
   background-color: #f5f5f5;
   border-radius: .5em;
   padding: 40px;
-  box-shadow: 5px 5px 30px rgb(186, 186, 186);
-
-
+  box-shadow: 0 5px 20px #b7b7b7;
 }
 
 .bg {
@@ -32,14 +30,14 @@
   width: 40vw;
   aspect-ratio: 1/1;
   border-radius: .5em;
-  border: 1px solid tomato;
+  border: 3px solid rgb(82, 82, 82);
   background-color: white;
 }
 
-.addImage:hover {
+/* .addImage:hover {
   transition: .15s;
   background-color: rgb(234, 231, 231);
-}
+} */
 
 .addItem input {
   width: 240px;
@@ -89,7 +87,7 @@
 .addImage img {
   height: 100%;
   overflow: hidden;
-  border-radius: .5em;
+  /* border-radius: .5em; */
 
 }
 

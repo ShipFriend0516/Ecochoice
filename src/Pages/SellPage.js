@@ -83,27 +83,28 @@ const SellPage = () => {
         <h1 className={`d-block m-5 bold text-center`}>
           <span className={`${styles.title}`}>상품 판매</span>
         </h1>
-        <div className={`${styles.addItem}`}>
-          <div className={`d-flex justify-content-evenly  align-items-center`}>
-            <input type="text"> </input>
-            <div onClick={handleImageClick} className={`${styles.addImage}`}>
-              {itemImage ? (
-                <img src={itemImage} alt="상품이미지"></img>
-              ) : (
-                "클릭하여 이미지 추가하기"
-              )}
+        <div className={`${styles.addItem} ${styles.effect4}`}>
+          <div className={"d-flex justify-content-evenly  align-items-center"}>
+            <div className={"d-flex flex-column justify-content-evenly"}>
+              <p className="bold fs-4 mb-2">상품 이미지의 URL</p>
+              <input
+                type="text"
+                className="mb-3 form form-control w-100"
+                placeholder="이미지 주소 URL"
+                onChange={(e) => setItemImage(e.target.value)}
+              ></input>
+              <div className={`${styles.addImage}`}>
+                {itemImage ? (
+                  <img src={itemImage} alt="상품이미지" onError={() => setItemImage(null)}></img>
+                ) : (
+                  "이미지 미리보기"
+                )}
+              </div>
             </div>
-            <input
-              type="file"
-              accept="image/*"
-              style={{ display: "none" }}
-              ref={fileInputRef}
-              onChange={handleImageChange}
-            />
             <div className={`d-flex flex-column ${styles.itemForm}`}>
               <p className="bold fs-4 mb-2">상품 정보 입력</p>
               <div className="d-flex flex-row text-nowrap">
-                <p>상품이름</p>
+                <p>상품 이름</p>
                 <input
                   onChange={(e) => {
                     setItemName(e.target.value);

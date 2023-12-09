@@ -45,6 +45,18 @@ const OrderPage = () => {
 
   const [error, setError] = useState(null);
 
+  // 주문을 만드는 함수
+  const createOrder = async () => {
+    const response = await axios.post("http://localhost:8080/orders", {
+      cartItemIds: cart.map((cartItem) => cartItem.productId),
+    });
+    console.log(response);
+  };
+
+  useEffect(() => {
+    //주문창에 왔을때 주문을 열어서 생성
+    createOrder();
+  }, []);
   useEffect(() => {
     console.log(userPayInfo, deliveryInfo);
   }, [userPayInfo, deliveryInfo]);
