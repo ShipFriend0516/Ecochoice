@@ -9,33 +9,30 @@ import MoreBtn from "../Components/MoreBtn";
 import logo from "../Images/logo.jpg";
 import Slider from "../Components/Slider";
 import FetchTest from "../Components/FetchTest";
+import ItemShelf from "../Components/ItemShelf";
 
-const Home = ({ onLoginSuccess }) => {
+const Home = () => {
   const [reviews, setReviews] = useState([]);
   const [reviewLoading, setReviewLoading] = useState(true);
 
   const getProducts = async (categoryId) => {
     try {
-      const user = sessionStorage.getItem("user");
-
-      const userToken = JSON.parse(user).accessToken;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
       if (categoryId === "2") {
         // NEW 카테고리
         const response = await axios.post("http://localhost:8080/products", {
           // sort: "new",
         });
         const json = await response.data.list;
-        json.reverse();
-        setProducts(json.slice(0, 20));
+        return json.reverse().slice(0, 20);
       } else {
         const response = await axios.post("http://localhost:8080/products", {
           categoryId: parseInt(categoryId),
         });
         console.log(response);
         const json = await response.data.list;
-        setProducts(json);
-        console.log(json);
+        // setProducts(json);
+        // console.log(json);
+        return json;
       }
     } catch (error) {
       console.error(error);
@@ -43,26 +40,11 @@ const Home = ({ onLoginSuccess }) => {
     }
   };
 
-  const getReviews = async () => {
-    const response = await axios.get(`http://localhost:3001/reviews`);
-    const result = await response.data;
-    setReviews(result);
-    setReviewLoading(false);
-  };
-
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  useEffect(() => {
-    getReviews();
-  }, []);
-
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([]);
 
-  const renderItemList = (categoryID) => {
+  const renderItemList = async (categoryID) => {
     if (categoryID === 2) {
+      const products = getProducts(0);
       return products.map((product, index) => {
         if (index < 10) {
           return (
@@ -81,6 +63,9 @@ const Home = ({ onLoginSuccess }) => {
         }
       });
     } else {
+      const products = getProducts(categoryID);
+      console.log(products);
+
       return products.map((product, index) => {
         return (
           product.categoryID === categoryID && (
@@ -102,7 +87,7 @@ const Home = ({ onLoginSuccess }) => {
   return (
     <div>
       {/* <FetchTest /> */}
-      <Header onLoginSuccess={onLoginSuccess} />
+      <Header />
       <Slider />
       <div className="bg">
         <div className="mainWrap">
@@ -135,7 +120,7 @@ const Home = ({ onLoginSuccess }) => {
           <MoreBtn categoryID={1} />
           <SubTitle title={"신상품 🌱"} summary={"가장 최신의 제품을 만나보세요."} />
           <div className="ItemList">
-            {loading || reviewLoading ? "loading..." : renderItemList(2)}
+            <ItemShelf categoryId={1} />
           </div>
           <MoreBtn categoryID={2} />
           <SubTitle title={"생활용품 💡"} summary={"친환경적인 생활용품을 만나보세요."} />

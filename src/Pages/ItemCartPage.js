@@ -79,9 +79,6 @@ const ItemCartPage = () => {
   useEffect(() => {
     console.log(cart, products);
   }, [cart, products]);
-  useEffect(() => {
-    console.log(checkedItems);
-  }, [checkedItems]);
 
   // 상품 가격과 상품 선택
   const findKeyByValue = (arr, value) => {
@@ -110,7 +107,7 @@ const ItemCartPage = () => {
     const checkedItemValues = Object.values(checkedItems);
     let totalPrice = 0;
     cart.map((cartItem, index) => {
-      if (checkedItems[cartItem.productId]) {
+      if (checkedItemValues[index]) {
         const optionId = cartItem.productOptionId;
         const optionIndex = products[index].options.findIndex(
           (option) => option.productOptionId === optionId
@@ -261,10 +258,10 @@ const ItemCartPage = () => {
                       price={product.options[optionIndex].price}
                       name={product.title}
                       optionID={optionId}
-                      brand={product.brandName}
+                      optionName={product.options[optionIndex].title}
+                      brand={products.brand}
                       quantity={cart[index].quantity}
                       cardStyle={1}
-                      optionName={product.options[optionIndex].title}
                       onCheckChange={handleCheckboxChange}
                       checked={checkedItems[product.productId]}
                       cart={cart}

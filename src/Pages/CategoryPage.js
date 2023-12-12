@@ -30,7 +30,7 @@ const CategoryPage = () => {
       } else {
         const response = await axios.post("http://localhost:8080/products", {
           categoryId: parseInt(categoryID),
-          size: 20,
+          size: 200,
         });
         console.log(response);
         const json = await response.data.list;

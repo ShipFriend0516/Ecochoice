@@ -3,9 +3,13 @@ import { FaRegStar, FaStar } from "react-icons/fa";
 import { FiMoreHorizontal } from "react-icons/fi";
 import logo from "../Images/logo.jpg";
 import { IconContext } from "react-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const Review = ({ user, rating, reviewText }) => {
+const Review = ({ reviewId, userId, rating, reviewText, deleteReview }) => {
+  // 상태 관리
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   const ratingRender = (rating = 0) => {
@@ -19,36 +23,64 @@ const Review = ({ user, rating, reviewText }) => {
     return <>{stars}</>;
   };
 
+  // 유저 정보를 불러오는 API
+  const getUser = async () => {
+    const userSession = sessionStorage.getItem("user");
+    const userAccessToken = JSON.parse(userSession).accessToken;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${userAccessToken}`;
+
+    const response = await axios.get("http://localhost:8080/users");
+    console.log(response);
+
+    setUser(response.data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <div className={styles.review}>
-      <div className={`${styles.leftSide}`}>
-        <div>
-          <img src={user.profileImage} alt="프로필사진"></img>
-          <div className={`${styles.name}`}>{user.nickName}</div>
-        </div>
-        <div className={`${styles.membership}`}>멤버십: {user.membership}</div>
-      </div>
-      <div className={`${styles.rightSide}`}>
-        <div className="d-flex justify-content-between">
-          <div className={`${styles.rating}`}>{ratingRender(rating)}</div>
-
-          <div className="dropdown">
-            <span onClick={() => setIsOpen((prev) => !prev)} className={`${styles.more} `}>
-              <IconContext.Provider value={{ size: "1.2em" }}>
-                <FiMoreHorizontal />
-              </IconContext.Provider>
-            </span>
-            {isOpen && (
-              <ul className={styles.dropdownMenu}>
-                <li>수정</li>
-                <li>삭제</li>
-              </ul>
-            )}
+      {loading ? (
+        <div>Loading</div>
+      ) : (
+        <>
+          <div className={`${styles.leftSide}`}>
+            <div>
+              <img srcSet={[logo, user.profileImageUrl]} alt="프로필사진"></img>
+              <div className={`${styles.name}`}>{user.nickname}</div>
+            </div>
+            <div className={`${styles.membership}`}>멤버십: {user.rank}</div>
           </div>
-        </div>
-        <div className={`${styles.boughtProduct}`}>구매한 제품</div>
-        <div className={`${styles.reviewText}`}>{reviewText}</div>
-      </div>
+          <div className={`${styles.rightSide}`}>
+            <div className="d-flex justify-content-between">
+              <div className={`${styles.rating}`}>{ratingRender(rating)}</div>
+              <div className="dropdown">
+                <span onClick={() => setIsOpen((prev) => !prev)} className={`${styles.more} `}>
+                  <IconContext.Provider value={{ size: "1.2em" }}>
+                    <FiMoreHorizontal />
+                  </IconContext.Provider>
+                </span>
+                {isOpen && (
+                  <ul className={styles.dropdownMenu}>
+                    <li>수정</li>
+                    <li
+                      onClick={() => {
+                        deleteReview(reviewId);
+                      }}
+                    >
+                      삭제
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </div>
+            <div className={`${styles.boughtProduct}`}>구매한 제품</div>
+            <div className={`${styles.reviewText}`}>{reviewText}</div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

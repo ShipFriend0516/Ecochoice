@@ -13,6 +13,7 @@ const OrderCompletePage = ({ isSuccess }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [orderInfo, setOrderInfo] = useState(null);
+
   // 유저의 주문 정보를 불러오는 API
   const getOrder = async () => {
     const currentUrl = window.location.href;

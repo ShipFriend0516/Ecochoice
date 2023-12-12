@@ -10,6 +10,7 @@ const SearchPage = () => {
   const { searchText } = useParams();
   const [searchResult, setSearchResult] = useState([]);
   const [search, setSearch] = useState(searchText);
+  const [loading, setLoading] = useState(true);
   const [validateError, setValidateError] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -25,11 +26,13 @@ const SearchPage = () => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
 
       const response = await axios.post(`http://localhost:8080/products`, {
-        categoryId: "1",
+        // categoryId: "1",
+        searchKeyword: searchText,
       });
 
       console.log("검색 결과", response);
-      setSearchResult(response.data);
+      setSearchResult(response.data.list);
+      setLoading(false);
     } catch (error) {
       console.error(error);
       console.error("검색 결과를 불러오는데 실패했습니다.");
@@ -79,30 +82,38 @@ const SearchPage = () => {
           </div>
           <div className={styles.searchResult}>
             <div className={"d-flex flex-row justify-content-between pt-3"}>
-              <p>
-                [ {searchText} ] 에 대한 검색 결과입니다. 총 {searchResult.length} 개 상품 검색됨
-              </p>
+              {loading ? (
+                <p>검색 중....</p>
+              ) : (
+                <p>
+                  [ {searchText} ] 에 대한 검색 결과입니다. 총 {searchResult.length}개 상품 검색됨
+                </p>
+              )}
               <select />
             </div>
             <hr />
-            <div className="ItemList">
-              {searchResult.length > 0 ? (
-                searchResult.map((product) => {
-                  return (
-                    <ItemCard
-                      key={product.id}
-                      id={product.id}
-                      img={product.imagePath}
-                      name={product.name}
-                      brand={product.brand}
-                      price={product.price}
-                    />
-                  );
-                })
-              ) : (
-                <div className="d-flex w-100 justify-content-center">상품이 없습니다. 😢</div>
-              )}
-            </div>
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <div className="ItemList">
+                {searchResult.length > 0 ? (
+                  searchResult.map((product) => {
+                    return (
+                      <ItemCard
+                        key={product.productId}
+                        id={product.productId}
+                        img={product.thumbnailImageUrl}
+                        name={product.title}
+                        brand={product.brandName}
+                        price={product.representativeOption.price}
+                      />
+                    );
+                  })
+                ) : (
+                  <div className="d-flex w-100 justify-content-center">상품이 없습니다. 😢</div>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <Footer />

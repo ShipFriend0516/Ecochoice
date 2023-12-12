@@ -31,7 +31,7 @@ const ItemDetailPage = ({ imgPath }) => {
   const [rating, setRating] = useState(0);
   const [summary, setSummary] = useState("");
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -42,13 +42,6 @@ const ItemDetailPage = ({ imgPath }) => {
 
   const getProduct = async () => {
     try {
-      const user = sessionStorage.getItem("user");
-      if (user) {
-        const userToken = await JSON.parse(user).accessToken;
-
-        axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-      }
-
       const response = await axios.get(`http://localhost:8080/products/${id}/details`);
       const result = await response.data;
       console.log(result);
@@ -61,12 +54,8 @@ const ItemDetailPage = ({ imgPath }) => {
   };
 
   const getReviews = async () => {
-    const response = await axios.get(`http://localhost:3001/reviews`, {
-      params: {
-        productID: id,
-      },
-    });
-    const result = await response.data;
+    const response = await axios.get(`http://localhost:8080/products/${id}/reviews`);
+    const result = await response.data.list;
     setReviews(result);
     setReviewLoading(false);
   };
@@ -167,20 +156,24 @@ const ItemDetailPage = ({ imgPath }) => {
       if (reviewValidate()) {
         console.log(typeof parseInt(id, 10), dummyUser.UID, summary, rating);
         const productID = parseFloat(id, 10);
-        axios
-          .post("http://localhost:3001/reviews", {
-            productID,
-            authorID: dummyUser.UID,
-            summary,
-            rating,
-          })
-          .then((response) => {
-            setSummary("");
-            setRating(0);
-            console.log(response);
-            getReviews();
-          })
-          .catch((error) => console.log(error));
+
+        const user = sessionStorage.getItem("user");
+
+        if (user) {
+          const userToken = JSON.parse(user).accessToken;
+          axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+        }
+
+        const response = await axios.post(`http://localhost:8080/products/${id}/reviews`, {
+          rating: rating,
+          description: summary,
+        });
+
+        console.log(response);
+
+        setSummary("");
+        setRating(0);
+        getReviews();
       }
     } catch (err) {
       console.error("리뷰 작성 실패!", err);
@@ -199,6 +192,26 @@ const ItemDetailPage = ({ imgPath }) => {
       return false;
     }
     return true;
+  };
+
+  const deleteReview = async (reviewId) => {
+    try {
+      const user = sessionStorage.getItem("user");
+
+      if (user) {
+        const userToken = JSON.parse(user).accessToken;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      }
+      console.log(reviewId);
+      const response = await axios.delete(
+        `http://localhost:8080/products/${id}/reviews/${reviewId}`
+      );
+
+      console.log(response);
+      getReviews();
+    } catch (err) {
+      console.error("리뷰 삭제 실패!", err);
+    }
   };
 
   return (
@@ -375,14 +388,15 @@ const ItemDetailPage = ({ imgPath }) => {
                     <div>리뷰가 없습니다.</div>
                   ) : (
                     <>
-                      <Review user={dummyUser} rating={4} reviewText={"이거 진짜 좋아요"} />
                       {reviews.map((review) => {
                         return (
                           <Review
-                            key={review.summary}
-                            user={anonymousUser}
+                            key={review.reviewId}
+                            reviewId={review.reviewId}
+                            userId={review.authorUserId}
                             rating={review.rating}
-                            reviewText={review.summary}
+                            reviewText={review.description}
+                            deleteReview={deleteReview}
                           />
                         );
                       })}
