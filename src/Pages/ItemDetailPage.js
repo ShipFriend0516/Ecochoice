@@ -234,7 +234,7 @@ const ItemDetailPage = ({ imgPath }) => {
                 {/* 설명 */}
                 <div className={`${styles.itemInfoWrapper} d-flex flex-column`}>
                   <div className="d-flex flex-column">
-                    <small>상품번호 : {product.productId}</small>
+                    <small className={`${styles.productId}`}>상품번호 : {product.productId}</small>
                     <span className={`${styles.productTitle}`}>{product.title}</span>
                     <span className={`${styles.productPrice}`}>
                       가격 : {product.representativeOption.price.toLocaleString()}원
@@ -301,7 +301,7 @@ const ItemDetailPage = ({ imgPath }) => {
                     </div>
                     <div className={styles.buttonsWrapper}>
                       <button onClick={() => setIsLiked((prev) => !prev)}>
-                        <IconContext.Provider value={{ color: "#6A9C89", size: "1.5em" }}>
+                        <IconContext.Provider value={{ color: "#6A9C89", size: "1em" }}>
                           {isLiked ? (
                             <FaHeart className={isLiked && `${styles.heart}`} />
                           ) : (

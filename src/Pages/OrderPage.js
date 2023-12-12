@@ -14,6 +14,7 @@ const OrderPage = () => {
 
   const customerKey = "fdafiodjv231ksjf";
   const paymentWidgetRef = useRef(null);
+
   const price = 50_000;
 
   const [paymentWay, setPaymentWay] = useState(0);
@@ -29,9 +30,6 @@ const OrderPage = () => {
   const [deliveryInfo, setDeliveryInfo] = useState([]); // 배송정보
 
   const [userName, setUserName] = useState(""); //
-  const [userTelFirst, setUserTelFirst] = useState("");
-  const [userTelSecond, setUserTelSecond] = useState("");
-  const [userTelThird, setUserTelThird] = useState("");
   const [userPhoneFirst, setUserPhoneFirst] = useState("010");
   const [userPhoneSecond, setUserPhoneSecond] = useState("");
   const [userPhoneThird, setUserPhoneThird] = useState("");
@@ -45,10 +43,39 @@ const OrderPage = () => {
 
   const [error, setError] = useState(null);
 
+  // 주문 상태
+  const [orderId, setOrderId] = useState(null);
+
   // 주문을 만드는 함수
   const createOrder = async () => {
+    const user = sessionStorage.getItem("user");
+
+    if (user) {
+      const userToken = JSON.parse(user).accessToken;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+    }
+
     const response = await axios.post("http://localhost:8080/orders", {
       cartItemIds: cart.map((cartItem) => cartItem.productId),
+    });
+
+    setOrderId(response.data.orderId);
+  };
+
+  // 주문 취소 API
+  const cancleOrder = async () => {
+    const response = await axios.delete(`http://localhost:8080/orders/${orderId}`);
+    console.log(response);
+  };
+
+  const completeOrder = async () => {
+    const response = await axios.post(`http://localhost:8080/orders/${orderId}/complete`, {
+      recipientName: deliveryName,
+      address: deliveryAddress1,
+      detailedAddress: deliveryAddress2,
+      zipCode: deliveryZip,
+      phoneNumber: userPhoneFirst + userPhoneSecond + userPhoneThird,
+      requestNote: deliveryRequest,
     });
     console.log(response);
   };
@@ -57,9 +84,13 @@ const OrderPage = () => {
     //주문창에 왔을때 주문을 열어서 생성
     createOrder();
   }, []);
+
+  // 주문 페이지를 나가면 생성했던 주문을 취소함.
   useEffect(() => {
-    console.log(userPayInfo, deliveryInfo);
-  }, [userPayInfo, deliveryInfo]);
+    return () => {
+      if (orderId) cancleOrder();
+    };
+  }, [orderId]);
 
   // 로딩
   const [loading, setLoading] = useState(true);
@@ -128,10 +159,6 @@ const OrderPage = () => {
       setError("이름은 필수 항목입니다.");
       return false;
     }
-    if (!(userTelFirst && userTelSecond && userTelThird)) {
-      setError("전화번호가 잘못된 입력입니다.");
-      return false;
-    }
     if (!(userPhoneFirst && userPhoneSecond && userPhoneThird)) {
       setError("휴대폰번호가 잘못된 입력입니다.");
       return false;
@@ -174,7 +201,7 @@ const OrderPage = () => {
       // console.log(clientKey);
       const paymentWidget = await loadPaymentWidget(clientKey, customerKey);
 
-      paymentWidget.renderPaymentMethods("#payment-widget", price);
+      paymentWidget.renderPaymentMethods("#payment-widget", totalPrice + deliveryFee);
 
       paymentWidgetRef.current = paymentWidget;
     })();
@@ -189,7 +216,7 @@ const OrderPage = () => {
           userName,
           userEmail,
           userPhone: userPhoneFirst + userPhoneSecond + userPhoneThird,
-          userTel: userTelFirst + userTelSecond + userTelThird,
+          // userTel: userTelFirst + userTelSecond + userTelThird,
         });
 
         setDeliveryInfo({
@@ -200,7 +227,7 @@ const OrderPage = () => {
         });
 
         await paymentWidget?.requestPayment({
-          orderId: nanoid(),
+          orderId: orderId,
           orderName:
             products.length >= 2 ? products[0].title + " 외 " + products.length : products[0].title,
           customerName: userName,
@@ -208,8 +235,10 @@ const OrderPage = () => {
           successUrl: `${window.location.origin}/success`,
           failUrl: `${window.location.origin}/fail`,
         });
+        await completeOrder();
       } catch (err) {
         console.log(err);
+        await cancleOrder();
       }
     }
   };
@@ -306,7 +335,7 @@ const OrderPage = () => {
                             />
                           </td>
                         </tr>
-                        <tr className={`${styles.tel}`}>
+                        {/* <tr className={`${styles.tel}`}>
                           <th scope="row">전화번호</th>
                           <td>
                             <div className="row">
@@ -338,7 +367,7 @@ const OrderPage = () => {
                               </div>
                             </div>
                           </td>
-                        </tr>
+                        </tr> */}
                         <tr className={`${styles.phone}`}>
                           <th scope="row">휴대폰번호</th>
                           <td>

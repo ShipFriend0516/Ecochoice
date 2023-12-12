@@ -35,8 +35,10 @@ const CategoryPage = () => {
         console.log(response);
         const json = await response.data.list;
         setProducts(json);
+
         console.log(json);
       }
+      setLoading(false);
     } catch (error) {
       console.error(error);
       console.error("카테고리별 제품 가져오기 실패");
@@ -50,7 +52,6 @@ const CategoryPage = () => {
       const categoryIndex = categoryList.findIndex((data) => data.id === parseInt(categoryID));
 
       setCategoryName(categoryList[categoryIndex].title);
-      setLoading(false);
     } catch (error) {
       console.error(error);
       console.error("카테고리 이름 불러오기 실패");
