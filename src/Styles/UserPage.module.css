@@ -1,0 +1,26 @@
+
+.bg {
+    background-color: white;
+    padding-top: 50px;
+    min-height: 100vh;
+}
+
+.h1 {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.tb {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.save{
+    float: right;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 30px;
+    margin-right: 20%;
+}
