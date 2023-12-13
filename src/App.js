@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { removeToast } from "./Store/toastSlice";
 import NoticePage from "./Pages/NoticePage";
 import OrderCompletePage from "./Pages/OrderCompletePage";
+import UserPage from "./Pages/UserPage";
 
 function App() {
   const toasts = useSelector((state) => state.toast.toasts);
@@ -51,6 +52,7 @@ function App() {
         ></Route>
         <Route key={"/notice"} path={"/notice"} element={<NoticePage />}></Route>
         <Route key={"/test"} path={"/test"} element={<FetchTest />}></Route>
+        <Route key={"/user"} path={"/user"} element={<UserPage />}></Route>
         <Route key={"/not"} path={"*"} element={<ErrorPage errorCode={404} />}></Route>
       </Routes>
     </Router>
