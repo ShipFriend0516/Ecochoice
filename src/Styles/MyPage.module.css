@@ -34,7 +34,7 @@
   overflow: hidden;
   padding-right: 40px;
   margin: 10px 0 15px 40px;
-  color: #877B73;
+  color: white;
 }
 
 .center_contents {
@@ -85,4 +85,14 @@
   display: block;
   margin-top: 10%;
   
+}
+
+.tb {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.tb p {
+  text-align: left;
 }

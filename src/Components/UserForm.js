@@ -3,14 +3,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const UserForm = () => {
-  const [id, setId] = useState("");
-  const [uname, setUname] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [ad, setAd] = useState("");
   const [user, setUser] = useState("");
   const onSubmit = () => {
-    console.log(id, uname, email, phone, ad);
+    console.log();
   };
 
   const getUser = async () => {
@@ -42,9 +37,7 @@ const UserForm = () => {
             <input
               className="form-control"
               value={user.userId}
-              onChange={(event) => {
-                setId(event.target.value);
-              }}
+              onChange={(event) => {}}
             />
           </td>
         </tr>
@@ -54,15 +47,15 @@ const UserForm = () => {
             <input
               className="form-control"
               value={user.nickname}
-              onChange={(event) => {
-                setUname(event.target.value);
-              }}
+              onChange={(event) => {}}
             />
           </td>
         </tr>
         <tr>
           <th>회원등급</th>
-          <input className="form-control" value={user.rank} />
+          <td>
+            <input className="form-control" value={user.rank} />
+          </td>
         </tr>
         <tr>
           <th>Email</th>
@@ -70,9 +63,7 @@ const UserForm = () => {
             <input
               className="form-control"
               value={user.email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
+              onChange={(event) => {}}
             />
           </td>
         </tr>
@@ -82,9 +73,7 @@ const UserForm = () => {
             <input
               className="form-control"
               value={user.phoneNumber}
-              onChange={(event) => {
-                setPhone(event.target.value);
-              }}
+              onChange={(event) => {}}
             />
           </td>
         </tr>
