@@ -6,46 +6,29 @@ const FetchTest = () => {
   const [product, setProduct] = useState(null);
   console.log("테스트용 컴포넌트입니다.");
   // 로그인 테스트
-  const fetchTest = async () => {
-    const id = "hello3@naver.com";
-    const pw = "1234";
 
-    // try {
-    //   const user = sessionStorage.getItem("user");
+  //
 
-    //   const userToken = await JSON.parse(user).accessToken;
-
-    //   axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-
-    //   const response = await axios.get("http://localhost:8080/products/1/details");
-
-    //   const data = await response.data;
-    //   setProduct(data);
-    //   console.log(data);
-    //   setLoading(false);
-    // } catch (err) {
-    //   console.error(err);
-    // }
-    const searchText = "과일";
-
+  const indexing = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/products`, {
-        searchKeyword: searchText,
-      });
+      const user = sessionStorage.getItem("user");
+
+      const userToken = await JSON.parse(user).accessToken;
+
+      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      const response = await axios.post("http://localhost:9200/admin/products/reindexing");
 
       console.log(response);
       setLoading(false);
-    } catch (error) {
-      console.error(error);
-      console.error("검색 결과를 불러오는데 실패했습니다.");
+    } catch (err) {
+      console.log(err);
     }
   };
 
   useEffect(() => {
-    fetchTest();
+    indexing();
   }, []);
 
-  //
   return (
     <div>
       {loading ? (
