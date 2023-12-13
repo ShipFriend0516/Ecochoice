@@ -1,14 +1,12 @@
-import React from 'react';
+import React from "react";
 import Header from "../Components/Header";
 import styles from "../Styles/MyPage.module.css";
 import profileImg from "../Images/logo.jpg";
 import CouponModal from "../Components/CouponModal";
 import { Link, useNavigate } from "react-router-dom";
 
-
-
 const MyPage = () => {
-  const [modalHandle,setModalHandle] = React.useState(false);
+  const [modalHandle, setModalHandle] = React.useState(false);
 
   return (
     <div>
@@ -36,31 +34,35 @@ const MyPage = () => {
             <div className={styles.right_contents}>
               <div>현재 가진 쿠폰</div>
               <div className={`fs-1 ${styles.count_coupon}`}>1개</div>
-              <button className={`btn btn-light ${styles.coupon_b}`} 
-              onClick={() => { setModalHandle(true) }}>쿠폰 등록하기</button>
-
+              <button
+                className={`btn btn-light ${styles.coupon_b}`}
+                onClick={() => {
+                  setModalHandle(true);
+                }}
+              >
+                쿠폰 등록하기
+              </button>
             </div>
           </div>
         </div>
         <div className={`${styles.myPageDetail}`}>
-            <div className="fs-3 text-center mt-3">회원정보</div>
-            <hr className={styles.top_hr}/>
+          <div className="fs-3 text-center mt-3">회원정보</div>
+          <hr className={styles.top_hr} />
           <div className="ms-3 me-3">
+            <div className="d-flex">
+              <div></div>
+            </div>
             <div>
-              <Link className="btn btn-light"
-                to={`/user`}>
+              <Link className="btn btn-light" to={`/user`}>
                 수정
               </Link>
             </div>
           </div>
-
         </div>
       </div>
       {modalHandle && <CouponModal closeModal={() => setModalHandle(false)} />}
-
     </div>
   );
-
 };
 
 export default MyPage;
