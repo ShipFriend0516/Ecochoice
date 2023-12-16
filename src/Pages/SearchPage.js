@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ItemCard from "../Components/ItemCard";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
+import Select from "react-select";
 
 const SearchPage = () => {
   const { searchText } = useParams();
@@ -12,10 +13,24 @@ const SearchPage = () => {
   const [search, setSearch] = useState(searchText);
   const [loading, setLoading] = useState(true);
   const [validateError, setValidateError] = useState(false);
+
+  const [filter, setFilter] = useState("NEW");
   const navigate = useNavigate();
+
+  const options = [
+    { value: "NEW", label: "최신순" },
+    { value: "OLD", label: "오래된순" },
+    { value: "PRICE_DESC", label: "비싼순" },
+    { value: "PRICE_ASC", label: "저렴한순" },
+  ];
+
+  useEffect(() => {
+    console.log(filter);
+  }, [filter]);
+
   useEffect(() => {
     getSearchResult();
-  }, [searchText]);
+  }, [searchText, filter]);
 
   const getSearchResult = async () => {
     try {
@@ -26,7 +41,7 @@ const SearchPage = () => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
 
       const response = await axios.post(`http://localhost:8080/products`, {
-        // categoryId: "1",
+        sort: filter,
         searchKeyword: searchText,
       });
 
@@ -89,7 +104,13 @@ const SearchPage = () => {
                   [ {searchText} ] 에 대한 검색 결과입니다. 총 {searchResult.length}개 상품 검색됨
                 </p>
               )}
-              <select />
+              <Select
+                defaultValue={options[0]}
+                options={options}
+                onChange={(e) => {
+                  setFilter(e.value);
+                }}
+              />
             </div>
             <hr />
             {loading ? (

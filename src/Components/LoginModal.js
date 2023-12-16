@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../Store/authSlice";
 import useToast from "../hooks/toast";
+import logo from "../Images/logo.jpg";
 
 const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
   const dispatch = useDispatch();
@@ -11,8 +12,16 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
   const [isRegistered, setIsRegistered] = useState(true);
   const [id, setID] = useState("");
   const [pw, setPW] = useState("");
+
+  // 회원가입 상태
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [pwCheck, setPWCheck] = useState("");
+  const [profileImg, setProfileImg] = useState(null);
+  const [profileShow, setProfileShow] = useState(false);
+
   const [error, setError] = useState("");
+
   // 토스트
   const { addToast } = useToast();
 
@@ -22,6 +31,10 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
     setID("");
     setPW("");
     setPWCheck("");
+    setName("");
+    setPhone("");
+    setProfileImg("");
+    setProfileShow(false);
     setIsRegistered(true);
   };
   const onSubmit = async (e) => {
@@ -70,11 +83,15 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
           const response = await axios.post(`http://localhost:8080/auth/sign-up`, {
             email: id,
             password: pw,
+            nickname: name,
+            phoneNumber: phone,
+            profileImageUrl: profileImg,
           });
           if (response) {
             console.log(id, "회원가입 성공!!");
           }
           console.log(response);
+          addToast({ type: "success", text: "회원가입 성공, 환영합니다!" });
           loginOnClick();
         } else {
           console.log("유효성 검사 실패");
@@ -83,6 +100,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
         }
       } catch (err) {
         console.error("회원가입 실패:", e);
+        addToast({ type: "danger", text: "회원가입 실패! 다시 시도해주세요" });
       }
     }
   };
@@ -99,6 +117,12 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
   const RegisterValidate = () => {
     // 회원가입 유효성 검사 함수
     // 아이디 8글자 이상
+    if (name.length < 1) {
+      return 103;
+    }
+    if (phone.length < 1) {
+      return 104;
+    }
     if (id.length < 8 && pw !== pwCheck) {
       return 100;
     } else if (id.length < 8) {
@@ -128,7 +152,10 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
     return (
       <>
         <div className={styles.loginPage}>
-          <form className={styles.loginForm + " " + styles.register} onSubmit={onSubmit}>
+          <form
+            className={`${styles.loginForm} ${!isRegistered ? styles.register : styles.login}`}
+            onSubmit={onSubmit}
+          >
             <div className="fs-2 text-center d-flex flex-column">
               {isRegistered ? "로그인" : "회원가입"}
               {errMsg === "" ? (
@@ -136,7 +163,60 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
               ) : (
                 <small className={styles.errorMsg}>{errMsg}</small>
               )}
+              {isRegistered ? (
+                <></>
+              ) : (
+                <div className={`${styles.profileImg}`}>
+                  {profileShow ? (
+                    <>
+                      <input
+                        onChange={(e) => {
+                          setProfileImg(e.target.value);
+                        }}
+                        placeholder="프로필사진의 URL"
+                        id="profileImg"
+                        className={"form-control"}
+                        type="url"
+                      ></input>
+                    </>
+                  ) : (
+                    <img
+                      srcSet={[profileImg, logo]}
+                      alt="profileImg"
+                      onClick={() => setProfileShow((prev) => !prev)}
+                    />
+                  )}
+                </div>
+              )}
             </div>
+            {!isRegistered && (
+              <div>
+                <label htmlFor="pw">이름</label>
+                <input
+                  onChange={(e) => setName(e.target.value)}
+                  id="pwCheck"
+                  className={"form-control"}
+                  type="text"
+                ></input>
+                {error === 103 ? (
+                  <small className={styles.errorMsg}>이름은 필수입니다.</small>
+                ) : null}
+              </div>
+            )}
+            {!isRegistered && (
+              <div>
+                <label htmlFor="pw">휴대폰 번호</label>
+                <input
+                  onChange={(e) => setPhone(e.target.value)}
+                  id="pwCheck"
+                  className={"form-control"}
+                  type="tel"
+                ></input>
+                {error === 104 ? (
+                  <small className={styles.errorMsg}>휴대폰 번호가 올바르지 않습니다.</small>
+                ) : null}
+              </div>
+            )}
             <div className="">
               <label htmlFor="id">아이디</label>
               <input onChange={onChangeID} id="id" className={"form-control"} type="email"></input>
@@ -175,12 +255,12 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
             <div className="d-flex justify-content-between gap-3">
               <input
                 onClick={canvasOnClick}
-                className="btn btn-danger mt-3 flex-grow-1"
+                className="btn btn-outline-danger btn-sm mt-3 flex-grow-1"
                 type="button"
                 value={"취소"}
               />
               <input
-                className="btn btn-success mt-3 flex-grow-1"
+                className="btn btn-outline-success btn-sm mt-3 flex-grow-1"
                 type="submit"
                 value={isRegistered ? "로그인" : "회원가입"}
               />
@@ -188,7 +268,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
             <span>
               {!isRegistered ? "이미 회원이라면 로그인해주세요." : "아직 회원이 아니라면?"}
             </span>
-            <button onClick={onRegisterClick} className="btn btn-outline-dark">
+            <button onClick={onRegisterClick} className="btn btn-outline-dark btn-sm">
               {!isRegistered ? "로그인" : "회원가입"}
             </button>
           </form>

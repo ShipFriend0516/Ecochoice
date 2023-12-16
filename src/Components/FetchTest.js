@@ -16,9 +16,9 @@ const FetchTest = () => {
       const userToken = await JSON.parse(user).accessToken;
 
       axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-      const response = await axios.post("http://localhost:9200/admin/products/reindexing");
+      // const response = await axios.post("http://localhost:8080/admin/products/reindexing");
 
-      console.log(response);
+      // console.log(response);
       setLoading(false);
     } catch (err) {
       console.log(err);

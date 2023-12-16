@@ -21,9 +21,10 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 
-  padding: 80px 80px 60px 80px;
+  padding: 40px 40px 40px 40px;
+  padding-top: 60px;
   border: 1px solid white;
   border-radius: 20px;
 
@@ -32,6 +33,7 @@
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
   z-index: 5;
+  transition: .3s;
 }
 
 .loginForm .field {
@@ -46,9 +48,39 @@
   padding-bottom: 20px;
 }
 
+.login {
+  padding-left: 60px;
+  padding-right: 60px;
+  width: 30vw;
+  gap: 10px;
+}
+
 .register {
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-left: 60px;
+  padding-right: 60px;
+  width: 40vw;
+  gap: 10px;
+}
+
+.profileImg {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+.profileImg img {
+  border-radius: 50%;
+  width: 25%;
+  background-color: #F2f2f2;
+  /* padding: 10px; */
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+
+.profileImg img:hover {
+  cursor: pointer;
 }
 
 .canvas {
@@ -59,6 +91,10 @@
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 3;
+}
+
+.loginPage form label.labelFont {
+  text-align: left;
 }
 
 @keyframes modalFade {

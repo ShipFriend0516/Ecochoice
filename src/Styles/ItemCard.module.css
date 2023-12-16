@@ -33,7 +33,7 @@
   width: 100%;
   overflow: hidden;
   position: relative;
-  z-index: 1;
+  /* z-index: 1; */
   margin: 0 auto;
   cursor: pointer;
   aspect-ratio: 1/1 ;
