@@ -20,21 +20,25 @@ const ItemCartPage = () => {
 
   // 상품 정보 조회 API
   const getCartItems = async () => {
-    const user = sessionStorage.getItem("user");
+    try {
+      const user = sessionStorage.getItem("user");
 
-    if (user) {
-      const userToken = JSON.parse(user).accessToken;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      if (user) {
+        const userToken = JSON.parse(user).accessToken;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
 
-      const response = await axios.get("http://localhost:8080/carts");
-      const userCartList = response.data.items;
+        const response = await axios.get("http://localhost:8080/carts");
+        const userCartList = response.data.items;
 
-      setCart(userCartList);
+        setCart(userCartList);
 
-      return userCartList;
-    } else {
-      console.log("User not found");
-      return null;
+        return userCartList;
+      } else {
+        console.log("User not found");
+        return null;
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
