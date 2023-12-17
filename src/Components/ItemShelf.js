@@ -17,14 +17,16 @@ const ItemShelf = ({ categoryId }) => {
 
   const getProducts = async (categoryId) => {
     try {
-      if (categoryId === "2") {
+      if (categoryId === 2) {
         // NEW 카테고리
         const response = await axios.post("http://localhost:8080/products", {
-          // sort: "new",
+          sort: "NEW",
           size: 10,
         });
+        console.log(response);
         const json = await response.data.list;
-        return json.reverse().slice(0, 20);
+        setProducts(json);
+        setLoading(false);
       } else {
         const response = await axios.post("http://localhost:8080/products", {
           categoryId: parseInt(categoryId),
@@ -32,14 +34,11 @@ const ItemShelf = ({ categoryId }) => {
         });
         console.log(response);
         const json = await response.data.list;
-        // setProducts(json);
-        // console.log(json);
         setProducts(json);
         setLoading(false);
       }
     } catch (error) {
-      console.error(error);
-      console.error("카테고리별 제품 가져오기 실패");
+      console.error("카테고리별 제품 가져오기 실패", error);
     }
   };
 

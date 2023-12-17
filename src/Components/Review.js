@@ -48,7 +48,7 @@ const Review = ({ reviewId, userId, rating, reviewText, deleteReview }) => {
         <>
           <div className={`${styles.leftSide}`}>
             <div>
-              <img srcSet={[logo, user.profileImageUrl]} alt="프로필사진"></img>
+              <img srcSet={[user.profileImageUrl, logo]} alt="프로필사진"></img>
               <div className={`${styles.name}`}>{user.nickname}</div>
             </div>
             <div className={`${styles.membership}`}>멤버십: {user.rank}</div>

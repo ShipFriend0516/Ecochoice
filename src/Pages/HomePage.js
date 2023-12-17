@@ -94,33 +94,12 @@ const Home = () => {
           <Intro />
           <SubTitle title={"인기 상품 🌏"} summary={"에코초이스 최고 인기 상품들을 모아보세요."} />
           <div className="ItemList">
-            <ItemCard img={logo} price={30000} name={"상품의 이름"} brand={"제조사 및 브랜드"} />
-            <ItemCard
-              img={
-                "https://gametouchmall.com/web/product/tiny/202207/e5daf237d5abed5c4a2e41bd699e1a61.jpg"
-              }
-              price={655800}
-              name={"PS5"}
-              brand={"Sony"}
-            />
-            <ItemCard
-              img={"https://i.gifer.com/5K4w.gif"}
-              price={30000}
-              name={"맷도요새"}
-              brand={"개귀엽네"}
-            />
-            <ItemCard img={logo} price={50000} name={""} brand={"공주대학교"} />
-            <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
-            <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
-            <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
-            <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
-            <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
-            <ItemCard img={logo} price={30000} name={"와 싸다"} brand={"공주대학교"} />
+            <ItemShelf categoryId={1} />
           </div>
           <MoreBtn categoryID={1} />
           <SubTitle title={"신상품 🌱"} summary={"가장 최신의 제품을 만나보세요."} />
           <div className="ItemList">
-            <ItemShelf categoryId={1} />
+            <ItemShelf categoryId={2} />
           </div>
           <MoreBtn categoryID={2} />
           <SubTitle title={"생활용품 💡"} summary={"친환경적인 생활용품을 만나보세요."} />

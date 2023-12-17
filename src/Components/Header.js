@@ -6,6 +6,7 @@ import logo from "../Images/logo.jpg";
 import { useSelector, useDispatch } from "react-redux";
 import { login, logout } from "../Store/authSlice";
 import useToast from "../hooks/toast";
+import axios from "axios";
 
 const Header = ({ isFixed, modalOpen }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,6 +16,7 @@ const Header = ({ isFixed, modalOpen }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
+  const [userProfile, setUserProfile] = useState(null);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
 
@@ -60,6 +62,23 @@ const Header = ({ isFixed, modalOpen }) => {
     }
   }, []);
 
+  const getUser = async () => {
+    try {
+      const userdata = sessionStorage.getItem("user");
+
+      if (userdata) {
+        const userToken = JSON.parse(userdata).accessToken;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      }
+      const response = await axios.get("http://localhost:8080/users");
+      console.log(response.data);
+      setUserProfile(response.data);
+      setUserLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const userLoad = async () => {
     const userData = sessionStorage.getItem("user");
     if (userData) {
@@ -67,7 +86,6 @@ const Header = ({ isFixed, modalOpen }) => {
       const userInfo = await JSON.parse(sessionStorage.getItem("user"));
       setUser(userInfo);
     }
-    setUserLoading(false);
   };
 
   const logOut = () => {
@@ -81,6 +99,7 @@ const Header = ({ isFixed, modalOpen }) => {
   useEffect(() => {
     try {
       userLoad();
+      getUser();
     } catch (e) {
       console.error("유저 정보가 없음", e);
     } finally {
@@ -184,6 +203,7 @@ const Header = ({ isFixed, modalOpen }) => {
               type="search"
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={handleKeyDown}
+              style={{ color: "white" }}
             ></input>
             <AiOutlineSearch onClick={onSubmit} />
           </li>
@@ -199,7 +219,13 @@ const Header = ({ isFixed, modalOpen }) => {
           </li>
           {isLoggedIn ? (
             <li onClick={logOut}>
-              {!userLoading && <img className="profileImg" srcSet={[logo]} alt="profile" />}
+              {!userLoading && (
+                <img
+                  className="profileImg"
+                  srcSet={[userProfile.profileImageUrl, logo]}
+                  alt="profile"
+                />
+              )}
             </li>
           ) : (
             <li id="login" onClick={loginOnClick}>

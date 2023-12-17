@@ -1,20 +1,91 @@
 import styles from "../Styles/SearchPage.module.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import ItemCard from "../Components/ItemCard";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import Select from "react-select";
+import { GoArrowUp } from "react-icons/go";
 
 const SearchPage = () => {
   const { searchText } = useParams();
   const [searchResult, setSearchResult] = useState([]);
   const [search, setSearch] = useState(searchText);
   const [loading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+
   const [validateError, setValidateError] = useState(false);
 
+  // 필터 상태
   const [filter, setFilter] = useState("NEW");
+
+  // 무한 스크롤 구현
+  const [scrollLoading, setScrollLoading] = useState(false);
+  const observer = useRef();
+
+  const lastItemRef = useCallback(
+    (node) => {
+      if (scrollLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(async (entries) => {
+        if (entries[0].isIntersecting) {
+          setScrollLoading(true);
+          await additionalGetProducts();
+          setScrollLoading(false);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [scrollLoading]
+  );
+
+  const additionalGetProducts = async () => {
+    try {
+      if (!searchResult.isLast) {
+        const response = await axios.post("http://localhost:8080/products", {
+          sort: filter,
+          searchKeyword: searchText,
+          page: searchResult.nextPage,
+        });
+
+        console.log(response);
+        setSearchResult((prevSearchResult) => ({
+          list: [...prevSearchResult.list, ...response.data.list],
+          isLast: response.data.isLast,
+          nextPage: response.data.nextPage,
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log(searchResult);
+    }
+  };
+
+  // 최상단으로 이동하는 함수
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // 부드럽게 스크롤
+    });
+  };
+
+  // 스크롤 이벤트 핸들러
+  const handleScroll = () => {
+    // 현재 스크롤 위치가 300px 이상이면 버튼을 표시
+    const currentScrollPos = window.pageYOffset;
+    setIsVisible(currentScrollPos > 300);
+  };
+
+  // 페이지 로드 시 및 스크롤 이벤트 리스너 등록
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   const navigate = useNavigate();
 
   const options = [
@@ -25,28 +96,17 @@ const SearchPage = () => {
   ];
 
   useEffect(() => {
-    console.log(filter);
-  }, [filter]);
-
-  useEffect(() => {
     getSearchResult();
   }, [searchText, filter]);
 
   const getSearchResult = async () => {
     try {
-      const user = sessionStorage.getItem("user");
-
-      const userToken = await JSON.parse(user).accessToken;
-
-      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
-
       const response = await axios.post(`http://localhost:8080/products`, {
         sort: filter,
         searchKeyword: searchText,
       });
-
       console.log("검색 결과", response);
-      setSearchResult(response.data.list);
+      setSearchResult(response.data);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -72,7 +132,6 @@ const SearchPage = () => {
       console.error("검색할 문자열이 없습니다.");
       return false;
     }
-
     return true;
   };
 
@@ -101,7 +160,8 @@ const SearchPage = () => {
                 <p>검색 중....</p>
               ) : (
                 <p>
-                  [ {searchText} ] 에 대한 검색 결과입니다. 총 {searchResult.length}개 상품 검색됨
+                  [ {searchText} ] 에 대한 검색 결과입니다. 총 {searchResult.list.length}개 상품
+                  검색됨
                 </p>
               )}
               <Select
@@ -117,8 +177,8 @@ const SearchPage = () => {
               <div>Loading...</div>
             ) : (
               <div className="ItemList">
-                {searchResult.length > 0 ? (
-                  searchResult.map((product) => {
+                {searchResult.list.length > 0 ? (
+                  searchResult.list.map((product, index) => {
                     return (
                       <ItemCard
                         key={product.productId}
@@ -133,9 +193,22 @@ const SearchPage = () => {
                 ) : (
                   <div className="d-flex w-100 justify-content-center">상품이 없습니다. 😢</div>
                 )}
+                <div className="" ref={lastItemRef}></div>
+                {scrollLoading && <p>Loading more items...</p>}
               </div>
             )}
           </div>
+        </div>
+        <div>
+          {isVisible && (
+            <button
+              onClick={scrollToTop}
+              className="btn rounded"
+              style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 999 }}
+            >
+              <GoArrowUp size={1.2 + "em"} />
+            </button>
+          )}
         </div>
         <Footer />
       </div>

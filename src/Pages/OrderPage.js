@@ -7,17 +7,16 @@ import tossLogo from "../Images/Toss_Logo_Secondary_Gray.png";
 import { useNavigate } from "react-router";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import CryptoJS from "crypto-js";
 
 const OrderPage = () => {
   const clientKey = process.env.REACT_APP_TOSSPAYMENTS_CLIENT_KEY;
   const apiKey = process.env.REACT_APP_TOSSPAYMENTS_SECRET_KEY;
 
-  const customerKey = "fdafiodjv231ksjf";
   const paymentWidgetRef = useRef(null);
 
-  const price = 50_000;
-
   const [paymentWay, setPaymentWay] = useState(0);
+
   // 상품 상태
   const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
@@ -48,18 +47,22 @@ const OrderPage = () => {
 
   // 주문을 만드는 함수
   const createOrder = async () => {
-    const user = sessionStorage.getItem("user");
+    try {
+      const user = sessionStorage.getItem("user");
 
-    if (user) {
-      const userToken = JSON.parse(user).accessToken;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      if (user) {
+        const userToken = JSON.parse(user).accessToken;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      }
+
+      const response = await axios.post("http://localhost:8080/orders", {
+        cartItemIds: cart.map((cartItem) => cartItem.productId),
+      });
+
+      return response.data.orderId;
+    } catch (error) {
+      console.error("CreateOrder Fail", error);
     }
-
-    const response = await axios.post("http://localhost:8080/orders", {
-      cartItemIds: cart.map((cartItem) => cartItem.productId),
-    });
-
-    setOrderId(response.data.orderId);
   };
 
   // 주문 취소 API
@@ -68,29 +71,26 @@ const OrderPage = () => {
     console.log(response);
   };
 
-  const completeOrder = async () => {
-    const response = await axios.post(`http://localhost:8080/orders/${orderId}/complete`, {
-      recipientName: deliveryName,
-      address: deliveryAddress1,
-      detailedAddress: deliveryAddress2,
-      zipCode: deliveryZip,
-      phoneNumber: userPhoneFirst + userPhoneSecond + userPhoneThird,
-      requestNote: deliveryRequest,
-    });
-    console.log(response);
+  // 주문 완료 API
+  const completeOrder = async (data) => {
+    try {
+      console.log(data);
+      const response = await axios.post(`http://localhost:8080/orders/${data.orderId}/complete`, {
+        recipientName: deliveryName,
+        address: deliveryAddress1,
+        detailedAddress: deliveryAddress2,
+        zipCode: deliveryZip,
+        phoneNumber: userPhoneFirst + userPhoneSecond + userPhoneThird,
+        requestNote: deliveryRequest,
+      });
+      navigate(
+        `/success?paymentKey=${data.paymentKey}&orderId=${data.orderId}&amount=${data.amount}`
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  useEffect(() => {
-    //주문창에 왔을때 주문을 열어서 생성
-    createOrder();
-  }, []);
-
-  // 주문 페이지를 나가면 생성했던 주문을 취소함.
-  useEffect(() => {
-    return () => {
-      if (orderId) cancleOrder();
-    };
-  }, [orderId]);
 
   // 로딩
   const [loading, setLoading] = useState(true);
@@ -198,25 +198,29 @@ const OrderPage = () => {
 
   useEffect(() => {
     (async () => {
-      // console.log(clientKey);
+      const response = await axios.get("http://localhost:8080/users");
+      const customerKey = CryptoJS.SHA256(response.data.userId).toString().slice(0, 40);
       const paymentWidget = await loadPaymentWidget(clientKey, customerKey);
 
-      paymentWidget.renderPaymentMethods("#payment-widget", totalPrice + deliveryFee);
+      const payPrice = totalPrice + deliveryFee;
+      paymentWidget.renderPaymentMethods("#payment-widget", payPrice);
 
       paymentWidgetRef.current = paymentWidget;
     })();
-  }, []);
+  }, [loading]);
 
   const payBtnClick = async () => {
     setError(null);
-    const paymentWidget = paymentWidgetRef.current;
-    if (infoValidate()) {
+
+    const newOrderId = await createOrder();
+    setOrderId(newOrderId);
+    if (newOrderId && infoValidate()) {
       try {
+        const paymentWidget = paymentWidgetRef.current;
         setUserPayInfo({
           userName,
           userEmail,
           userPhone: userPhoneFirst + userPhoneSecond + userPhoneThird,
-          // userTel: userTelFirst + userTelSecond + userTelThird,
         });
 
         setDeliveryInfo({
@@ -226,20 +230,30 @@ const OrderPage = () => {
           deliveryRequest,
         });
 
-        await paymentWidget?.requestPayment({
-          orderId: orderId,
-          orderName:
-            products.length >= 2 ? products[0].title + " 외 " + products.length : products[0].title,
-          customerName: userName,
-          customerEmail: userEmail,
-          successUrl: `${window.location.origin}/success`,
-          failUrl: `${window.location.origin}/fail`,
-        });
-        await completeOrder();
+        await paymentWidget
+          ?.requestPayment({
+            orderId: newOrderId,
+            orderName:
+              products.length >= 2
+                ? products[0].title + " 외 " + products.length
+                : products[0].title,
+            customerName: userName,
+            customerEmail: userEmail,
+            // successUrl: `${window.location.origin}/success`,
+            // failUrl: `${window.location.origin}/fail`,
+          })
+          .then(async (data) => {
+            await completeOrder(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } catch (err) {
         console.log(err);
-        await cancleOrder();
+        cancleOrder();
       }
+    } else {
+      cancleOrder();
     }
   };
 
@@ -335,39 +349,6 @@ const OrderPage = () => {
                             />
                           </td>
                         </tr>
-                        {/* <tr className={`${styles.tel}`}>
-                          <th scope="row">전화번호</th>
-                          <td>
-                            <div className="row">
-                              <div className="col">
-                                <input
-                                  onChange={(e) => setUserTelFirst(e.target.value)}
-                                  className="form-control"
-                                  maxLength={4}
-                                  type="text"
-                                />
-                              </div>
-                              -{" "}
-                              <div className="col">
-                                <input
-                                  onChange={(e) => setUserTelSecond(e.target.value)}
-                                  className="form-control"
-                                  maxLength={4}
-                                  type="text"
-                                />
-                              </div>
-                              -{" "}
-                              <div className="col">
-                                <input
-                                  onChange={(e) => setUserTelThird(e.target.value)}
-                                  className="form-control"
-                                  maxLength={4}
-                                  type="text"
-                                />
-                              </div>
-                            </div>
-                          </td>
-                        </tr> */}
                         <tr className={`${styles.phone}`}>
                           <th scope="row">휴대폰번호</th>
                           <td>

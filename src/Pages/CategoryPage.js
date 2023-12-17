@@ -4,7 +4,7 @@ import ItemCard from "../Components/ItemCard";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import useToast from "../hooks/toast";
 
 const CategoryPage = () => {
@@ -17,23 +17,73 @@ const CategoryPage = () => {
 
   const { addToast } = useToast();
 
+  // 무한 스크롤 구현
+  const [scrollLoading, setScrollLoading] = useState(false);
+  const observer = useRef();
+
+  const lastItemRef = useCallback(
+    (node) => {
+      if (scrollLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(async (entries) => {
+        if (entries[0].isIntersecting) {
+          setScrollLoading(true);
+          await additionalGetProducts();
+          setScrollLoading(false);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [scrollLoading]
+  );
+
+  const additionalGetProducts = async () => {
+    try {
+      if (!products.isLast) {
+        if (categoryID === "2") {
+          const response = await axios.post("http://localhost:8080/products", {
+            sort: "NEW",
+            page: products.nextPage,
+          });
+          console.log("추가 로딩", response);
+          setProducts((prevproducts) => ({
+            list: [...prevproducts.list, ...response.data.list],
+            isLast: response.data.isLast,
+            nextPage: response.data.nextPage,
+          }));
+        } else {
+          const response = await axios.post("http://localhost:8080/products", {
+            categoryId: parseInt(categoryID),
+            page: products.nextPage,
+          });
+          console.log("추가 로딩", response);
+          setProducts((prevproducts) => ({
+            list: [...prevproducts.list, ...response.data.list],
+            isLast: response.data.isLast,
+            nextPage: response.data.nextPage,
+          }));
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getProducts = async () => {
     try {
       if (categoryID === "2") {
         // NEW 카테고리
         const response = await axios.post("http://localhost:8080/products", {
-          // sort: "new",
+          sort: "NEW",
         });
-        const json = await response.data.list;
-        json.reverse();
-        setProducts(json.slice(0, 20));
+        const json = response.data;
+        setProducts(json);
       } else {
         const response = await axios.post("http://localhost:8080/products", {
           categoryId: parseInt(categoryID),
-          size: 200,
         });
         console.log(response);
-        const json = await response.data.list;
+        const json = response.data;
         setProducts(json);
 
         console.log(json);
@@ -63,6 +113,8 @@ const CategoryPage = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
+    setProducts((prev) => ({ list: [] }));
     getProducts();
     getCategoryName();
   }, [categoryID]);
@@ -84,8 +136,23 @@ const CategoryPage = () => {
             </div>
             <hr className={styles.hrStyle} />
             <div className="ItemList">
-              {products.length !== 0 ? (
-                products.map((product) => {
+              {products.list.length !== 0 ? (
+                products.list.map((product, index) => {
+                  if (index === products.list.length - 1) {
+                    return (
+                      <>
+                        <ItemCard
+                          key={product.productId}
+                          id={product.productId}
+                          img={product.thumbnailImageUrl}
+                          name={product.title}
+                          brand={product.brandName}
+                          price={product.representativeOption.price}
+                        ></ItemCard>
+                        <div ref={lastItemRef}></div>
+                      </>
+                    );
+                  }
                   return (
                     <ItemCard
                       key={product.productId}
@@ -103,6 +170,7 @@ const CategoryPage = () => {
                 </div>
               )}
             </div>
+            {scrollLoading && <p>Loading more items...</p>}
           </div>
         )}
       </div>

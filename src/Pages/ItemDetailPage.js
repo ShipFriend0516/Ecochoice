@@ -68,23 +68,6 @@ const ItemDetailPage = ({ imgPath }) => {
     getReviews();
   }, []);
 
-  let dummyUser = {
-    UID: 1,
-    id: "orbita@example.com",
-    pw: "1234",
-    nickName: "오르비타",
-    membership: "Bronze",
-    profileImage: "https://i.gifer.com/5K4w.gif",
-  };
-
-  let anonymousUser = {
-    UID: 2,
-    profileImage:
-      "https://phinf.pstatic.net/contact/20210727_207/1627329785715shmqc_JPEG/image.jpg?type=s160",
-    nickName: "익명",
-    membership: "Bronze",
-  };
-
   const toggleModal = () => {
     setIsVisible((prev) => !prev);
   };
@@ -154,8 +137,7 @@ const ItemDetailPage = ({ imgPath }) => {
   const postReview = async () => {
     try {
       if (reviewValidate()) {
-        console.log(typeof parseInt(id, 10), dummyUser.UID, summary, rating);
-        const productID = parseFloat(id, 10);
+        const productID = parseInt(id);
 
         const user = sessionStorage.getItem("user");
 
@@ -173,6 +155,7 @@ const ItemDetailPage = ({ imgPath }) => {
 
         setSummary("");
         setRating(0);
+        setError("");
         getReviews();
       }
     } catch (err) {
