@@ -12,7 +12,7 @@ import { FaCheckCircle } from "react-icons/fa";
 const MyPage = () => {
   const [modalHandle, setModalHandle] = React.useState(false);
   const [user, setUser] = useState("");
-
+  const [userLoading, setUserLoading] = useState(true);
   // 주문 정보 조회 부분
   const [orderLoading, setOrderLoading] = useState(true);
   const [orderList, setOrderList] = useState([]);
@@ -28,6 +28,7 @@ const MyPage = () => {
       const response = await axios.get("http://localhost:8080/users");
       console.log(response.data);
       setUser(response.data);
+      setUserLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -113,46 +114,56 @@ const MyPage = () => {
             <div className="fs-3 text-center mt-3">회원정보</div>
             <hr className={styles.top_hr} />
             <div className="ms-3 me-3">
-              <div>
-                <table className={styles.tb}>
-                  <tr>
-                    <th>회원번호</th>
-                    <td>
-                      <p>{user.userId}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>이름</th>
-                    <td>
-                      <p>{user.nickname}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>회원등급</th>
-                    <td>
-                      <p>{user.rank}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Email</th>
-                    <td>
-                      <p>{user.email}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>전화번호</th>
-                    <td>
-                      <p>{user.phoneNumber}</p>
-                    </td>
-                  </tr>
-                </table>
-              </div>
+              {userLoading ? (
+                <div className="w-100 d-flex justfiy-content-center">
+                  <div className="spinner-border text-success" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div>
+                    <table className={styles.tb}>
+                      <tr>
+                        <th>회원번호</th>
+                        <td>
+                          <p>{user.userId}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>이름</th>
+                        <td>
+                          <p>{user.nickname}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>회원등급</th>
+                        <td>
+                          <p>{user.rank}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Email</th>
+                        <td>
+                          <p>{user.email}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>전화번호</th>
+                        <td>
+                          <p>{user.phoneNumber}</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
 
-              <div>
-                <Link className="btn btn-light" to={`/user`}>
-                  수정
-                </Link>
-              </div>
+                  <div>
+                    <Link className="btn btn-light" to={`/user`}>
+                      수정
+                    </Link>
+                  </div>
+                </>
+              )}
             </div>
 
             <hr />
@@ -160,8 +171,8 @@ const MyPage = () => {
               <div className="fs-3 text-center mt-3">주문 정보 조회</div>
               {orderLoading ? (
                 <div className="w-100 d-flex justfiy-content-center">
-                  <div class="spinner-border text-success" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                  <div className="spinner-border text-success" role="status">
+                    <span className="visually-hidden">Loading...</span>
                   </div>
                 </div>
               ) : (
