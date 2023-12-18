@@ -56,9 +56,10 @@ const OrderPage = () => {
       }
 
       const response = await axios.post("http://localhost:8080/orders", {
-        cartItemIds: cart.map((cartItem) => cartItem.productId),
+        cartItemIds: cart.map((cartItem) => cartItem.cartId),
       });
 
+      console.log(response);
       return response.data.orderId;
     } catch (error) {
       console.error("CreateOrder Fail", error);
@@ -204,7 +205,6 @@ const OrderPage = () => {
 
       const payPrice = totalPrice + deliveryFee;
       paymentWidget.renderPaymentMethods("#payment-widget", payPrice);
-
       paymentWidgetRef.current = paymentWidget;
     })();
   }, [loading]);

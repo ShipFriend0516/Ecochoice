@@ -10,7 +10,8 @@
 
 .myPageDetail {
   width: 80%;
-  height: 800px;
+  /* height: 800px; */
+  padding-bottom: 100px;
 }
 
 .top_info {
@@ -95,4 +96,17 @@
 
 .tb p {
   text-align: left;
+}
+
+.orderLeft {
+  /* flex-grow: 1; */
+  width: 10%;
+}
+
+.orderRight {
+  width: 90%;
+}
+
+.orderBox {
+  justify-content: space-between;
 }
