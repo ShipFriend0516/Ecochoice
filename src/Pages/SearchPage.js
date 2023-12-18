@@ -49,9 +49,13 @@ const SearchPage = () => {
           page: searchResult.nextPage,
         });
 
-        console.log(response);
-        setSearchResult((prevSearchResult) => ({
-          list: [...prevSearchResult.list, ...response.data.list],
+        const newProducts = response.data.list.filter(
+          (newProduct) =>
+            !searchResult.list.some((prevProduct) => prevProduct.productId === newProduct.productId)
+        );
+
+        setSearchResult((prevProducts) => ({
+          list: [...prevProducts.list, ...newProducts],
           isLast: response.data.isLast,
           nextPage: response.data.nextPage,
         }));
@@ -179,6 +183,21 @@ const SearchPage = () => {
               <div className="ItemList">
                 {searchResult.list.length > 0 ? (
                   searchResult.list.map((product, index) => {
+                    if (index === searchResult.list.length - 1) {
+                      return (
+                        <>
+                          <ItemCard
+                            key={product.productId}
+                            id={product.productId}
+                            img={product.thumbnailImageUrl}
+                            name={product.title}
+                            brand={product.brandName}
+                            price={product.representativeOption.price}
+                          />
+                          {searchResult.nextPage !== null && <div ref={lastItemRef} />}
+                        </>
+                      );
+                    }
                     return (
                       <ItemCard
                         key={product.productId}
@@ -194,7 +213,13 @@ const SearchPage = () => {
                   <div className="d-flex w-100 justify-content-center">상품이 없습니다. 😢</div>
                 )}
                 <div className="" ref={lastItemRef}></div>
-                {scrollLoading && <p>Loading more items...</p>}
+                {scrollLoading && (
+                  <div className="d-flex justify-content-center">
+                    <div class="spinner-grow text-secondary" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

@@ -42,13 +42,13 @@ const SellPage = () => {
   };
 
   const resetInput = () => {
-    setItemImage(null);
+    setItemImage("");
     setItemName("");
     setItemPrice(0);
     setItemBrand("");
     setItemCount(1);
     setItemDescription("");
-    setItemCategoryId(null);
+    setItemCategoryId(1);
     setItemOptionTitle("");
   };
 
@@ -107,6 +107,7 @@ const SellPage = () => {
                 type="text"
                 className="mb-3 form form-control w-100"
                 placeholder="이미지 주소 URL"
+                value={itemImage}
                 onChange={(e) => setItemImage(e.target.value)}
               ></input>
               <div className={`${styles.addImage}`}>
@@ -125,6 +126,7 @@ const SellPage = () => {
                   onChange={(e) => {
                     setItemName(e.target.value);
                   }}
+                  value={itemName}
                   className="form-control"
                   type="text"
                   placeholder="상품이름"
@@ -136,6 +138,7 @@ const SellPage = () => {
                   onChange={(e) => {
                     setItemOptionTitle(e.target.value);
                   }}
+                  value={itemOptionTitle}
                   className="form-control"
                   type="text"
                   placeholder="옵션 이름"
@@ -147,6 +150,7 @@ const SellPage = () => {
                   onChange={(e) => {
                     setItemCategoryId(e.target.value);
                   }}
+                  value={itemCategoryId}
                   className="form-control"
                   type="number"
                   max={12}
@@ -161,6 +165,7 @@ const SellPage = () => {
                     setItemPrice(e.target.value);
                   }}
                   className="form-control"
+                  value={itemPrice}
                   type="text"
                   placeholder="가격"
                 ></input>
@@ -171,6 +176,7 @@ const SellPage = () => {
                   onChange={(e) => {
                     setItemBrand(e.target.value);
                   }}
+                  value={itemBrand}
                   className="form-control"
                   type="text"
                   placeholder="브랜드"
@@ -184,6 +190,7 @@ const SellPage = () => {
                   }}
                   className="form-control"
                   type="text"
+                  value={itemCount}
                   placeholder="수량"
                 ></input>
               </div>
@@ -195,6 +202,7 @@ const SellPage = () => {
                   }}
                   rows={5}
                   className="form-control"
+                  value={itemDescription}
                   type="text"
                   placeholder="상품 설명"
                 ></textarea>

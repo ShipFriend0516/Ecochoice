@@ -103,7 +103,14 @@ const MyPage = () => {
             </div>
             <div className={styles.center_contents}>
               <div className="text-white">등급: {user.rank}</div>
-              <button className={`btn btn-light ${styles.coupon_b}`}>상품 판매하기</button>
+              <button
+                className={`btn btn-light ${styles.coupon_b}`}
+                onClick={() => {
+                  navigate("/sell");
+                }}
+              >
+                상품 판매하기
+              </button>
             </div>
             <div className={styles.right_contents}>
               <div>현재 가진 쿠폰</div>
