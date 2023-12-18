@@ -51,15 +51,17 @@
 .login {
   padding-left: 60px;
   padding-right: 60px;
-  width: 30vw;
+  width: 360px;
   gap: 10px;
+
 }
 
 .register {
   padding-left: 60px;
   padding-right: 60px;
-  width: 40vw;
+  width: 400px;
   gap: 10px;
+  
 }
 
 .profileImg {
@@ -77,6 +79,7 @@
   /* padding: 10px; */
   aspect-ratio: 1/1;
   overflow: hidden;
+  object-fit: cover;
 }
 
 .profileImg img:hover {
@@ -95,6 +98,45 @@
 
 .loginPage form label.labelFont {
   text-align: left;
+}
+
+.loginPage label {
+  font-size: .85em;
+}
+
+
+.btn_outline_lightcoral {
+  --bs-btn-color: #ba757c;
+  --bs-btn-border-color: #ba757c;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #ba757c;
+  --bs-btn-hover-border-color: #ba757c;
+  --bs-btn-focus-shadow-rgb: 220,53,69;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #ba757c;
+  --bs-btn-active-border-color: #ba757c;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #ba757c;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #ba757c;
+  --bs-gradient: none;
+}
+
+.btn_outline_lightgreen {
+  --bs-btn-color: #668b5b;
+  --bs-btn-border-color: #668b5b;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #668b5b;
+  --bs-btn-hover-border-color: #668b5b;
+  --bs-btn-focus-shadow-rgb: 220,53,69;
+  --bs-btn-active-color: #668b5b;
+  --bs-btn-active-bg: #668b5b;
+  --bs-btn-active-border-color: #668b5b;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #668b5b;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #668b5b;
+  --bs-gradient: none;
 }
 
 @keyframes modalFade {

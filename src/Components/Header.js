@@ -71,7 +71,6 @@ const Header = ({ isFixed, modalOpen }) => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
       }
       const response = await axios.get("http://localhost:8080/users");
-      console.log(response.data);
       setUserProfile(response.data);
       setUserLoading(false);
     } catch (error) {
@@ -102,8 +101,6 @@ const Header = ({ isFixed, modalOpen }) => {
       getUser();
     } catch (e) {
       console.error("유저 정보가 없음", e);
-    } finally {
-      console.log("user access token", user, "로그인 여부", isLoggedIn);
     }
   }, [userLoading]);
 

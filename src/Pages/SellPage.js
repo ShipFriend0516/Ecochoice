@@ -3,6 +3,8 @@ import Header from "../Components/Header";
 
 import styles from "../Styles/SellPage.module.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const SellPage = () => {
   const [itemImage, setItemImage] = useState(null);
   const [itemName, setItemName] = useState("");
@@ -10,30 +12,44 @@ const SellPage = () => {
   const [itemBrand, setItemBrand] = useState("");
   const [itemCount, setItemCount] = useState(1);
   const [itemDescription, setItemDescription] = useState("");
+  const [itemCategoryId, setItemCategoryId] = useState(2);
+  const [itemOptionTitle, setItemOptionTitle] = useState("");
+
   const navigate = useNavigate();
 
-  const fileInputRef = useRef(null);
-  const handleImageClick = () => {
-    // 클릭 시 input 파일 업로드 클릭
-    fileInputRef.current.click();
+  const postProduct = async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/admin/products/create", {
+        title: itemName,
+        contents: itemDescription,
+        thumbnailImageUrl: itemImage,
+        brandName: itemBrand,
+        categoryId: itemCategoryId,
+        options: [
+          {
+            isRepresentative: true,
+            title: itemOptionTitle,
+            price: itemPrice,
+            stock: itemCount,
+            display: true,
+          },
+        ],
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      // 이미지 파일을 선택한 경우
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        // 이미지 미리보기를 위한 작업
-        // 여기서는 예시로 alert를 사용하고 실제로는 상태를 업데이트하여 프리뷰에 사용할 수 있습니다.
-        setItemImage(e.target.result);
-        // alert(`Selected Image: ${e.target.result}`);
-      };
-
-      reader.readAsDataURL(file);
-    }
+  const resetInput = () => {
+    setItemImage(null);
+    setItemName("");
+    setItemPrice(0);
+    setItemBrand("");
+    setItemCount(1);
+    setItemDescription("");
+    setItemCategoryId(null);
+    setItemOptionTitle("");
   };
 
   const sellValidate = () => {
@@ -85,7 +101,7 @@ const SellPage = () => {
         </h1>
         <div className={`${styles.addItem} ${styles.effect4}`}>
           <div className={"d-flex justify-content-evenly  align-items-center"}>
-            <div className={"d-flex flex-column justify-content-evenly"}>
+            <div className={"d-flex flex-column justify-content-between"}>
               <p className="bold fs-4 mb-2">상품 이미지의 URL</p>
               <input
                 type="text"
@@ -118,11 +134,24 @@ const SellPage = () => {
                 <p>옵션 이름</p>
                 <input
                   onChange={(e) => {
-                    setItemPrice(e.target.value);
+                    setItemOptionTitle(e.target.value);
                   }}
                   className="form-control"
                   type="text"
                   placeholder="옵션 이름"
+                ></input>
+              </div>
+              <div className="d-flex flex-row text-nowrap">
+                <p>카테고리</p>
+                <input
+                  onChange={(e) => {
+                    setItemCategoryId(e.target.value);
+                  }}
+                  className="form-control"
+                  type="number"
+                  max={12}
+                  min={1}
+                  placeholder="카테고리"
                 ></input>
               </div>
               <div className="d-flex flex-row text-nowrap">
@@ -182,7 +211,10 @@ const SellPage = () => {
             </button>
             <button
               onClick={() => {
-                if (sellValidate()) console.log(itemName, "등록");
+                if (sellValidate()) {
+                  postProduct();
+                  resetInput();
+                }
               }}
             >
               등록하기

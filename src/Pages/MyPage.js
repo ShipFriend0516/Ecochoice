@@ -8,6 +8,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import ItemCard from "../Components/ItemCard";
 import { FaCheckCircle } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import OrderBox from "../Components/OrderBox";
 
 const MyPage = () => {
   const [modalHandle, setModalHandle] = React.useState(false);
@@ -16,6 +19,10 @@ const MyPage = () => {
   // 주문 정보 조회 부분
   const [orderLoading, setOrderLoading] = useState(true);
   const [orderList, setOrderList] = useState([]);
+
+  // 로그인 여부
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const navigate = useNavigate();
 
   const getUser = async () => {
     try {
@@ -37,6 +44,15 @@ const MyPage = () => {
   useEffect(() => {
     getUser();
   }, []);
+
+  // 마이페이지에서 로그아웃 될 경우
+  useEffect(() => {
+    if (!userLoading && !orderLoading) {
+      if (!isLoggedIn) {
+        navigate("/");
+      }
+    }
+  }, [userLoading, orderLoading, isLoggedIn]);
 
   const getOrderList = async () => {
     try {
@@ -68,16 +84,10 @@ const MyPage = () => {
     getOrderList();
   }, []);
 
-  useEffect(() => {
-    if (!orderLoading) getOrder(orderList.list[0].id);
-  }, [orderLoading]);
-
   return (
     <div>
       <Header isFixed={true} />
-      <div
-        className={`d-flex flex-column justify-content-center align-items-center h-100 ${styles.myPage}`}
-      >
+      <div className={`d-flex flex-column align-items-center h-100 ${styles.myPage}`}>
         <div className={styles.mytop}>
           <div className={styles.top_info}>
             <div className={styles.left_contents}>
@@ -92,12 +102,12 @@ const MyPage = () => {
               <div className="rank"></div>
             </div>
             <div className={styles.center_contents}>
-              <div>등급 {user.rank}</div>
-              <div>주문정보조회</div>
+              <div className="text-white">등급: {user.rank}</div>
+              <button className={`btn btn-light ${styles.coupon_b}`}>상품 판매하기</button>
             </div>
             <div className={styles.right_contents}>
               <div>현재 가진 쿠폰</div>
-              <div className={`fs-1 ${styles.count_coupon}`}>1개</div>
+              <div className={`fs-1 ${styles.count_coupon}`}>0개</div>
               <button
                 className={`btn btn-light ${styles.coupon_b}`}
                 onClick={() => {
@@ -123,7 +133,7 @@ const MyPage = () => {
               ) : (
                 <>
                   <div>
-                    <table className={styles.tb}>
+                    <table className={`table ${styles.tb}`}>
                       <tr>
                         <th>회원번호</th>
                         <td>
@@ -184,23 +194,7 @@ const MyPage = () => {
                   </span>
                   <div className="mt-3">
                     {orderList.list.map((orderItem) => (
-                      <div
-                        className={`border mb-1 rounded pt-3 px-3 pb-1 d-flex flex-row ${styles.orderBox}`}
-                      >
-                        <div className={styles.orderLeft}>
-                          <FaCheckCircle size={1.2 + "em"} color="green" />
-                        </div>
-                        <div className={styles.orderRight} key={orderItem.id}>
-                          <p>주문 번호 : {orderItem.id}</p>
-                          <p>주문자 이름 : {orderItem.recipientName}</p>
-                          <p>
-                            주문 상품 : {orderItem.items[0].productName}
-                            {orderItem.items.length > 1 &&
-                              " 외" + (orderItem.items.length - 1) + " 개"}
-                          </p>
-                          <p>주문 금액 : {orderItem.price.toLocaleString()}원</p>
-                        </div>
-                      </div>
+                      <OrderBox orderItem={orderItem} />
                     ))}
                   </div>
                 </>

@@ -27,11 +27,16 @@
   justify-content: center;
   align-items: center ;
   min-width: 300px;
-  width: 40vw;
-  aspect-ratio: 1/1;
+  width: 36vw;
   border-radius: .5em;
   border: 3px solid rgb(82, 82, 82);
   background-color: white;
+}
+
+.addImage img {
+  aspect-ratio: 1/1;
+  object-fit: cover;
+
 }
 
 /* .addImage:hover {
@@ -60,6 +65,14 @@
 
 .itemForm > div > p {
   margin-right: 8px;
+}
+
+.itemForm > div > p {
+  width: 30%;
+}
+
+.itemForm > div > input {
+  width: 70%;
 }
 
 .buttonWrapper {

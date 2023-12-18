@@ -39,30 +39,30 @@ const CategoryPage = () => {
 
   const additionalGetProducts = async () => {
     try {
-      if (!products.isLast) {
-        if (categoryID === "2") {
-          const response = await axios.post("http://localhost:8080/products", {
-            sort: "NEW",
-            page: products.nextPage,
-          });
-          console.log("추가 로딩", response);
-          setProducts((prevproducts) => ({
-            list: [...prevproducts.list, ...response.data.list],
-            isLast: response.data.isLast,
-            nextPage: response.data.nextPage,
-          }));
+      if (!products.isLast && products.nextPage !== null) {
+        const queryParams = {
+          page: products.nextPage,
+          size: 20,
+        };
+        if (categoryID !== "2") {
+          queryParams.categoryId = parseInt(categoryID);
         } else {
-          const response = await axios.post("http://localhost:8080/products", {
-            categoryId: parseInt(categoryID),
-            page: products.nextPage,
-          });
-          console.log("추가 로딩", response);
-          setProducts((prevproducts) => ({
-            list: [...prevproducts.list, ...response.data.list],
-            isLast: response.data.isLast,
-            nextPage: response.data.nextPage,
-          }));
+          queryParams.sort = "NEW";
         }
+
+        const response = await axios.post("http://localhost:8080/products", queryParams);
+        console.log("추가 로딩", response);
+
+        const newProducts = response.data.list.filter(
+          (newProduct) =>
+            !products.list.some((prevProduct) => prevProduct.productId === newProduct.productId)
+        );
+
+        setProducts((prevProducts) => ({
+          list: [...prevProducts.list, ...newProducts],
+          isLast: response.data.isLast,
+          nextPage: response.data.nextPage,
+        }));
       }
     } catch (error) {
       console.log(error);
@@ -77,6 +77,7 @@ const CategoryPage = () => {
           sort: "NEW",
         });
         const json = response.data;
+        console.log(json);
         setProducts(json);
       } else {
         const response = await axios.post("http://localhost:8080/products", {
@@ -94,6 +95,10 @@ const CategoryPage = () => {
       console.error("카테고리별 제품 가져오기 실패");
     }
   };
+
+  useEffect(() => {
+    console.log("products 변경됨", products);
+  }, [products]);
 
   const getCategoryName = async () => {
     try {
@@ -114,7 +119,6 @@ const CategoryPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    setProducts((prev) => ({ list: [] }));
     getProducts();
     getCategoryName();
   }, [categoryID]);
@@ -148,8 +152,8 @@ const CategoryPage = () => {
                           name={product.title}
                           brand={product.brandName}
                           price={product.representativeOption.price}
-                        ></ItemCard>
-                        <div ref={lastItemRef}></div>
+                        />
+                        {products.nextPage !== null && <div ref={lastItemRef} />}
                       </>
                     );
                   }
@@ -170,7 +174,13 @@ const CategoryPage = () => {
                 </div>
               )}
             </div>
-            {scrollLoading && <p>Loading more items...</p>}
+            {scrollLoading && (
+              <div className="d-flex justify-content-center">
+                <div class="spinner-grow text-secondary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -72,6 +72,23 @@ const OrderPage = () => {
     console.log(response);
   };
 
+  const deleteCart = async () => {
+    try {
+      const response = await axios.post("http://localhost:8080/carts/delete", {
+        items: cart.map((cartItem) => {
+          return {
+            productId: cartItem.productId,
+            productOptionId: cartItem.productOptionId,
+            quantity: cartItem.quantity,
+          };
+        }),
+      });
+      console.log("결제완료되어 상품이 장바구니에서 제거됨!", response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // 주문 완료 API
   const completeOrder = async (data) => {
     try {
@@ -84,6 +101,7 @@ const OrderPage = () => {
         phoneNumber: userPhoneFirst + userPhoneSecond + userPhoneThird,
         requestNote: deliveryRequest,
       });
+      await deleteCart();
       navigate(
         `/success?paymentKey=${data.paymentKey}&orderId=${data.orderId}&amount=${data.amount}`
       );

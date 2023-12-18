@@ -175,7 +175,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
                         }}
                         placeholder="프로필사진의 URL"
                         id="profileImg"
-                        className={"form-control"}
+                        className={"form-control form-control-sm form-control form-control-sm-sm"}
                         type="url"
                       ></input>
                     </>
@@ -195,7 +195,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
                 <input
                   onChange={(e) => setName(e.target.value)}
                   id="pwCheck"
-                  className={"form-control"}
+                  className={"form-control form-control-sm"}
                   type="text"
                 ></input>
                 {error === 103 ? (
@@ -209,7 +209,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
                 <input
                   onChange={(e) => setPhone(e.target.value)}
                   id="pwCheck"
-                  className={"form-control"}
+                  className={"form-control form-control-sm"}
                   type="tel"
                 ></input>
                 {error === 104 ? (
@@ -219,7 +219,12 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
             )}
             <div className="">
               <label htmlFor="id">아이디</label>
-              <input onChange={onChangeID} id="id" className={"form-control"} type="email"></input>
+              <input
+                onChange={onChangeID}
+                id="id"
+                className={"form-control form-control-sm"}
+                type="email"
+              ></input>
               {error === 100 || error === 101 ? (
                 <small className={styles.errorMsg}>아이디는 8글자 이상이어야합니다.</small>
               ) : null}
@@ -229,7 +234,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
               <input
                 onChange={(e) => setPW(e.target.value)}
                 id="pw"
-                className={"form-control"}
+                className={"form-control form-control-sm"}
                 type="password"
               ></input>
             </div>
@@ -239,7 +244,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
                 <input
                   onChange={(e) => setPWCheck(e.target.value)}
                   id="pwCheck"
-                  className={"form-control"}
+                  className={"form-control form-control-sm"}
                   type="password"
                 ></input>
                 {error === 100 || error === 102 ? (
@@ -255,20 +260,20 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
             <div className="d-flex justify-content-between gap-3">
               <input
                 onClick={canvasOnClick}
-                className="btn btn-outline-danger btn-sm mt-3 flex-grow-1"
+                className={`btn btn-outline-danger btn-sm mt-3 flex-grow-1 ${styles.btn_outline_lightcoral}`}
                 type="button"
                 value={"취소"}
               />
               <input
-                className="btn btn-outline-success btn-sm mt-3 flex-grow-1"
+                className={`btn btn-outline-success btn-sm mt-3 flex-grow-1 ${styles.btn_outline_lightgreen}`}
                 type="submit"
                 value={isRegistered ? "로그인" : "회원가입"}
               />
             </div>
-            <span>
+            <span className="small">
               {!isRegistered ? "이미 회원이라면 로그인해주세요." : "아직 회원이 아니라면?"}
             </span>
-            <button onClick={onRegisterClick} className="btn btn-outline-dark btn-sm">
+            <button onClick={onRegisterClick} className={"btn btn-outline-dark btn-sm "}>
               {!isRegistered ? "로그인" : "회원가입"}
             </button>
           </form>

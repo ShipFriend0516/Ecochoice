@@ -2,11 +2,19 @@ import styles from "../Styles/UserPage.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import logo from "../Images/logo.jpg";
+import { useNavigate } from "react-router-dom";
+
 const UserForm = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState("");
   const onSubmit = async (e) => {
-    e.preventDefault();
-    await updateUser();
+    try {
+      e.preventDefault();
+      await updateUser();
+      navigate("/mypage");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // 유저 정보 업데이트 관련 상태
@@ -48,7 +56,6 @@ const UserForm = () => {
         phoneNumber: userPhone,
         profileImageUrl: userProfileURL,
       });
-      console.log(response);
     } catch (error) {
       console.error(error);
     }
