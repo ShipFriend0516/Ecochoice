@@ -317,6 +317,7 @@ const OrderPage = () => {
             <div className={`d-block bold text-center ${styles.titleBox}`}>
               <span className={`${styles.title}`}>주문서 작성</span>
             </div>
+
             <div className={`bg-white ${styles.bill}`}>
               <p className="bold fs-5 mb-2">주문 상품 목록({cart.length})</p>
               <div className={`${styles.itemGrid}`}>
@@ -562,6 +563,7 @@ const OrderPage = () => {
                 </div>
               </div>
             </div>
+            <div className="d-none" id="payment-widget"></div>
           </>
         )}
       </div>
