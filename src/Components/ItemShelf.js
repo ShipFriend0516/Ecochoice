@@ -29,6 +29,7 @@ const ItemShelf = ({ categoryId }) => {
         setLoading(false);
       } else {
         const response = await axios.post("http://localhost:8080/products", {
+          sort: "OLD",
           categoryId: parseInt(categoryId),
           size: 10,
         });

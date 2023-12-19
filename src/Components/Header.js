@@ -102,7 +102,7 @@ const Header = ({ isFixed, modalOpen }) => {
     } catch (e) {
       console.error("유저 정보가 없음", e);
     }
-  }, [userLoading]);
+  }, [userLoading, isVisible]);
 
   // ScrollSpy
   useEffect(() => {
@@ -169,28 +169,28 @@ const Header = ({ isFixed, modalOpen }) => {
             <Link to={"/category/3"}>오늘의할인</Link>
           </li>
           <li>
-            <Link to={"/category/4"}>의류 및 패션</Link>
+            <Link to={"/category/4"}>뷰티</Link>
           </li>
           <li>
-            <Link to={"/category/5"}>생활용품</Link>
+            <Link to={"/category/5"}>사무용품</Link>
           </li>
           <li>
-            <Link to={"/category/6"}>건강 및 뷰티</Link>
+            <Link to={"/category/6"}>디지털</Link>
           </li>
           <li>
-            <Link to={"/category/7"}>식품</Link>
+            <Link to={"/category/7"}>인테리어</Link>
           </li>
           <li>
-            <Link to={"/category/8"}>재활용 제품</Link>
+            <Link to={"/category/8"}>주방용품</Link>
           </li>
           <li>
-            <Link to={"/category/9"}>에너지 절약용품</Link>
+            <Link to={"/category/9"}>식품</Link>
           </li>
           <li>
-            <Link to={"/category/10"}>캠핑용품</Link>
+            <Link to={"/category/10"}>유아용품</Link>
           </li>
           <li>
-            <Link to={"/category/11"}>사무용품</Link>
+            <Link to={"/category/11"}>건강</Link>
           </li>
           <li>
             <Link to={"/category/12"}>장식</Link>

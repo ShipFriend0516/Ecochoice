@@ -24,6 +24,8 @@ const MyPage = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
 
+  let totalPrice = 0;
+
   const getUser = async () => {
     try {
       const userdata = sessionStorage.getItem("user");
@@ -71,14 +73,14 @@ const MyPage = () => {
     }
   };
 
-  const getOrder = async (orderId) => {
-    try {
-      const response = await axios.get(`http://localhost:8080/orders/${orderId}`);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const getOrder = async (orderId) => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:8080/orders/${orderId}`);
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   useEffect(() => {
     getOrderList();
@@ -200,10 +202,15 @@ const MyPage = () => {
                     개를 조회했습니다.
                   </span>
                   <div className="mt-3">
-                    {orderList.list.map((orderItem) => (
-                      <OrderBox orderItem={orderItem} />
-                    ))}
+                    {orderList.list.map((orderItem) => {
+                      totalPrice += orderItem.price;
+                      return <OrderBox orderItem={orderItem} />;
+                    })}
                   </div>
+                  <p className="fs-4">
+                    <span className="bold">{user.nickname}</span>님은 현재까지{" "}
+                    <span className="bold">{totalPrice.toLocaleString()}</span>원 구매하셨습니다.
+                  </p>
                 </>
               )}
             </div>

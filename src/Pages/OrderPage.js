@@ -42,6 +42,22 @@ const OrderPage = () => {
 
   const [error, setError] = useState(null);
 
+  // 유저 정보
+  const [user, setUser] = useState(null);
+  const [userLoading, setUserLoading] = useState(true);
+
+  // 유저 정보를 불러오는 API
+  const getUser = async () => {
+    const userSession = sessionStorage.getItem("user");
+    const userAccessToken = JSON.parse(userSession).accessToken;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${userAccessToken}`;
+
+    const response = await axios.get("http://localhost:8080/users");
+
+    setUser(response.data);
+    setUserLoading(false);
+  };
+
   // 주문 상태
   const [orderId, setOrderId] = useState(null);
 
@@ -213,6 +229,7 @@ const OrderPage = () => {
   // 상품의 정보를 읽어오는 요청
   useEffect(() => {
     getCartItemsDetail();
+    getUser();
   }, []);
 
   useEffect(() => {
@@ -289,7 +306,7 @@ const OrderPage = () => {
     <div>
       <Header isFixed={true} />
       <div className={`${styles.bg}`}>
-        {loading ? (
+        {loading || userLoading ? (
           <div className="w-100 p-5 d-flex justify-content-center">
             <div className="spinner-grow text-success" role="status">
               <span className="visually-hidden">Loading...</span>
@@ -362,6 +379,7 @@ const OrderPage = () => {
                           <td>
                             <input
                               onChange={(e) => setUserName(e.target.value)}
+                              defaultValue={user.nickname}
                               className="form-control"
                               type="text"
                             />
@@ -388,6 +406,7 @@ const OrderPage = () => {
                               <div className="col">
                                 <input
                                   onChange={(e) => setUserPhoneSecond(e.target.value)}
+                                  defaultValue={user.phoneNumber.slice(3, 7)}
                                   className="form-control"
                                   maxLength={4}
                                   type="text"
@@ -397,6 +416,7 @@ const OrderPage = () => {
                               <div className="col">
                                 <input
                                   onChange={(e) => setUserPhoneThird(e.target.value)}
+                                  defaultValue={user.phoneNumber.slice(7, 11)}
                                   className="form-control"
                                   maxLength={4}
                                   type="text"
@@ -410,6 +430,7 @@ const OrderPage = () => {
                           <td>
                             <input
                               onChange={(e) => setUserEmail(e.target.value)}
+                              defaultValue={user.email}
                               className="form-control"
                               type="text"
                               data-require_msg="이메일주소를"

@@ -4,6 +4,7 @@ import Header from "../Components/Header";
 import styles from "../Styles/SellPage.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import useToast from "../hooks/toast";
 
 const SellPage = () => {
   const [itemImage, setItemImage] = useState(null);
@@ -14,6 +15,7 @@ const SellPage = () => {
   const [itemDescription, setItemDescription] = useState("");
   const [itemCategoryId, setItemCategoryId] = useState(2);
   const [itemOptionTitle, setItemOptionTitle] = useState("");
+  const { addToast } = useToast();
 
   const navigate = useNavigate();
 
@@ -38,6 +40,10 @@ const SellPage = () => {
       console.log(response);
     } catch (error) {
       console.log(error);
+      addToast({
+        type: "danger",
+        text: "상품 등록을 실패했습니다.",
+      });
     }
   };
 
@@ -222,6 +228,10 @@ const SellPage = () => {
                 if (sellValidate()) {
                   postProduct();
                   resetInput();
+                  addToast({
+                    type: "success",
+                    text: "상품을 등록했습니다!",
+                  });
                 }
               }}
             >

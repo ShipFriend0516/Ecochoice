@@ -104,9 +104,14 @@ const Home = () => {
           <MoreBtn categoryID={2} />
           <SubTitle title={"생활용품 💡"} summary={"친환경적인 생활용품을 만나보세요."} />
           <div className="ItemList">
-            {loading || reviewLoading ? "loading..." : renderItemList(5)}
+            <ItemShelf categoryId={5} />
           </div>
           <MoreBtn categoryID={5} />
+          <SubTitle title={"식품 🍎"} summary={"친환경 식품들을 바로 만나보세요."} />
+          <div className="ItemList">
+            <ItemShelf categoryId={9} />
+          </div>
+          <MoreBtn categoryID={9} />
           <Footer />
         </div>
       </div>

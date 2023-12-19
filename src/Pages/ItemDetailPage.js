@@ -201,9 +201,11 @@ const ItemDetailPage = ({ imgPath }) => {
     <div className={styles.detailPageWrapper}>
       {loading ? (
         <>
-          <Header />
+          <Header isFixed={true} />
           <div className="w-100 vh-100 d-flex justify-content-center align-items-center fs-1 bold">
-            Loading..
+            <div class="spinner-grow text-secondary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
           </div>
         </>
       ) : (
@@ -233,7 +235,7 @@ const ItemDetailPage = ({ imgPath }) => {
                     <small className={`${styles.productId}`}>상품번호 : {product.productId}</small>
                     <span className={`${styles.productTitle}`}>{product.title}</span>
                     <span className={`${styles.productPrice}`}>
-                      가격 : {product.representativeOption.price.toLocaleString()}원
+                      {product.representativeOption.price.toLocaleString()}원
                     </span>
                     <p>{product.description}</p>
                   </div>

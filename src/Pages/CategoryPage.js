@@ -6,6 +6,7 @@ import Footer from "../Components/Footer";
 import axios from "axios";
 import { useEffect, useState, useRef, useCallback } from "react";
 import useToast from "../hooks/toast";
+import Select from "react-select";
 
 const CategoryPage = () => {
   const [products, setProducts] = useState([]);
@@ -20,6 +21,9 @@ const CategoryPage = () => {
   // 무한 스크롤 구현
   const [scrollLoading, setScrollLoading] = useState(false);
   const observer = useRef();
+
+  // 필터
+  const [filter, setFilter] = useState("NEW");
 
   const lastItemRef = useCallback(
     (node) => {
@@ -41,6 +45,7 @@ const CategoryPage = () => {
     try {
       if (!products.isLast && products.nextPage !== null) {
         const queryParams = {
+          sort: filter,
           page: products.nextPage,
           size: 20,
         };
@@ -81,6 +86,7 @@ const CategoryPage = () => {
         setProducts(json);
       } else {
         const response = await axios.post("http://localhost:8080/products", {
+          sort: filter,
           categoryId: parseInt(categoryID),
         });
         console.log(response);
@@ -123,6 +129,18 @@ const CategoryPage = () => {
     getCategoryName();
   }, [categoryID]);
 
+  useEffect(() => {
+    // setLoading(true);
+    getProducts();
+  }, [filter]);
+
+  const options = [
+    { value: "NEW", label: "최신순" },
+    { value: "OLD", label: "오래된순" },
+    { value: "PRICE_DESC", label: "비싼순" },
+    { value: "PRICE_ASC", label: "저렴한순" },
+  ];
+
   return (
     <div className={styles.categoryPageWrapper}>
       <Header isFixed={true} />
@@ -139,6 +157,19 @@ const CategoryPage = () => {
               <p>{categoryName}</p>
             </div>
             <hr className={styles.hrStyle} />
+            <div className="w-100 d-flex flex-row justify-content-between align-items-center mb-2">
+              <p>
+                <span className="bold">{categoryName}</span> 카테고리의 상품을 조회했습니다.
+              </p>
+              <Select
+                className="z-2"
+                defaultValue={options[0]}
+                options={options}
+                onChange={(e) => {
+                  setFilter(e.value);
+                }}
+              />
+            </div>
             <div className="ItemList">
               {products.list.length !== 0 ? (
                 products.list.map((product, index) => {

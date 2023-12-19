@@ -120,7 +120,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
     if (name.length < 1) {
       return 103;
     }
-    if (phone.length < 1) {
+    if (phone.length !== 11) {
       return 104;
     }
     if (id.length < 8 && pw !== pwCheck) {
