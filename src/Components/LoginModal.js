@@ -169,21 +169,33 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
                 <div className={`${styles.profileImg}`}>
                   {profileShow ? (
                     <>
-                      <input
-                        onChange={(e) => {
-                          setProfileImg(e.target.value);
-                        }}
-                        placeholder="프로필사진의 URL"
-                        id="profileImg"
-                        className={"form-control form-control-sm form-control form-control-sm-sm"}
-                        type="url"
-                      ></input>
+                      <div className="d-flex justify-content-between">
+                        <input
+                          onChange={(e) => {
+                            setProfileImg(e.target.value);
+                          }}
+                          placeholder="프로필사진의 URL"
+                          id="profileImg"
+                          className={`form-control form-control-sm ${styles.profileImgInput}`}
+                          type="url"
+                        ></input>
+                        <button
+                          className={`btn btn-sm text-nowrap ${styles.profileShowBtn}`}
+                          onClick={() => {
+                            setProfileShow((prev) => !prev);
+                          }}
+                        >
+                          미리보기
+                        </button>
+                      </div>
                     </>
                   ) : (
                     <img
                       srcSet={[profileImg, logo]}
                       alt="profileImg"
-                      onClick={() => setProfileShow((prev) => !prev)}
+                      onClick={() => {
+                        setProfileShow((prev) => !prev);
+                      }}
                     />
                   )}
                 </div>
@@ -194,7 +206,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
                 <label htmlFor="pw">이름</label>
                 <input
                   onChange={(e) => setName(e.target.value)}
-                  id="pwCheck"
+                  id="userName"
                   className={"form-control form-control-sm"}
                   type="text"
                 ></input>
@@ -208,12 +220,12 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
                 <label htmlFor="pw">휴대폰 번호</label>
                 <input
                   onChange={(e) => setPhone(e.target.value)}
-                  id="pwCheck"
+                  id="userPhone"
                   className={"form-control form-control-sm"}
                   type="tel"
                 ></input>
                 {error === 104 ? (
-                  <small className={styles.errorMsg}>휴대폰 번호가 올바르지 않습니다.</small>
+                  <small className={styles.errorMsg}>휴대폰 번호는 (-)를 제외한 11자입니다.</small>
                 ) : null}
               </div>
             )}
