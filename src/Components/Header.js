@@ -69,10 +69,10 @@ const Header = ({ isFixed, modalOpen }) => {
       if (userdata) {
         const userToken = JSON.parse(userdata).accessToken;
         axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+        const response = await axios.get("http://localhost:8080/users");
+        setUserProfile(response.data);
+        setUserLoading(false);
       }
-      const response = await axios.get("http://localhost:8080/users");
-      setUserProfile(response.data);
-      setUserLoading(false);
     } catch (error) {
       console.log(error);
     }

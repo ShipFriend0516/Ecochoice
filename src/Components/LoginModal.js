@@ -17,7 +17,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [pwCheck, setPWCheck] = useState("");
-  const [profileImg, setProfileImg] = useState(null);
+  const [profileImg, setProfileImg] = useState("");
   const [profileShow, setProfileShow] = useState(false);
 
   const [error, setError] = useState("");
@@ -92,6 +92,7 @@ const LoginModal = ({ loginOnClick, isOpen, errMsg = "" }) => {
           }
           console.log(response);
           addToast({ type: "success", text: "회원가입 성공, 환영합니다!" });
+          canvasOnClick();
           loginOnClick();
         } else {
           console.log("유효성 검사 실패");

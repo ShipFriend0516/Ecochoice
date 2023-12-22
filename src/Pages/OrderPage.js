@@ -127,29 +127,33 @@ const OrderPage = () => {
     const user = sessionStorage.getItem("user");
 
     if (user) {
-      const userToken = JSON.parse(user).accessToken;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
+      try {
+        const userToken = JSON.parse(user).accessToken;
+        axios.defaults.headers.common["Authorization"] = `Bearer ${userToken}`;
 
-      const response = await axios.get("http://localhost:8080/carts");
-      const userCartList = await response.data.items;
-      // URL에서 매개변수 추출
-      const queryParams = new URLSearchParams(window.location.search);
-      const checkedItemsString = queryParams.get("checkedItems");
-      if (checkedItemsString) {
-        // 쉼표로 구분된 문자열을 다시 배열로 변환
-        const checkedItemsArray = checkedItemsString.split(",");
-        console.log(checkedItemsArray);
-        const selectedCartList = userCartList.filter((cartItem) =>
-          checkedItemsArray.includes(cartItem.productId.toString())
-        );
+        const response = await axios.get("http://localhost:8080/carts");
+        const userCartList = await response.data.items;
+        // URL에서 매개변수 추출
+        const queryParams = new URLSearchParams(window.location.search);
+        const checkedItemsString = queryParams.get("checkedItems");
+        if (checkedItemsString) {
+          // 쉼표로 구분된 문자열을 다시 배열로 변환
+          const checkedItemsArray = checkedItemsString.split(",");
+          console.log(checkedItemsArray);
+          const selectedCartList = userCartList.filter((cartItem) =>
+            checkedItemsArray.includes(cartItem.productId.toString())
+          );
 
-        setCart(selectedCartList);
-        return selectedCartList;
+          setCart(selectedCartList);
+          return selectedCartList;
+        }
+
+        setCart(userCartList);
+
+        return userCartList;
+      } catch (error) {
+        console.error(error);
       }
-
-      setCart(userCartList);
-
-      return userCartList;
     } else {
       console.log("User not found");
       return null;
@@ -239,21 +243,9 @@ const OrderPage = () => {
     if (newOrderId && infoValidate()) {
       try {
         const paymentWidget = paymentWidgetRef.current;
-        setUserPayInfo({
-          userName,
-          userEmail,
-          userPhone: userPhoneFirst + userPhoneSecond + userPhoneThird,
-        });
-
-        setDeliveryInfo({
-          deliveryName,
-          deliveryZip,
-          deliveryAddress: `${deliveryAddress1} ${deliveryAddress2}`,
-          deliveryRequest,
-        });
 
         await paymentWidget
-          ?.requestPayment({
+          .requestPayment({
             orderId: newOrderId,
             orderName:
               products.length >= 2

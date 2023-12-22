@@ -64,7 +64,7 @@ const Review = ({ reviewId, userId, rating, reviewText, deleteReview }) => {
                 </span>
                 {isOpen && (
                   <ul className={styles.dropdownMenu}>
-                    <li>수정</li>
+                    {/* <li>수정</li> */}
                     <li
                       onClick={() => {
                         deleteReview(reviewId);
