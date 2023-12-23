@@ -26,11 +26,8 @@ CSS Framework :
 npm install
 npm start
 ```
-그리고 터미널 하나 더 열어서 아래와 같이 입력하면 json-server 실행
 
-```bash
-npm run db
-```
+백엔드서버 필요
 
 ## 메인페이지 미리보기
 <img width="807" alt="1" src="https://github.com/ShipFriend0516/dbproject/assets/98446924/47391447-7e5c-44b1-b015-3a0d361a7c35">
