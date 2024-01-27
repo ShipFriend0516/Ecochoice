@@ -4,6 +4,8 @@
 ## 프로젝트 설명
 3학년 2학기 데이터베이스 프로그래밍 과목의 기말고사 대체 프로젝트로, 데이터베이스를 활용한 DB 시스템
 
+컨셉: 친환경 제품을 파는 e커머스 서비스, 에코초이스
+
 
 ### 사용 기술
 Used TechStacks :
@@ -32,6 +34,12 @@ npm start
 ## 메인페이지 미리보기
 <img width="807" alt="1" src="https://github.com/ShipFriend0516/dbproject/assets/98446924/47391447-7e5c-44b1-b015-3a0d361a7c35">
 
+## Deployment
 
+![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7)
+
+🌿 <a href="https://ecochoice00.netlify.app/" target="_blank">EcoChoice</a>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ed7a0d8e-a532-4036-917d-62d62377a98d/deploy-status)](https://app.netlify.com/sites/ecochoice00/deploys)
 ![Static Badge](https://img.shields.io/github/languages/top/ShipFriend0516/dbproject)
 ![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/ShipFriend0516/dbproject)
