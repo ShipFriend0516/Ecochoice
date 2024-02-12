@@ -21,6 +21,9 @@ CSS Framework :
 
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 
+결제 API : 
+Toss Payments
+
 ## ✨ 프로젝트 설치 및 실행 방법
 
 깃허브에서 리포지토리 복제 후 터미널 아래와 같이 입력 
